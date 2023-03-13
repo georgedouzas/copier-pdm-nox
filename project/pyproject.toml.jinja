@@ -119,8 +119,8 @@ docs = "nox --error-on-external-run -R -s docs -- {args:serve}"
 formatting = "nox --error-on-external-run -R -s formatting -- {args:all}"
 checks = "nox --error-on-external-run -R -s checks -- {args:all}"
 tests = "nox --error-on-external-run -R -s tests"
-changelog = "nox --error-on-external-run -R -s changelog -- {args}"
-release = "nox --error-on-external-run -R -s release"
+changelog = "nox --error-on-external-run -R -s changelog"
+release = "nox --error-on-external-run -R -s release -- {args}"
 
 [tool.pdm.dev-dependencies]
 maintenance = [
@@ -159,12 +159,10 @@ tests = [
     "nptyping>=2.4.1"
 ]
 changelog = [
-    "towncrier>=19.2",
-    "click>=8.1.3",
+    "git-changelog>=1.0.0",
 ]
 release = [
     "twine>=4.0.0",
-    "click>=8.1.3",
 ]
 
 [tool.black]
@@ -221,49 +219,3 @@ omit = ["src/*/__init__.py", "tests/__init__.py"]
 
 [tool.coverage.json]
 output = "htmlcov/coverage.json"
-
-[tool.towncrier]
-package_dir = "src"
-package = "clover"
-directory = "news"
-filename = "CHANGELOG.md"
-template = "news/changelog_template.jinja"
-issue_format = "([Issue #{issue}](https://github/{{ repository_namespace }}/{{ repository_name }}/issues/{issue}))"
-start_string = "<!-- release notes start -->"
-title_format = "## [Version {version}](https://github/{{ repository_namespace }}/{{ repository_name }}/releases/tag/{version}) ({project_date})"
-underlines = ["", "", ""]
-
-[[tool.towncrier.type]]
-directory = "feat"
-name = "New feature implementation"
-showcontent = true
-
-[[tool.towncrier.type]]
-directory = "fix"
-name = "Bug fix"
-showcontent = true
-
-[[tool.towncrier.type]]
-directory = "docs"
-name = "Documentation changes"
-showcontent = true
-
-[[tool.towncrier.type]]
-directory = "style"
-name = "Code style or format changes"
-showcontent = true
-
-[[tool.towncrier.type]]
-directory = "refactor"
-name = "Changes that are not features or bug fixes"
-showcontent = true
-
-[[tool.towncrier.type]]
-directory = "test"
-name = "Test additions or corrections"
-showcontent = true
-
-[[tool.towncrier.type]]
-directory = "chore"
-name = "Maintenance code changes"
-showcontent = true

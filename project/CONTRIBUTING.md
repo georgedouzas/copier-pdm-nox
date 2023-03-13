@@ -27,7 +27,6 @@ the project for more details. You can run any of the following commands and subc
 
 #### Changelog
 
-- `pdm changelog add`: Add a news fragment to the changelog.
 - `pdm changelog build`: Build the changelog.
 
 #### Release

@@ -37,13 +37,13 @@ Related to PR namespace/other-project#15: https://github.com/namespace/other-pro
 - Subject must have proper casing, i.e. uppercase for first letter if it makes sense.
 - Subject must have no dot at the end and no punctuation.
 - Type can be:
-  - `feat`: New feature implementation.
-  - `fix`: Bug fix.
-  - `docs`: Documentation changes.
-  - `style`: Code style or format changes.
-  - `refactor`: Changes that are not features or bug fixes.
-  - `tests`: Test additions or corrections.
-  - `chore`: Maintenance code changes.
+    - `feat`: New feature implementation.
+    - `fix`: Bug fix.
+    - `docs`: Documentation changes.
+    - `style`: Code style or format changes.
+    - `refactor`: Changes that are not features or bug fixes.
+    - `tests`: Test additions or corrections.
+    - `chore`: Maintenance code changes.
 
 ## Pull Request guidelines
 

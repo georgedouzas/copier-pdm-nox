@@ -38,7 +38,7 @@ jobs:
       uses: actions/configure-pages@v3
 
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: pip install -r requirements.doc.txt
 
     - name: Build documentation
       run: mkdocs build

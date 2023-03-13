@@ -101,17 +101,20 @@ def changelog(session: nox.Session) -> None:
     Arguments:
         session: The nox session.
     """
-    check_cli(session, ['add', 'build'])
-    session.run('pdm', 'install', '-dG', 'changelog', external=True)
-    import click
+    from git_changelog.cli import build_and_render
 
-    if session.posargs[0] == 'add':
-        issue_num = click.prompt('Issue number (start with + for orphan fragment)')
-        frag_type = click.prompt('News fragment type', type=str)
-        session.run('towncrier', 'create', '--edit', f'{issue_num}.{frag_type}.txt')
-    if session.posargs[0] == 'build':
-        version = click.prompt('Incremented version number to use')
-        session.run('towncrier', 'build', '--yes', '--version', version)
+    session.run('pdm', 'install', '-dG', 'changelog', external=True)
+    build_and_render(
+        repository='.',
+        output='CHANGELOG.md',
+        convention='angular',
+        template='keepachangelog',
+        parse_trailers=True,
+        parse_refs=False,
+        sections=['feat', 'fix', 'docs', 'style', 'refactor', 'tests', 'chore'],
+        bump_latest=True,
+        in_place=True,
+    )
 
 
 @nox.session
@@ -121,14 +124,14 @@ def release(session: nox.Session) -> None:
     Arguments:
         session: The nox session.
     """
+    if not session.posargs:
+        session.skip('No version was provided')
     session.run('pdm', 'install', '-dG', 'release', external=True)
-    import click
 
-    version = click.prompt('Incremented version number to use')
     session.run('git', 'add', 'pyproject.toml', 'CHANGELOG.md', external=True)
-    session.run('git', 'commit', '-m', f'chore: Release {version}', external=True)
+    session.run('git', 'commit', '-m', f'chore: Release {session.posargs[0]}', external=True)
     try:
-        session.run('git', 'tag', '-a', version, external=True)
+        session.run('git', 'tag', '-a', session.posargs[0], external=True)
         session.run('git', 'push', '--tags', external=True)
     finally:
         session.run('pdm', 'build', external=True)
