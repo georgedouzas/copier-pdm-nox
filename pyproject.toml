@@ -1,0 +1,43 @@
+[tool.towncrier]
+directory = "news"
+filename = "CHANGELOG.md"
+template = "news/changelog_template.jinja"
+issue_format = "([Issue #{issue}](https://github/georgedouzas/copier-pdm-nox/issues/{issue}))"
+start_string = "<!-- release notes start -->"
+title_format = "## [Version {version}](https://github/georgedouzas/copier-pdm-nox/releases/tag/{version}) ({project_date})"
+underlines = ["", "", ""]
+
+[[tool.towncrier.type]]
+directory = "feat"
+name = "New feature implementation"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "fix"
+name = "Bug fix"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "docs"
+name = "Documentation changes"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "style"
+name = "Code style or format changes"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "refactor"
+name = "Changes that are not features or bug fixes"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "test"
+name = "Test additions or corrections"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "chore"
+name = "Maintenance code changes"
+showcontent = true

@@ -1,0 +1,53 @@
+name: Documentation
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+
+  doc:
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Install Python versions
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.8
+
+    - name: Setup Pages
+      uses: actions/configure-pages@v3
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Build documentation
+      run: mkdocs build
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v1
+      with:
+        path: 'site'
+
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v1
