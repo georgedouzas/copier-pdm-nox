@@ -25,6 +25,9 @@ feat(directive): A new feature of code
 A description of the new feature.
 It contains **important** information.
 
+BREAKING CHANGES:
+Explanation, code, etc.
+
 Issue #10: https://github.com/namespace/project/issues/10
 Related to PR namespace/other-project#15: https://github.com/namespace/other-project/pull/15
 ```
