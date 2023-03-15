@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.2.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.2.0) - 2023-03-15
+
+<small>[Compare with 0.1.3](https://github.com/georgedouzas/copier-pdm-nox/compare/0.1.3...0.2.0)</small>
+
+### Features
+
+- Run correct dependencies check per file ([fb4eaea](https://github.com/georgedouzas/copier-pdm-nox/commit/fb4eaea58e4c02c422864f08d0e42d96106ec418) by georgedouzas).
+
+### Chore
+
+- Remove ntyping dependency ([41ec431](https://github.com/georgedouzas/copier-pdm-nox/commit/41ec431202e19186a18a5bb0aa149f1fd510fdb1) by georgedouzas).
+
 ## [0.1.3](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.1.3) - 2023-03-14
 
 <small>[Compare with 0.1.2](https://github.com/georgedouzas/copier-pdm-nox/compare/0.1.2...0.1.3)</small>
@@ -13,6 +25,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Bug Fixes
 
 - Include correct types ([e2cc103](https://github.com/georgedouzas/copier-pdm-nox/commit/e2cc10397ab05728b522a603ddeb1dae3706c1c3) by georgedouzas).
+
+### Docs
+
+- Update changelog for version 0.1.3 ([7fc1ce7](https://github.com/georgedouzas/copier-pdm-nox/commit/7fc1ce70192403105c950d362eef927736cc9b5b) by georgedouzas).
 
 ## [0.1.2](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.1.2) - 2023-03-14
 
