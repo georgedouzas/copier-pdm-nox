@@ -95,3 +95,8 @@ python_package_import_name:
   type: str
   help: Your Python package import name (for `import NAME` in Python code)
   default: "{{ repository_name|lower|replace('-', '_')|replace(' ', '_') }}"
+
+python_versions:
+  type: str
+  help: The range of Python versions that your project supports
+  default: ">=3.8, <=3.11"

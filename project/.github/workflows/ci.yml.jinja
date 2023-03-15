@@ -17,7 +17,7 @@ jobs:
         - macos-latest
         - windows-latest
 
-    runs-on: ${{ matrix.os }}
+    runs-on: {% raw %}${{ matrix.os }}{% endraw %}
 
     steps:
     - name: Checkout
@@ -44,7 +44,7 @@ jobs:
         - macos-latest
         - windows-latest
 
-    runs-on: ${{ matrix.os }}
+    runs-on: {% raw %}${{ matrix.os }}{% endraw %}
 
     steps:
     - name: Checkout
@@ -54,11 +54,19 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: |
-            3.8
-            3.9
-            3.10
-            3.11
-
+            {% set minor_versions = [] -%}
+            {% for version in python_versions.rsplit(',') -%}
+            {% set offset = (-1 if loop.index == 1 else 1) if '=' in version else 0 -%}
+            {% set version = version|replace('>', '')|replace('<', '')|replace('=', '') -%}
+            {{ minor_versions.append(version.rsplit('.')[1]|int + offset) or '' -}}
+            {% endfor -%}
+            {% set versions = [] -%}
+            {% for minor_version in range(minor_versions[0] + 1, minor_versions[1]) -%}
+            {{ versions.append('3.' + minor_version|string) or '' -}}
+            {% endfor -%}
+            {% for version in versions -%}
+            {{ version }}
+            {% endfor %}
     - name: Set up PDM
       uses: pdm-project/setup-pdm@v3
       with:

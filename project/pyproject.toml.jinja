@@ -75,7 +75,7 @@ license = "
     Zlib
     {%- endif %}"
 readme = "README.md"
-requires-python = ">=3.8, <3.12"
+requires-python = "{{ python_versions }}"
 keywords = []
 dynamic = ["version"]
 classifiers = [
@@ -84,10 +84,19 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
+    {% set minor_versions = [] -%}
+    {% for version in python_versions.rsplit(',') -%}
+    {% set offset = (-1 if loop.index == 1 else 1) if '=' in version else 0 -%}
+    {% set version = version|replace('>', '')|replace('<', '')|replace('=', '') -%}
+    {{ minor_versions.append(version.rsplit('.')[1]|int + offset) or '' -}}
+    {% endfor -%}
+    {% set versions = [] -%}
+    {% for minor_version in range(minor_versions[0] + 1, minor_versions[1]) -%}
+    {{ versions.append('3.' + minor_version|string) or '' -}}
+    {% endfor -%}
+    {% for version in versions -%}
+    "Programming Language :: Python :: {{ version }}",
+    {% endfor -%}
     "Topic :: Documentation",
     "Topic :: Software Development",
     "Topic :: Utilities",
