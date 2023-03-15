@@ -55,7 +55,7 @@ def formatting(session: nox.Session, file: str) -> None:
         session.run('docformatter', '--in-place', '--recursive', '--close-quotes-on-newline', file)
 
 
-@nox.session
+@nox.session(python=PYTHON_VERSIONS)
 @nox.parametrize('file', FILES)
 def checks(session: nox.Session, file: str) -> None:
     """Check code quality, dependencies or type annotations.
@@ -72,7 +72,11 @@ def checks(session: nox.Session, file: str) -> None:
         session.run('mypy', file)
     if session.posargs[0] in ['dependencies', 'all']:
         requirements_path = (Path(session.create_tmp()) / 'requirements.txt').as_posix()
-        session.run('pdm', 'export', '-f', 'requirements', '--without-hashes', '-o', requirements_path, external=True)
+        requirements_types = zip(
+            FILES, [['--prod'], ['-dG', 'tests'], ['-dG', 'docs'], ['-dG', 'maintenance']], strict=True,
+        )
+        args = ['pdm', 'export', '-f', 'requirements', '--without-hashes', '-o', requirements_path]
+        session.run(*(args + dict(requirements_types)[file]), external=True)
         session.run('safety', 'check', '-r', requirements_path)
 
 
