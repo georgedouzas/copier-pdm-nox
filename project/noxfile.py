@@ -117,7 +117,6 @@ def changelog(session: nox.Session) -> None:
         parse_refs=False,
         sections=['feat', 'fix', 'docs', 'style', 'refactor', 'tests', 'chore'],
         bump_latest=True,
-        in_place=True,
     )
 
 
