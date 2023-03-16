@@ -4,7 +4,7 @@
 
 Please check the following:
 
-- [ ] You have checked the [Pull Request guidelines](https://github.com/{{ repository_namespace }}/{{ repository_name }}/blob/master/.github/CONTRIBUTING.md).
+- [ ] You have checked the [Pull Request guidelines](https://github.com/georgedouzas/copier-pdm-nox/blob/master/.github/CONTRIBUTING.md).
 - [ ] Tests for bug fixes or new features have been added.
 - [ ] Docs have been added or updated.
 
