@@ -26,13 +26,19 @@ with the help of [Nox](https://github.com/wntrblm/nox).
 - All licenses from [choosealicense.com](https://choosealicense.com/appendix/).
 - Python 3.8 or above.
 
-## Installation
+## Usage
+
+To use the template for a new project:
 
 ```bash
 copier "gh:georgedouzas/copier-pdm-nox.git" /path/to/your/new/project
 ```
 
-See the [documentation](https://georgedouzas.github.io/copier-pdm-nox) for more details.
+To update the project using a new version of the template:
+
+```bash
+copier update
+```
 
 ## Credits
 
