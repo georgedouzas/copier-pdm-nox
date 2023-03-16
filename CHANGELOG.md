@@ -6,12 +6,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.3.2](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.3.2) - 2023-03-16
+
+<small>[Compare with 0.3.1](https://github.com/georgedouzas/copier-pdm-nox/compare/0.3.1...0.3.2)</small>
+
+### Code Refactoring
+
+- Remove annotated tags ([5cc7484](https://github.com/georgedouzas/copier-pdm-nox/commit/5cc7484f99a643db7ad6b5ea4d5d035636d1c938) by georgedouzas).
+
 ## [0.3.1](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.3.1) - 2023-03-16
 
 <small>[Compare with 0.3.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.3.0...0.3.1)</small>
 
 ### Docs
 
+- Update changelog for version 0.3.1 ([f8c02e0](https://github.com/georgedouzas/copier-pdm-nox/commit/f8c02e087087a623d8215edbff8a34327857b578) by georgedouzas).
 - Include both installation and update instructions ([401ad03](https://github.com/georgedouzas/copier-pdm-nox/commit/401ad0315cfc25c880773fa7687b9801ea7aa29a) by georgedouzas).
 
 ## [0.3.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.3.0) - 2023-03-16
