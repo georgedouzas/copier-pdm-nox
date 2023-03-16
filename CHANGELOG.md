@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Bug Fixes
 
-- Typo on url ([7f29221](https://github.com/georgedouzas/copier-pdm-nox/commit/7f29221b9b9a987779fc29368b9aa9acdfa0cf72) by georgedouzas).
+- Typos of URLs ([f472bac](https://github.com/georgedouzas/copier-pdm-nox/commit/f472bac564aac4e952b9add6c88bea65ad98bf6a) by georgedouzas).
 
 ## [0.3.2](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.3.2) - 2023-03-16
 
