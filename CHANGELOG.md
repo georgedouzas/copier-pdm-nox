@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.3.4](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.3.4) - 2023-03-23
+
+<small>[Compare with 0.3.3](https://github.com/georgedouzas/copier-pdm-nox/compare/0.3.3...0.3.4)</small>
+
+### Docs
+
+- Fix list indent ([62ae5f2](https://github.com/georgedouzas/copier-pdm-nox/commit/62ae5f251387441c76599a527dae9140ea58d47a) by georgedouzas).
+
+### Code Refactoring
+
+- Replace with correct docstring ([9df6cf2](https://github.com/georgedouzas/copier-pdm-nox/commit/9df6cf24cd006721fe36f27fe32af0a235887cd4) by georgedouzas).
+
+### Chore
+
+- Clear gallery and nox directories ([325fc74](https://github.com/georgedouzas/copier-pdm-nox/commit/325fc74a66085de61db40f62a73fcfe1bc70c4f9) by georgedouzas).
+
 ## [0.3.3](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.3.3) - 2023-03-16
 
 <small>[Compare with 0.3.2](https://github.com/georgedouzas/copier-pdm-nox/compare/0.3.2...0.3.3)</small>
@@ -13,6 +29,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Bug Fixes
 
 - Typos of URLs ([f472bac](https://github.com/georgedouzas/copier-pdm-nox/commit/f472bac564aac4e952b9add6c88bea65ad98bf6a) by georgedouzas).
+
+### Docs
+
+- Update changelog for version 0.3.3 ([19a203e](https://github.com/georgedouzas/copier-pdm-nox/commit/19a203ee96d2d777a155cdea08c5a81689ec51ec) by georgedouzas).
 
 ## [0.3.2](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.3.2) - 2023-03-16
 
