@@ -39,7 +39,7 @@ def check_cli(session: nox.Session, args: list[str]) -> None:
 
 @nox.session
 def docs(session: nox.Session) -> None:
-    """Build or serve.
+    """Build or serve the documentation.
 
     Arguments:
         session: The nox session.
@@ -111,7 +111,7 @@ def tests(session: nox.Session) -> None:
 
 @nox.session
 def changelog(session: nox.Session) -> None:
-    """Add news fragment or build changelog.
+    """Build the changelog.
 
     Arguments:
         session: The nox session.
