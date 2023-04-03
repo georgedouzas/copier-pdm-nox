@@ -7,9 +7,9 @@ Contributions are welcome, and they are greatly appreciated.
 Commit messages follow conventions based on the [Angular
 style](https://gist.github.com/stephenparish/9941e89d80e2bc58a153#format-of-the-commit-message).
 
-#### Structure
+### Structure
 
-```
+```bash
 <type>(<scope>): <subject>
 
 <body>
@@ -17,9 +17,9 @@ style](https://gist.github.com/stephenparish/9941e89d80e2bc58a153#format-of-the-
 <footer>
 ```
 
-#### Example
+### Example
 
-```
+```bash
 feat(directive): A new feature of code
 
 A description of the new feature.
@@ -32,7 +32,7 @@ Issue #10: https://github.com/namespace/project/issues/10
 Related to PR namespace/other-project#15: https://github.com/namespace/other-project/pull/15
 ```
 
-#### Guidelines
+### Guidelines
 
 - Scope and body are optional.
 - Subject and body must be valid Markdown.
