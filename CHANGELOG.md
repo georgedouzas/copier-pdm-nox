@@ -6,12 +6,26 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.3.5](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.3.5) - 2023-04-03
+
+<small>[Compare with 0.3.4](https://github.com/georgedouzas/copier-pdm-nox/compare/0.3.4...0.3.5)</small>
+
+### Docs
+
+- Use correct indentation for list ([1f0337d](https://github.com/georgedouzas/copier-pdm-nox/commit/1f0337dd680ada8f2c014376d55a3427ed4248c9) by georgedouzas).
+
+### Chore
+
+- Hide private files and modules from API ([5dcc978](https://github.com/georgedouzas/copier-pdm-nox/commit/5dcc978c091fcec5dc65e283377affd875e370a5) by georgedouzas).
+- Include more files in clean task ([b8c8db7](https://github.com/georgedouzas/copier-pdm-nox/commit/b8c8db72b9e42f16e681e9e1f8ca576262396106) by georgedouzas).
+
 ## [0.3.4](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.3.4) - 2023-03-23
 
 <small>[Compare with 0.3.3](https://github.com/georgedouzas/copier-pdm-nox/compare/0.3.3...0.3.4)</small>
 
 ### Docs
 
+- Update changelog for version 0.3.4 ([a2fd545](https://github.com/georgedouzas/copier-pdm-nox/commit/a2fd5456e94a024c42e828374df685f257c0ff92) by georgedouzas).
 - Fix list indent ([62ae5f2](https://github.com/georgedouzas/copier-pdm-nox/commit/62ae5f251387441c76599a527dae9140ea58d47a) by georgedouzas).
 
 ### Code Refactoring
