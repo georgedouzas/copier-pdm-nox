@@ -16,7 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Docs
 
-- Update changelog for version 0.3.6 ([4c94b77](https://github.com/georgedouzas/copier-pdm-nox/commit/4c94b7742e2bf9003aa226b0ffc30dbccbf3d641) by georgedouzas).
+- Add development installation instructions ([b60b496](https://github.com/georgedouzas/copier-pdm-nox/commit/b60b496bc2f7430ed54e5dddf889692424d67866) by georgedouzas).
+- Update changelog for version 0.3.6 ([92e2eb1](https://github.com/georgedouzas/copier-pdm-nox/commit/92e2eb1e39ca27c9815a953d7ea9a56650443187) by georgedouzas).
 
 ### Chore
 
