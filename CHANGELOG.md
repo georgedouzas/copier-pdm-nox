@@ -6,9 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
-## [0.3.6](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.3.6) - 2023-04-11
+## [0.4.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.4.0) - 2023-04-12
 
-<small>[Compare with 0.3.5](https://github.com/georgedouzas/copier-pdm-nox/compare/0.3.5...0.3.6)</small>
+<small>[Compare with 0.3.5](https://github.com/georgedouzas/copier-pdm-nox/compare/0.3.5...0.4.0)</small>
+
+### Features
+
+- Add multiple python versions to CI ([b5d60b4](https://github.com/georgedouzas/copier-pdm-nox/commit/b5d60b4d48bfdd712cfc71d55c0cc000aab12358) by georgedouzas).
 
 ### Bug Fixes
 
@@ -16,13 +20,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Docs
 
+- Update changelog for version 0.3.6 ([0fb9c53](https://github.com/georgedouzas/copier-pdm-nox/commit/0fb9c5306ef3c7508a0c5e64a4448bc2003c328d) by georgedouzas).
 - Add version to release command ([db47bd6](https://github.com/georgedouzas/copier-pdm-nox/commit/db47bd61f1b345029ff445566ddf5188aa25feff) by georgedouzas).
 - Modify installation instructions and add type hints ([2cf8838](https://github.com/georgedouzas/copier-pdm-nox/commit/2cf88383cb9e999e23ce038d89afb629fb4080c5) by georgedouzas).
-- Update changelog for version 0.3.6 ([1e0d159](https://github.com/georgedouzas/copier-pdm-nox/commit/1e0d15915379f0329686a7e0cddf1568df5b8778) by georgedouzas).
 - Add development installation instructions ([b60b496](https://github.com/georgedouzas/copier-pdm-nox/commit/b60b496bc2f7430ed54e5dddf889692424d67866) by georgedouzas).
 
 ### Chore
 
+- Ignore .pdm-python file ([0270548](https://github.com/georgedouzas/copier-pdm-nox/commit/027054836f3b76173a1f663d8c9f4a2b5f6b1da1) by georgedouzas).
 - Fix typo in target version ([86ef9bd](https://github.com/georgedouzas/copier-pdm-nox/commit/86ef9bd2825eb3f1cfac96fbfe96f6d141f38af7) by georgedouzas).
 - Fix typo in feature request ([f36022f](https://github.com/georgedouzas/copier-pdm-nox/commit/f36022fe8725d4f266b66b1f6303aa0a651ca6d9) by georgedouzas).
 - Remove `pdm.lock` and generate min version ([d6ce8a7](https://github.com/georgedouzas/copier-pdm-nox/commit/d6ce8a79d8cb3245479dc0bf2af21d8dc022775f) by georgedouzas).
