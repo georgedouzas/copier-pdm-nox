@@ -195,7 +195,7 @@ line-length = 120
 {% set offset = 1 if '=' not in version else 0 -%}
 {% set version = version.rsplit('.')[-1] -%}
 {% set version = version|int + offset -%}
-target-version = "py3{{ version }}
+target-version = "py3{{ version }}"
 
 [tool.ruff.per-file-ignores]
 "docs/examples/*" = ["ANN", "D", "B018"]

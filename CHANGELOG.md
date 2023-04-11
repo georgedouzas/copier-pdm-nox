@@ -16,11 +16,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Docs
 
+- Add version to release command ([db47bd6](https://github.com/georgedouzas/copier-pdm-nox/commit/db47bd61f1b345029ff445566ddf5188aa25feff) by georgedouzas).
+- Modify installation instructions and add type hints ([2cf8838](https://github.com/georgedouzas/copier-pdm-nox/commit/2cf88383cb9e999e23ce038d89afb629fb4080c5) by georgedouzas).
+- Update changelog for version 0.3.6 ([1e0d159](https://github.com/georgedouzas/copier-pdm-nox/commit/1e0d15915379f0329686a7e0cddf1568df5b8778) by georgedouzas).
 - Add development installation instructions ([b60b496](https://github.com/georgedouzas/copier-pdm-nox/commit/b60b496bc2f7430ed54e5dddf889692424d67866) by georgedouzas).
-- Update changelog for version 0.3.6 ([92e2eb1](https://github.com/georgedouzas/copier-pdm-nox/commit/92e2eb1e39ca27c9815a953d7ea9a56650443187) by georgedouzas).
 
 ### Chore
 
+- Fix typo in target version ([86ef9bd](https://github.com/georgedouzas/copier-pdm-nox/commit/86ef9bd2825eb3f1cfac96fbfe96f6d141f38af7) by georgedouzas).
 - Fix typo in feature request ([f36022f](https://github.com/georgedouzas/copier-pdm-nox/commit/f36022fe8725d4f266b66b1f6303aa0a651ca6d9) by georgedouzas).
 - Remove `pdm.lock` and generate min version ([d6ce8a7](https://github.com/georgedouzas/copier-pdm-nox/commit/d6ce8a79d8cb3245479dc0bf2af21d8dc022775f) by georgedouzas).
 - Ignore external venv ([e33f262](https://github.com/georgedouzas/copier-pdm-nox/commit/e33f262b23fe50c448acf89a7104063dcc09fe66) by georgedouzas).
