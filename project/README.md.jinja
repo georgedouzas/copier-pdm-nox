@@ -37,8 +37,16 @@
 
 ## Installation
 
-`{{ python_package_distribution_name }}` is currently available on the PyPi's repository, and you can install it via `pip`:
+For user installation, `{{ python_package_distribution_name }}` is currently available on the PyPi's repository, and you can
+install it via `pip`:
 
 ```bash
 pip install {{ python_package_distribution_name }}
+```
+
+Development installation requires to clone the repository and then use [PDM](https://github.com/pdm-project/pdm) to install the
+project as well as the main and development dependencies:
+
+```bash
+pdm install
 ```
