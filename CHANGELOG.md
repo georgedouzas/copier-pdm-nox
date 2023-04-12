@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.5.1](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.5.1) - 2023-04-12
+
+<small>[Compare with 0.5.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.5.0...0.5.1)</small>
+
+### Chore
+
+- Handle group installation ([9422e66](https://github.com/georgedouzas/copier-pdm-nox/commit/9422e66b32d10ee351c80739cba4076729830274) by georgedouzas).
+
 ## [0.5.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.5.0) - 2023-04-12
 
 <small>[Compare with 0.4.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.4.0...0.5.0)</small>
@@ -13,6 +21,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Features
 
 - Split CI tasks ([9d081d0](https://github.com/georgedouzas/copier-pdm-nox/commit/9d081d00070d39b52a3440238dcc69b5b802cd0a) by georgedouzas).
+
+### Docs
+
+- Update changelog for version 0.5.0 ([841cc2d](https://github.com/georgedouzas/copier-pdm-nox/commit/841cc2d9d3dba007d954dad6f40c1963a0d08781) by georgedouzas).
 
 ### Chore
 
