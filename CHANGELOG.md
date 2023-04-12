@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Features
 
+- Split CI checks ([561e1a5](https://github.com/georgedouzas/copier-pdm-nox/commit/561e1a5ec21bd5f8f94680caba4f0a81cb0f5ebd) by georgedouzas).
 - Force push code and tags ([23de184](https://github.com/georgedouzas/copier-pdm-nox/commit/23de18427ef842b5ff61484f730b29585ef771cb) by georgedouzas).
 - Add multiple python versions to CI ([e210c1a](https://github.com/georgedouzas/copier-pdm-nox/commit/e210c1a794adc4b4b380676f5cd75f3a3dc59abc) by georgedouzas).
 - Push code and tags ([82cee49](https://github.com/georgedouzas/copier-pdm-nox/commit/82cee493f27015546526911d4cb08bbf9b7cc366) by georgedouzas).
