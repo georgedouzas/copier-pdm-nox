@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.5.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.5.0) - 2023-04-12
+
+<small>[Compare with 0.4.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.4.0...0.5.0)</small>
+
+### Features
+
+- Split CI tasks ([9d081d0](https://github.com/georgedouzas/copier-pdm-nox/commit/9d081d00070d39b52a3440238dcc69b5b802cd0a) by georgedouzas).
+
+### Chore
+
+- Delete tag before force pushing ([4a2e55f](https://github.com/georgedouzas/copier-pdm-nox/commit/4a2e55fde3f4bd63e585cba414efc1975ca82334) by georgedouzas).
+- Removed strict parameter from zip ([aa2459b](https://github.com/georgedouzas/copier-pdm-nox/commit/aa2459b82c96dee9b990ce3fbb04df568682acf9) by georgedouzas).
+
 ## [0.4.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.4.0) - 2023-04-12
 
 <small>[Compare with 0.3.5](https://github.com/georgedouzas/copier-pdm-nox/compare/0.3.5...0.4.0)</small>
@@ -24,6 +37,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Docs
 
+- Update changelog for version 0.4.0 ([7ed8e4c](https://github.com/georgedouzas/copier-pdm-nox/commit/7ed8e4cf9a5c97f1a1c5e816eefd7454b4516c6b) by georgedouzas).
 - Add version to release command ([1d0e3cd](https://github.com/georgedouzas/copier-pdm-nox/commit/1d0e3cd4106173334c54ac817951d10dd7b03cae) by georgedouzas).
 - Modify installation instructions and add type hints ([45e0e6b](https://github.com/georgedouzas/copier-pdm-nox/commit/45e0e6b0fdb9b1786c06522a9c4df68f3f374986) by georgedouzas).
 - Add development installation instructions ([0f37821](https://github.com/georgedouzas/copier-pdm-nox/commit/0f378218f023786227ae4c0b87780f7a8668d222) by georgedouzas).
