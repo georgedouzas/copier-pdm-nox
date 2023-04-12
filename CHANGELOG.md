@@ -6,9 +6,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.5.2](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.5.2) - 2023-04-12
+
+<small>[Compare with 0.5.1](https://github.com/georgedouzas/copier-pdm-nox/compare/0.5.1...0.5.2)</small>
+
+### Chore
+
+- Use pyproject to export requirements ([9c6fd43](https://github.com/georgedouzas/copier-pdm-nox/commit/9c6fd43b59b32dfbb234bb2e13470b90d1b0fec6) by georgedouzas).
+
 ## [0.5.1](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.5.1) - 2023-04-12
 
 <small>[Compare with 0.5.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.5.0...0.5.1)</small>
+
+### Docs
+
+- Update changelog for version 0.5.1 ([fb5d656](https://github.com/georgedouzas/copier-pdm-nox/commit/fb5d6563778076a977e741cadaecc1c4fc8cdfd3) by georgedouzas).
 
 ### Chore
 
