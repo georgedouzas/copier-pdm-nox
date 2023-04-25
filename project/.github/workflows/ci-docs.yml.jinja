@@ -1,9 +1,10 @@
-name: CI
+name: CI and documentation
 
 on:
   push:
-    branches:
+    branches-ignore:
       - master
+  workflow_dispatch:
 
 jobs:
 
@@ -16,7 +17,7 @@ jobs:
         - macos-latest
         - windows-latest
 
-    runs-on: {% raw %}${{ matrix.os }}{% endraw %}
+    runs-on: ${{ matrix.os }}
 
     steps:
     - name: Checkout
@@ -39,6 +40,7 @@ jobs:
             {% for version in versions -%}
             {{ version }}
             {% endfor %}
+
     - name: Set up PDM
       uses: pdm-project/setup-pdm@v3
       with:
@@ -66,7 +68,7 @@ jobs:
         - macos-latest
         - windows-latest
 
-    runs-on: {% raw %}${{ matrix.os }}{% endraw %}
+    runs-on: ${{ matrix.os }}
 
     steps:
     - name: Checkout
@@ -89,6 +91,7 @@ jobs:
             {% for version in versions -%}
             {{ version }}
             {% endfor %}
+
     - name: Set up PDM
       uses: pdm-project/setup-pdm@v3
       with:
@@ -100,3 +103,37 @@ jobs:
 
     - name: Run the test suite
       run: pdm tests
+
+  doc:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+          {% set minor_versions = [] -%}
+          {% for version in python_versions.rsplit(',') -%}
+          {% set offset = (-1 if loop.index == 1 else 1) if '=' in version else 0 -%}
+          {% set version = version|replace('>', '')|replace('<', '')|replace('=', '') -%}
+          {{ minor_versions.append(version.rsplit('.')[1]|int + offset) or '' -}}
+          {% endfor -%}
+          {% set versions = [] -%}
+          {% for minor_version in range(minor_versions[0] + 1, minor_versions[1]) -%}
+          {{ versions.append('3.' + minor_version|string) or '' -}}
+          {% endfor -%}
+        python-version: {{ versions }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Set up PDM
+      uses: pdm-project/setup-pdm@v3
+      with:
+        cache: true
+        cache-dependency-path: pyproject.toml
+
+    - name: Install dependencies
+      run: pdm install --no-editable -dG maintenance -dG docs
+
+    - name: Build documentation with Python ${{ matrix.python-version }}
+      run: pdm docs build
