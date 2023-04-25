@@ -6,9 +6,26 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.6.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.6.0) - 2023-04-25
+
+<small>[Compare with 0.5.2](https://github.com/georgedouzas/copier-pdm-nox/compare/0.5.2...0.6.0)</small>
+
+### Features
+
+- Automate release process ([5944621](https://github.com/georgedouzas/copier-pdm-nox/commit/5944621575a849288200fb043fe3f940349c9de9) by georgedouzas).
+- Add workflows for staging environment ([9fab2c5](https://github.com/georgedouzas/copier-pdm-nox/commit/9fab2c5ddb9bbd0a224d215fe272f621b5693a9f) by georgedouzas).
+
+### Chore
+
+- Fix wrong github links ([e20875e](https://github.com/georgedouzas/copier-pdm-nox/commit/e20875e11d2a922698633bf666a3de1a6abb0981) by georgedouzas).
+
 ## [0.5.2](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.5.2) - 2023-04-12
 
 <small>[Compare with 0.5.1](https://github.com/georgedouzas/copier-pdm-nox/compare/0.5.1...0.5.2)</small>
+
+### Docs
+
+- Update changelog for version 0.5.2 ([aad6d26](https://github.com/georgedouzas/copier-pdm-nox/commit/aad6d26e307b505d51f0743168cb8cea003827c8) by georgedouzas).
 
 ### Chore
 
