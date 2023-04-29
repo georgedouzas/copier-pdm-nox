@@ -17,7 +17,7 @@ jobs:
         - macos-latest
         - windows-latest
 
-    runs-on: ${{ matrix.os }}
+    runs-on: {% raw %}${{ matrix.os }}{% endraw %}
 
     steps:
     - name: Checkout
@@ -68,7 +68,7 @@ jobs:
         - macos-latest
         - windows-latest
 
-    runs-on: ${{ matrix.os }}
+    runs-on: {% raw %}${{ matrix.os }}{% endraw %}
 
     steps:
     - name: Checkout
@@ -135,5 +135,5 @@ jobs:
     - name: Install dependencies
       run: pdm install --no-editable -dG maintenance -dG docs
 
-    - name: Build documentation with Python ${{ matrix.python-version }}
+    - name: Build documentation with Python {% raw %}${{ matrix.python-version }}{% endraw %}
       run: pdm docs build
