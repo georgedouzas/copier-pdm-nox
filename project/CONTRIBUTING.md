@@ -25,6 +25,10 @@ the project for more details. You can run any of the following commands and subc
     - `pdm checks types`: Check only type annotations.
     - `pdm checks dependencies`: Check only for vulnerabilities in dependencies.
 
+### Tests
+
+- `pdm tests`: Run the tests.
+
 ### Changelog
 
 - `pdm changelog build`: Build the changelog.
