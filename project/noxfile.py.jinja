@@ -22,7 +22,7 @@ os.environ.update({'PDM_IGNORE_SAVED_PYTHON': '1'})
 {% endfor -%}
 
 PYTHON_VERSIONS: list[str] = {{ versions }}
-FILES:  list[str] = ['src', 'tests', 'docs', 'noxfile.py']
+FILES: list[str] = ['src', 'tests', 'docs', 'noxfile.py']
 CHANGELOG_ARGS: dict[str, Any] = {
     'repository': '.',
     'convention': 'angular',
