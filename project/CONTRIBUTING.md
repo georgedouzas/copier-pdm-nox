@@ -44,7 +44,7 @@ The next steps should be followed during development:
 - `git checkout -b new-branch-name` to create a new branch and then modify the code.
 - `pdm formattting` to auto-format the code and docstrings.
 - `pdm checks` to apply all checks.
-- `pdm test` to run the tests.
+- `pdm tests` to run the tests.
 - `pdm serve-docs` if you updated the documentation or the project dependencies to check that everything looks as expected.
 
 ## Commit message convention
