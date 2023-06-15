@@ -31,7 +31,7 @@ the project for more details. You can run any of the following commands and subc
 
 ### Changelog
 
-- `pdm changelog build`: Build the changelog.
+- `pdm changelog`: Build the changelog.
 
 ### Release
 
@@ -42,10 +42,10 @@ the project for more details. You can run any of the following commands and subc
 The next steps should be followed during development:
 
 - `git checkout -b new-branch-name` to create a new branch and then modify the code.
-- `pdm formattting` to auto-format the code and docstrings.
+- `pdm formatting` to auto-format the code and docstrings.
 - `pdm checks` to apply all checks.
 - `pdm tests` to run the tests.
-- `pdm serve-docs` if you updated the documentation or the project dependencies to check that everything looks as expected.
+- `pdm docs serve` if you updated the documentation or the project dependencies to check that everything looks as expected.
 
 ## Commit message convention
 
