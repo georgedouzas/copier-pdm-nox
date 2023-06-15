@@ -6,12 +6,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.6.5](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.6.5) - 2023-06-15
+
+<small>[Compare with 0.6.4](https://github.com/georgedouzas/copier-pdm-nox/compare/0.6.4...0.6.5)</small>
+
+### Docs
+
+- Fix contributing typos ([8b8c13d](https://github.com/georgedouzas/copier-pdm-nox/commit/8b8c13d2e636105ad2d9390baaabde2957695b8b) by georgedouzas).
+- Add prerequisites section ([4296ea8](https://github.com/georgedouzas/copier-pdm-nox/commit/4296ea8c6b4b4896f6b830c29c2234894185188f) by georgedouzas).
+
 ## [0.6.4](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.6.4) - 2023-06-07
 
 <small>[Compare with 0.6.3](https://github.com/georgedouzas/copier-pdm-nox/compare/0.6.3...0.6.4)</small>
 
 ### Docs
 
+- Update changelog for version 0.6.4 ([2264c13](https://github.com/georgedouzas/copier-pdm-nox/commit/2264c137db42ef06606fa555bd8aaa6d220a2aab) by georgedouzas).
 - Fix wrong command ([64bc1d5](https://github.com/georgedouzas/copier-pdm-nox/commit/64bc1d5c99753942e1f5b492ed1c8f4f4e59b063) by georgedouzas).
 
 ### Style
