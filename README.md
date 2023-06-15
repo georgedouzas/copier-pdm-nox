@@ -26,6 +26,14 @@ with the help of [Nox](https://github.com/wntrblm/nox).
 - All licenses from [choosealicense.com](https://choosealicense.com/appendix/).
 - Python 3.8 or above.
 
+## Prerequisites
+
+To use the template's development tasks, the following command-line tools are required:
+
+- [PDM](https://github.com/pdm-project/pdm) (>= 2.7.0)
+- [Git](https://git-scm.com/) (>= 2.30.0)
+- [GitHub CLI](https://cli.github.com/) (>= 2.25.0)
+
 ## Usage
 
 To use the template for a new project:
