@@ -3,7 +3,7 @@ name: CI and documentation
 on:
   push:
     branches-ignore:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
@@ -48,7 +48,7 @@ jobs:
         cache-dependency-path: pyproject.toml
 
     - name: Install dependencies
-      run: pdm install --no-editable -dG maintenance -dG checks
+      run: pdm install --no-default -dG maintenance -dG checks
 
     - name: Check code quality
       run: pdm checks quality
@@ -99,7 +99,7 @@ jobs:
         cache-dependency-path: pyproject.toml
 
     - name: Install dependencies
-      run: pdm install --no-editable -dG maintenance -dG tests
+      run: pdm install -dG maintenance -dG tests
 
     - name: Run the test suite
       run: pdm tests
@@ -133,7 +133,7 @@ jobs:
         cache-dependency-path: pyproject.toml
 
     - name: Install dependencies
-      run: pdm install --no-editable -dG maintenance -dG docs
+      run: pdm install -dG maintenance -dG docs
 
     - name: Build documentation with Python {% raw %}${{ matrix.python-version }}{% endraw %}
       run: pdm docs build

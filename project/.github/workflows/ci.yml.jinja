@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
 
@@ -46,7 +46,7 @@ jobs:
         cache-dependency-path: pyproject.toml
 
     - name: Install dependencies
-      run: pdm install --no-editable -dG maintenance -dG checks
+      run: pdm install --no-default -dG maintenance -dG checks
 
     - name: Check code quality
       run: pdm checks quality
@@ -96,7 +96,7 @@ jobs:
         cache-dependency-path: pyproject.toml
 
     - name: Install dependencies
-      run: pdm install --no-editable -dG maintenance -dG tests
+      run: pdm install -dG maintenance -dG tests
 
     - name: Run the test suite
       run: pdm tests
