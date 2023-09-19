@@ -167,12 +167,12 @@ def release(session: nox.Session) -> None:
     session.run('git', 'commit', '-m', f'chore: Release {version}', '--allow-empty', external=True)
     session.run('git', 'push', '-u', 'origin', f'release_{version}', external=True)
 
-    # Create and merge PR from release branch to master
-    session.run('gh', 'pr', 'create', '--base', 'master', external=True)
+    # Create and merge PR from release branch to main
+    session.run('gh', 'pr', 'create', '--base', 'main', external=True)
     session.run('gh', 'pr', 'merge', '--rebase', '--delete-branch', external=True)
 
     # Create tag
-    session.run('git', 'checkout', 'master', external=True)
+    session.run('git', 'checkout', 'main', external=True)
     session.run('git', 'pull', '--rebase', external=True)
     session.run('git', 'tag', version, external=True)
     session.run('git', 'push', '--tags', external=True)
