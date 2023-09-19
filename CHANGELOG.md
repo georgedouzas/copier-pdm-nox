@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.6.8](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.6.8) - 2023-09-19
+
+<small>[Compare with 0.6.7](https://github.com/georgedouzas/copier-pdm-nox/compare/0.6.7...0.6.8)</small>
+
+### Bug Fixes
+
+- Remove redundant commands ([6194c12](https://github.com/georgedouzas/copier-pdm-nox/commit/6194c12180fc5bca8a1cfdfe8b219267e9291884) by georgedouzas).
+- Rename default branch ([c78f49c](https://github.com/georgedouzas/copier-pdm-nox/commit/c78f49cf7e43f633f34367467d4eeda7db963340) by georgedouzas).
+
+### Docs
+
+- Fix copier command ([3ff81fc](https://github.com/georgedouzas/copier-pdm-nox/commit/3ff81fc1b0810896394bd8dfdea9ed99b79a06f9) by georgedouzas).
+
+### Chore
+
+- Rename default branch of project ([c3cfeef](https://github.com/georgedouzas/copier-pdm-nox/commit/c3cfeef3bfda37bcc18c2bafdbf117906da472e1) by georgedouzas).
+
 ## [0.6.7](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.6.7) - 2023-09-13
 
 <small>[Compare with 0.6.6](https://github.com/georgedouzas/copier-pdm-nox/compare/0.6.6...0.6.7)</small>
@@ -14,6 +31,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Rename pdm config file ([a256c95](https://github.com/georgedouzas/copier-pdm-nox/commit/a256c958899ab722199abc8a5f2c585a77834eea) by georgedouzas).
 - Replace master with main default branch ([ecf9353](https://github.com/georgedouzas/copier-pdm-nox/commit/ecf9353b96e04ae7d88256d34ccbf20df7d48acc) by georgedouzas).
+
+### Docs
+
+- Update changelog for version 0.6.7 ([a094b75](https://github.com/georgedouzas/copier-pdm-nox/commit/a094b75bf4bc5e48de98afdd097878e691f62fc7) by georgedouzas).
 
 ## [0.6.6](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.6.6) - 2023-09-10
 
