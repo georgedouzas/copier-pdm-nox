@@ -30,7 +30,8 @@ with the help of [Nox](https://github.com/wntrblm/nox).
 
 To use the template's development tasks, the following command-line tools are required:
 
-- [PDM](https://github.com/pdm-project/pdm) (>= 2.7.0)
+- [PDM](https://github.com/pdm-project/pdm) (>= 2.9.0)
+- [Nox](https://nox.thea.codes/en/stable/) (>=2023.4.22)
 - [Git](https://git-scm.com/) (>= 2.30.0)
 - [GitHub CLI](https://cli.github.com/) (>= 2.25.0)
 
