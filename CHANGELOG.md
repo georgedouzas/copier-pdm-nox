@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.8.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.8.0) - 2023-09-26
+
+<small>[Compare with 0.7.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.7.0...0.8.0)</small>
+
+### Features
+
+- Update Python range of versions ([487c54f](https://github.com/georgedouzas/copier-pdm-nox/commit/487c54fdf4a4b304eb490289e8a11959facc4eea) by georgedouzas).
+
 ## [0.7.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.7.0) - 2023-09-26
 
 <small>[Compare with 0.6.9](https://github.com/georgedouzas/copier-pdm-nox/compare/0.6.9...0.7.0)</small>
@@ -13,6 +21,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Features
 
 - Update copier minimum version ([3f529a8](https://github.com/georgedouzas/copier-pdm-nox/commit/3f529a893c64305d22826c7c511d0b0e4d541721) by georgedouzas).
+
+### Docs
+
+- Update changelog for version 0.7.0 ([5a9c42c](https://github.com/georgedouzas/copier-pdm-nox/commit/5a9c42c39358593449d24245f02c73593237b84f) by georgedouzas).
 
 ## [0.6.9](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.6.9) - 2023-09-25
 
