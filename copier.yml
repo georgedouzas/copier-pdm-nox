@@ -1,4 +1,4 @@
-_min_copier_version: "8.3.0"
+_min_copier_version: "9"
 _envops:
   autoescape: false
   keep_trailing_newline: true
@@ -45,7 +45,7 @@ copyright_holder_email:
 copyright_date:
   type: str
   help: The copyright date
-  default: "2023"
+  default: "2024"
 
 copyright_license:
   type: str
@@ -99,4 +99,4 @@ python_package_import_name:
 python_versions:
   type: str
   help: The range of Python versions that your project supports
-  default: ">=3.9, <3.11"
+  default: ">=3.9, <3.12"
