@@ -8,7 +8,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## [0.9.1](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.9.1) - 2024-07-02
 
-<small>[Compare with 0.8.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.8.0...0.9.1)</small>
+<small>[Compare with 0.9.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.9.0...0.9.1)</small>
+
+### Docs
+
+- Update changelog for version 0.9.1 ([f568189](https://github.com/georgedouzas/copier-pdm-nox/commit/f568189ac94c971e78189cd3fbf42b08fe2f174b) by georgedouzas).
+- Fix previous version error ([998f506](https://github.com/georgedouzas/copier-pdm-nox/commit/998f506aea9c2ed73d57068f230601daff1d6e0f) by georgedouzas).
+
+## [0.9.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.9.0) - 2024-07-02
+
+<small>[Compare with 0.8.2](https://github.com/georgedouzas/copier-pdm-nox/compare/0.8.2...0.9.0)</small>
 
 ### Features
 
@@ -19,18 +28,34 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Use correct flag ([33067f5](https://github.com/georgedouzas/copier-pdm-nox/commit/33067f52c4c0a824e6412cce97f7a37ac631cf1a) by georgedouzas).
 - Remove space ([a4e396b](https://github.com/georgedouzas/copier-pdm-nox/commit/a4e396b53d2b5dc7b61e3efe6a212162bc0740e8) by georgedouzas).
 - Use quotes for package ([d5508b5](https://github.com/georgedouzas/copier-pdm-nox/commit/d5508b563dc6360ccae75ff24858e13ab1228071) by georgedouzas).
-- Make it compatible to new ruff requirements ([021a807](https://github.com/georgedouzas/copier-pdm-nox/commit/021a8071fefce4cff7d8053151e2eef3037b47f6) by georgedouzas).
 
 ### Docs
 
-- Fix previous version error ([998f506](https://github.com/georgedouzas/copier-pdm-nox/commit/998f506aea9c2ed73d57068f230601daff1d6e0f) by georgedouzas).
 - Update changelog for version 0.9.0 ([91205d1](https://github.com/georgedouzas/copier-pdm-nox/commit/91205d1eb68849586186d8ff18b0608fbeffd3f7) by georgedouzas).
+
+## [0.8.2](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.8.2) - 2024-07-02
+
+<small>[Compare with 0.8.1](https://github.com/georgedouzas/copier-pdm-nox/compare/0.8.1...0.8.2)</small>
+
+### Docs
+
 - Update changelog for version 0.8.2 ([c9cb086](https://github.com/georgedouzas/copier-pdm-nox/commit/c9cb086f9b42e66d4bae8984cd23bed440ab03a3) by georgedouzas).
-- Update changelog for version 0.8.1 ([c183c85](https://github.com/georgedouzas/copier-pdm-nox/commit/c183c85268106000cca454fb5c20093817ab90b2) by georgedouzas).
 
 ### Chore
 
 - Update copier configuration ([ef56cce](https://github.com/georgedouzas/copier-pdm-nox/commit/ef56cce6c3f061eef1ef32ff8c6f825f35d7c835) by georgedouzas).
+
+## [0.8.1](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.8.1) - 2024-07-02
+
+<small>[Compare with 0.8.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.8.0...0.8.1)</small>
+
+### Bug Fixes
+
+- Make it compatible to new ruff requirements ([021a807](https://github.com/georgedouzas/copier-pdm-nox/commit/021a8071fefce4cff7d8053151e2eef3037b47f6) by georgedouzas).
+
+### Docs
+
+- Update changelog for version 0.8.1 ([c183c85](https://github.com/georgedouzas/copier-pdm-nox/commit/c183c85268106000cca454fb5c20093817ab90b2) by georgedouzas).
 
 ## [0.8.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.8.0) - 2023-09-26
 
