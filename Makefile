@@ -2,7 +2,7 @@ install:
 	@pip install -r requirements.txt
 
 changelog:
-	@git-changelog -Tbo CHANGELOG.md -c angular -t keepachangelog -s feat,fix,docs,style,refactor,tests,chore
+	@git-changelog -T --bump=auto -o CHANGELOG.md -c angular -t keepachangelog -s feat,fix,docs,style,refactor,tests,chore
 
 release:
 	@git add CHANGELOG.md
