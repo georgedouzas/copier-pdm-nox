@@ -6,12 +6,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.9.3](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.9.3) - 2024-07-02
+
+<small>[Compare with 0.9.2](https://github.com/georgedouzas/copier-pdm-nox/compare/0.9.2...0.9.3)</small>
+
+### Bug Fixes
+
+- Remove ruff option ([38819f9](https://github.com/georgedouzas/copier-pdm-nox/commit/38819f9b07b13c44f34fb6501d78a0c4a9c674de) by georgedouzas).
+
 ## [0.9.2](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.9.2) - 2024-07-02
 
 <small>[Compare with 0.9.1](https://github.com/georgedouzas/copier-pdm-nox/compare/0.9.1...0.9.2)</small>
 
 ### Docs
 
+- Update changelog for version 0.9.2 ([1b25df9](https://github.com/georgedouzas/copier-pdm-nox/commit/1b25df90cded36be329dea70db0e9e55b01b3062) by georgedouzas).
 - Split versions ([64f671a](https://github.com/georgedouzas/copier-pdm-nox/commit/64f671a02cd2810daa8e3d9cb33e28efa6f82e1c) by georgedouzas).
 
 ## [0.9.1](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.9.1) - 2024-07-02
@@ -451,4 +460,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Chore
 
 - Add makefile for various tasks ([d851df8](https://github.com/georgedouzas/copier-pdm-nox/commit/d851df80f6e64132881c2372dc9cdcd8418486ba) by georgedouzas).
-- Initial commit ([5260d04](https://github.com/georgedouzas/copier-pdm-nox/commit/5260d04647a88dcd6767c5157d1dedb112e82995) by georgedouzas).
+- Initial commit ([5260d04](https://github.com/georgedouzas/copier-pdm-nox/commit/5260d04647a88dcd6767c5157d1dedb112e82995) by
+  georgedouzas).
