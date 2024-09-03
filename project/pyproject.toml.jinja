@@ -126,12 +126,15 @@ htmlcov pip-wheel-metadata site __pycache__ docs/generated .nox .ruff_cache pdm.
 && find . -name '.coverage*'  -delete"""}
 docs = "nox --error-on-external-run -R -s docs -- {args:serve}"
 formatting = "nox --error-on-external-run -R -s formatting -- {args:all}"
-checks = "nox --error-on-external-run -R -s checks -- {args:all}"
-tests = "nox --error-on-external-run -R -s tests"
+checks = "nox --default-venv-backend uv --error-on-external-run -R -s checks -- {args:all}"
+tests = "nox --default-venv-backend uv --error-on-external-run -R -s tests"
 changelog = "nox --error-on-external-run -R -s changelog"
 release = "nox --error-on-external-run -R -s release"
 
 [tool.pdm.dev-dependencies]
+maintenance = [
+    "nox[uv]>=2024.4.15",
+]
 docs = [
     "mkdocs>=1.6.0",
     "mkdocs-coverage>=1.1.0",
