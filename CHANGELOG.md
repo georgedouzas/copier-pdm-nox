@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.11.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.11.0) - 2024-10-12
+
+<small>[Compare with 0.10.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.10.0...0.11.0)</small>
+
+### Features
+
+- Add docformatter configuration options ([1ce68e8](https://github.com/georgedouzas/copier-pdm-nox/commit/1ce68e8091f766de7eef82977dd516a3d5d94384) by georgedouzas).
+
 ## [0.10.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.10.0) - 2024-09-03
 
 <small>[Compare with 0.9.3](https://github.com/georgedouzas/copier-pdm-nox/compare/0.9.3...0.10.0)</small>
@@ -13,6 +21,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Features
 
 - Use uv as backend ([f4cd6af](https://github.com/georgedouzas/copier-pdm-nox/commit/f4cd6af550f036f8c160930fc9a122db4437556b) by georgedouzas).
+
+### Docs
+
+- Update changelog for version 0.10.0 ([13f565a](https://github.com/georgedouzas/copier-pdm-nox/commit/13f565a1a6548450321b6783c45f7c4480481ca2) by georgedouzas).
 
 ## [0.9.3](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.9.3) - 2024-07-02
 
