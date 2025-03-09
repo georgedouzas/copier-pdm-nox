@@ -6,13 +6,27 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
-## [0.11.1](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.11.1) - 2025-03-09
+## [0.13.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.13.0) - 2025-03-09
 
-<small>[Compare with 0.11.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.11.0...0.11.1)</small>
+<small>[Compare with 0.12.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.12.0...0.13.0)</small>
+
+### Features
+
+- Validate minimum Python version ([dd4cc01](https://github.com/georgedouzas/copier-pdm-nox/commit/dd4cc0123b40f352167e31e33748629c7bbcd7ae) by georgedouzas).
+- Use strict option ([9659c87](https://github.com/georgedouzas/copier-pdm-nox/commit/9659c877b7f0d03f30e625e7670016d087468393) by georgedouzas).
+- Change wrap summaries limit ([ae44828](https://github.com/georgedouzas/copier-pdm-nox/commit/ae448282b3483e708ff61f4c2e2968599290cbb5) by georgedouzas).
+
+## [0.12.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.12.0) - 2025-03-09
+
+<small>[Compare with 0.11.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.11.0...0.12.0)</small>
 
 ### Bug Fixes
 
 - Format module name ([87cc197](https://github.com/georgedouzas/copier-pdm-nox/commit/87cc197b1c6d0316e87662c765f218061d2f593b) by georgedouzas).
+
+### Docs
+
+- Update changelog for version 0.12.0 ([818d516](https://github.com/georgedouzas/copier-pdm-nox/commit/818d516e6e70bd0ec25f3a7c9cc6c3ef8dfca2fd) by georgedouzas).
 
 ### Chore
 
