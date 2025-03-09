@@ -100,3 +100,7 @@ python_versions:
   type: str
   help: The range of Python versions that your project supports
   default: ">=3.10, <3.12"
+  validator: >-
+    {% set min_version = python_versions.split(',')[0] %}
+    {% set last_part = min_version.split('.')[-1] | int %}
+    {% if last_part < 10 %}Minimum version is Python 3.10{% endif %}
