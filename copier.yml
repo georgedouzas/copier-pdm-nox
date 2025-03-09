@@ -45,7 +45,7 @@ copyright_holder_email:
 copyright_date:
   type: str
   help: The copyright date
-  default: "2024"
+  default: "2025"
 
 copyright_license:
   type: str
@@ -99,4 +99,4 @@ python_package_import_name:
 python_versions:
   type: str
   help: The range of Python versions that your project supports
-  default: ">=3.9, <3.12"
+  default: ">=3.10, <3.12"
