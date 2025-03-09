@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.11.1](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.11.1) - 2025-03-09
+
+<small>[Compare with 0.11.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.11.0...0.11.1)</small>
+
+### Bug Fixes
+
+- Format module name ([87cc197](https://github.com/georgedouzas/copier-pdm-nox/commit/87cc197b1c6d0316e87662c765f218061d2f593b) by georgedouzas).
+
+### Chore
+
+- Update default value ([e722389](https://github.com/georgedouzas/copier-pdm-nox/commit/e7223890f994b37bc56e6cee2ece002cd0b89318) by georgedouzas).
+- Update pre-commit versions ([59affa8](https://github.com/georgedouzas/copier-pdm-nox/commit/59affa8f37f6e203cf12d26605cf741ced428d0b) by georgedouzas).
+
 ## [0.11.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.11.0) - 2024-10-12
 
 <small>[Compare with 0.10.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.10.0...0.11.0)</small>
@@ -13,6 +26,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Features
 
 - Add docformatter configuration options ([1ce68e8](https://github.com/georgedouzas/copier-pdm-nox/commit/1ce68e8091f766de7eef82977dd516a3d5d94384) by georgedouzas).
+
+### Docs
+
+- Update changelog for version 0.11.0 ([52f37c3](https://github.com/georgedouzas/copier-pdm-nox/commit/52f37c3f1e44b192aec6201f63bc5bb5f141b4a0) by georgedouzas).
 
 ## [0.10.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.10.0) - 2024-09-03
 
