@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.14.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.14.0) - 2025-03-17
+
+<small>[Compare with 0.13.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.13.0...0.14.0)</small>
+
+### Features
+
+- Update GitHub actions steps ([45008b1](https://github.com/georgedouzas/copier-pdm-nox/commit/45008b1d2c3ce75f69c94a044c4d388f334b3911) by georgedouzas).
+
 ## [0.13.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.13.0) - 2025-03-09
 
 <small>[Compare with 0.12.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.12.0...0.13.0)</small>
@@ -15,6 +23,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Validate minimum Python version ([dd4cc01](https://github.com/georgedouzas/copier-pdm-nox/commit/dd4cc0123b40f352167e31e33748629c7bbcd7ae) by georgedouzas).
 - Use strict option ([9659c87](https://github.com/georgedouzas/copier-pdm-nox/commit/9659c877b7f0d03f30e625e7670016d087468393) by georgedouzas).
 - Change wrap summaries limit ([ae44828](https://github.com/georgedouzas/copier-pdm-nox/commit/ae448282b3483e708ff61f4c2e2968599290cbb5) by georgedouzas).
+
+### Docs
+
+- Update changelog for version 0.13.0 ([ead0706](https://github.com/georgedouzas/copier-pdm-nox/commit/ead070656b96e57f44365a469618586bcace08d6) by georgedouzas).
 
 ## [0.12.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.12.0) - 2025-03-09
 
