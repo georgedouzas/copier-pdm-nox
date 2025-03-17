@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Features
 
-- Update GitHub actions steps ([45008b1](https://github.com/georgedouzas/copier-pdm-nox/commit/45008b1d2c3ce75f69c94a044c4d388f334b3911) by georgedouzas).
+- Update GitHub actions steps ([490a034](https://github.com/georgedouzas/copier-pdm-nox/commit/490a034102636b08fe49716951e5d5772ef0b77c) by georgedouzas).
 
 ## [0.13.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.13.0) - 2025-03-09
 
