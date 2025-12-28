@@ -85,11 +85,12 @@ copyright_license:
     - PostgreSQL License
     - The Unlicense
     - zlib License
+    - None
 
 python_package_distribution_name:
   type: str
   help: Your Python package distribution name (for `pip install NAME`)
-  default: "{{ repository_name|lower|replace('_', '-')|replace(' ', '-') }}"
+  default: "{{ repository_name|lower|replace('-', '_')|replace(' ', '_') }}"
 
 python_package_import_name:
   type: str
@@ -99,8 +100,32 @@ python_package_import_name:
 python_versions:
   type: str
   help: The range of Python versions that your project supports
-  default: ">=3.10, <3.12"
+  default: ">=3.11, <3.14"
   validator: >-
     {% set min_version = python_versions.split(',')[0] %}
     {% set last_part = min_version.split('.')[-1] | int %}
-    {% if last_part < 10 %}Minimum version is Python 3.10{% endif %}
+    {% if last_part < 11 %}Minimum version is Python 3.11{% endif %}
+
+git_provider:
+  type: str
+  help: Your Git provider
+  default: GitHub
+  choices:
+    - GitHub
+    - Azure DevOps
+    - Bitbucket
+    - GitLab
+    - None
+
+package_manager:
+  type: str
+  help: Your Python package manager
+  default: PDM
+  choices:
+    - PDM
+    - uv
+
+publish_pypi:
+  type: bool
+  help: Publish your project to PyPI
+  default: true

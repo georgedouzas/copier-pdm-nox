@@ -8,28 +8,58 @@
 [mypy]: <http://mypy-lang.org>
 [mkdocs badge]: <https://img.shields.io/badge/docs-mkdocs%20material-blue.svg?style=flat>
 [mkdocs]: <https://squidfunk.github.io/mkdocs-material>
+[safety badge]: <https://img.shields.io/badge/safety-checked-green>
+[safety]: <https://github.com/pyupio/safety>
+[bandit badge]: <https://img.shields.io/badge/security-bandit-yellow>
+[bandit]: <https://github.com/PyCQA/bandit>
+[pytest badge]: <https://img.shields.io/badge/tests-pytest-blue>
+[pytest]: <https://github.com/pytest-dev/pytest>
+[coverage badge]: <https://img.shields.io/badge/coverage-pytest--cov-blue>
+[coverage]: <https://github.com/nedbat/coveragepy>
+[interrogate badge]: <https://img.shields.io/badge/docstring-interrogate-blue>
+[interrogate]: <https://github.com/econchick/interrogate>
+[pre-commit badge]: <https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit>
+[pre-commit]: <https://github.com/pre-commit/pre-commit>
+[nox badge]: <https://img.shields.io/badge/%F0%9F%A6%8A-Nox-D85E00.svg>
+[nox]: <https://github.com/wntrblm/nox>
 [version badge]: <https://img.shields.io/pypi/v/{{ repository_name }}.svg>
 [pythonversion badge]: <https://img.shields.io/pypi/pyversions/{{ repository_name }}.svg>
 [downloads badge]: <https://img.shields.io/pypi/dd/{{ repository_name }}>
-[gitter]: <https://gitter.im/{{ repository_name }}/community>
-[gitter badge]: <https://badges.gitter.im/join%20chat.svg>
+{% if git_provider == "GitHub" -%}
 [discussions]: <https://github.com/{{ repository_namespace }}/{{ repository_name }}/discussions>
 [discussions badge]: <https://img.shields.io/github/discussions/{{ repository_namespace }}/{{ repository_name }}>
 [ci]: <https://github.com/{{ repository_namespace }}/{{ repository_name }}/actions?query=workflow>
 [ci badge]: <https://github.com/{{ repository_namespace }}/{{ repository_name }}/actions/workflows/ci.yml/badge.svg?branch=main>
 [doc]: <https://github.com/{{ repository_namespace }}/{{ repository_name }}/actions?query=workflow>
 [doc badge]: <https://github.com/{{ repository_namespace }}/{{ repository_name }}/actions/workflows/doc.yml/badge.svg?branch=main>
+{% elif git_provider == "GitLab" -%}
+[ci]: <https://gitlab.com/{{ repository_namespace }}/{{ repository_name }}/-/pipelines>
+[ci badge]: <https://gitlab.com/{{ repository_namespace }}/{{ repository_name }}/badges/main/pipeline.svg>
+{% elif git_provider == "Azure DevOps" -%}
+[ci]: <https://dev.azure.com/{{ repository_namespace }}/{{ repository_name }}/_build>
+[ci badge]: <https://dev.azure.com/{{ repository_namespace }}/{{ repository_name }}/_apis/build/status/ci?branchName=main>
+{% elif git_provider == "Bitbucket" -%}
+[ci]: <https://bitbucket.org/{{ repository_namespace }}/{{ repository_name }}/addon/pipelines/home>
+[ci badge]: <https://img.shields.io/bitbucket/pipelines/{{ repository_namespace }}/{{ repository_name }}/main>
+{% endif %}
 
-# {{ repository_name }}
-
+{% if git_provider == "GitHub" -%}
 [![ci][ci badge]][ci] [![doc][doc badge]][doc]
+{% elif git_provider != "None" -%}
+[![ci][ci badge]][ci]
+{% endif %}
 
 | Category          | Tools    |
 | ------------------| -------- |
 | **Development**   | [![black][black badge]][black] [![ruff][ruff badge]][ruff] [![mypy][mypy badge]][mypy] [![docformatter][docformatter badge]][docformatter] |
+| **Testing**       | [![pytest][pytest badge]][pytest] [![coverage][coverage badge]][coverage] [![interrogate][interrogate badge]][interrogate] |
+| **Security**      | [![safety][safety badge]][safety] [![bandit][bandit badge]][bandit] |
+| **Automation**    | [![nox][nox badge]][nox] [![pre-commit][pre-commit badge]][pre-commit] |
 | **Package**       | ![version][version badge] ![pythonversion][pythonversion badge] ![downloads][downloads badge] |
 | **Documentation** | [![mkdocs][mkdocs badge]][mkdocs]|
-| **Communication** | [![gitter][gitter badge]][gitter] [![discussions][discussions badge]][discussions] |
+{% if git_provider == "GitHub" -%}
+| **Communication** | [![discussions][discussions badge]][discussions] |
+{% endif %}
 
 ## Introduction
 
@@ -37,18 +67,28 @@
 
 ## Installation
 
+{% if publish_pypi %}
 For user installation, `{{ python_package_distribution_name }}` is currently available on the PyPi's repository, and you can
 install it via `pip`:
 
 ```bash
 pip install {{ python_package_distribution_name }}
 ```
+{% endif %}
 
 Development installation requires to clone the repository and then use [PDM](https://github.com/pdm-project/pdm) to install the
 project as well as the main and development dependencies:
 
 ```bash
+{% if git_provider == "GitHub" -%}
 git clone https://github.com/{{ repository_namespace }}/{{ repository_name }}.git
+{% elif git_provider == "GitLab" -%}
+git clone https://gitlab.com/{{ repository_namespace }}/{{ repository_name }}.git
+{% elif git_provider == "Azure DevOps" -%}
+git clone https://dev.azure.com/{{ repository_namespace }}/{{ repository_name }}.git
+{% elif git_provider == "Bitbucket" -%}
+git clone https://bitbucket.org/{{ repository_namespace }}/{{ repository_name }}.git
+{% endif %}
 cd {{ python_package_distribution_name }}
-pdm install
+{% if package_manager == "PDM" %}pdm install{% else %}uv sync{% endif %}
 ```
