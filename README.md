@@ -11,14 +11,14 @@ with the help of [Nox](https://github.com/wntrblm/nox).
 - Documentation built with [MkDocs](https://github.com/mkdocs/mkdocs) using [Material
   theme](https://github.com/squidfunk/mkdocs-material) and [mkdocstrings](https://github.com/mkdocstrings/mkdocstrings) plugin.
 - Tools for code formatting:
-    - [black](https://github.com/psf/black)
-    - [docformatter](https://github.com/PyCQA/docformatter)
+  - [black](https://github.com/psf/black)
+  - [docformatter](https://github.com/PyCQA/docformatter)
 - Tools for checking code quality:
-    - [ruff](https://github.com/charliermarsh/ruff)
+  - [ruff](https://github.com/charliermarsh/ruff)
 - Tools for checking safety vulnerabilities:
-    - [safety](https://github.com/pyupio/safety)
+  - [safety](https://github.com/pyupio/safety)
 - Tools for checking type annotations:
-    - [mypy](https://github.com/pyupio/safety)
+  - [mypy](https://github.com/pyupio/safety)
 - Tests run with [pytest](https://github.com/pytest-dev/pytest) and plugins, with [coverage](https://github.com/nedbat/coveragepy)
   support.
 - `CHANGELOG.md` managed by [git-changelog](https://github.com/pawamoy/git-changelog).
