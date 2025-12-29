@@ -20,8 +20,13 @@ teardown() {
 
     [ "$status" -eq 0 ]
     [ -d "test-repo" ]
-    [ -f "test-repo/README.md" ]
-    diff "$(dirname "$BATS_TEST_FILENAME")/repos/default/README.md" "test-repo/README.md"
+    for expected_file in "$(dirname "$BATS_TEST_FILENAME")/repos/default"/*; do
+        if [ -f "$expected_file" ]; then
+            filename=$(basename "$expected_file")
+            [ -f "test-repo/$filename" ]
+            diff "$expected_file" "test-repo/$filename"
+        fi
+    done
 }
 
 @test "Test default interactive copier" {
@@ -48,5 +53,11 @@ teardown() {
     [ "$status" -eq 0 ]
     [ -d "test-repo" ]
     [ -f "test-repo/README.md" ]
-    diff "$(dirname "$BATS_TEST_FILENAME")/repos/default/README.md" "test-repo/README.md"
+    for expected_file in "$(dirname "$BATS_TEST_FILENAME")/repos/default"/*; do
+        if [ -f "$expected_file" ]; then
+            filename=$(basename "$expected_file")
+            [ -f "test-repo/$filename" ]
+            diff "$expected_file" "test-repo/$filename"
+        fi
+    done
 }
