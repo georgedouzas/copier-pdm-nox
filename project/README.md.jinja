@@ -42,13 +42,13 @@
 [ci]: <https://bitbucket.org/{{ repository_namespace }}/{{ repository_name }}/addon/pipelines/home>
 [ci badge]: <https://img.shields.io/bitbucket/pipelines/{{ repository_namespace }}/{{ repository_name }}/main>
 {% endif %}
+# {{ repository_name }}
 
 {% if git_provider == "GitHub" -%}
 [![ci][ci badge]][ci] [![doc][doc badge]][doc]
 {% elif git_provider != "None" -%}
 [![ci][ci badge]][ci]
 {% endif %}
-
 | Category          | Tools    |
 | ------------------| -------- |
 | **Development**   | [![black][black badge]][black] [![ruff][ruff badge]][ruff] [![mypy][mypy badge]][mypy] [![docformatter][docformatter badge]][docformatter] |
@@ -60,22 +60,21 @@
 {% if git_provider == "GitHub" -%}
 | **Communication** | [![discussions][discussions badge]][discussions] |
 {% endif %}
-
 ## Introduction
 
 {{ project_description }}
 
 ## Installation
 
-{% if publish_pypi %}
+{% if publish_pypi -%}
 For user installation, `{{ python_package_distribution_name }}` is currently available on the PyPi's repository, and you can
 install it via `pip`:
 
 ```bash
 pip install {{ python_package_distribution_name }}
 ```
-{% endif %}
 
+{% endif -%}
 Development installation requires to clone the repository and then use [PDM](https://github.com/pdm-project/pdm) to install the
 project as well as the main and development dependencies:
 
@@ -88,7 +87,7 @@ git clone https://gitlab.com/{{ repository_namespace }}/{{ repository_name }}.gi
 git clone https://dev.azure.com/{{ repository_namespace }}/{{ repository_name }}.git
 {% elif git_provider == "Bitbucket" -%}
 git clone https://bitbucket.org/{{ repository_namespace }}/{{ repository_name }}.git
-{% endif %}
+{% endif -%}
 cd {{ python_package_distribution_name }}
 {% if package_manager == "PDM" %}pdm install{% else %}uv sync{% endif %}
 ```
