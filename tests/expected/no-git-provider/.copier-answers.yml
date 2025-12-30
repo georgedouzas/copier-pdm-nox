@@ -1,0 +1,18 @@
+_commit: 0.14.0-6-ge70a1f6
+_src_path: .
+author_email: gdouzas@icloud.com
+author_fullname: Georgios Douzas
+author_username: gdouzas
+copyright_date: '2025'
+copyright_holder: Georgios Douzas
+copyright_holder_email: gdouzas@icloud.com
+copyright_license: MIT License
+git_provider: None
+package_manager: PDM
+project_description: A test project.
+publish_pypi: true
+python_package_distribution_name: test_repo
+python_package_import_name: test_repo
+python_versions: '>=3.11, <3.14'
+repository_name: test-repo
+repository_namespace: gdouzas

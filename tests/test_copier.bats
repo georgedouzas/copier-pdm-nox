@@ -1,5 +1,42 @@
 #!/usr/bin/env bats
 
+compare_repos() {
+    local expected_dir="$1"
+    local generated_dir="$2"
+
+    [ -d "test-repo" ]
+
+    # Check all expected files and directories exist in generated repo
+    for expected_item in "$expected_dir"/* "$expected_dir"/.*; do
+        [ "$expected_item" = "$expected_dir/*" ] && continue
+        [ "$expected_item" = "$expected_dir/.*" ] && continue
+        [ "$(basename "$expected_item")" = "." ] && continue
+        [ "$(basename "$expected_item")" = ".." ] && continue
+        [ "$(basename "$expected_item")" = ".copier-answers.yml" ] && continue
+        if [ -f "$expected_item" ]; then
+            filename=$(basename "$expected_item")
+            [ -f "$generated_dir/$filename" ] || { echo "Missing file: $filename"; return 1; }
+            diff "$expected_item" "$generated_dir/$filename"
+        elif [ -d "$expected_item" ]; then
+            dirname=$(basename "$expected_item")
+            [ -d "$generated_dir/$dirname" ] || { echo "Missing directory: $dirname"; return 1; }
+        fi
+    done
+
+    # Check no extra files or directories exist in generated repo
+    for generated_item in "$generated_dir"/* "$generated_dir"/.*; do
+        [ "$generated_item" = "$generated_dir/*" ] && continue
+        [ "$generated_item" = "$generated_dir/.*" ] && continue
+        [ "$(basename "$generated_item")" = "." ] && continue
+        [ "$(basename "$generated_item")" = ".." ] && continue
+        [ "$(basename "$generated_item")" = ".copier-answers.yml" ] && continue
+        if [ -f "$generated_item" ] || [ -d "$generated_item" ]; then
+            itemname=$(basename "$generated_item")
+            [ -e "$expected_dir/$itemname" ] || { echo "Extra item: $itemname"; return 1; }
+        fi
+    done
+}
+
 setup() {
     export TEST_DIR="$(mktemp -d)"
     export TEMPLATE_DIR="$(pwd)"
@@ -19,45 +56,18 @@ teardown() {
     --data repository_name="test-repo"
 
     [ "$status" -eq 0 ]
-    [ -d "test-repo" ]
-    for expected_file in "$(dirname "$BATS_TEST_FILENAME")/repos/default"/*; do
-        if [ -f "$expected_file" ]; then
-            filename=$(basename "$expected_file")
-            [ -f "test-repo/$filename" ]
-            diff "$expected_file" "test-repo/$filename"
-        fi
-    done
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/default" "test-repo"
 }
 
-@test "Test default interactive copier" {
-    run timeout 20 expect -c '
-        spawn copier copy "$::env(TEMPLATE_DIR)" test-repo --vcs-ref=HEAD
-        expect "Your project description" { send "A test project.\r" }
-        expect "Your full name" { send "Georgios Douzas\r" }
-        expect "Your email" { send "gdouzas@icloud.com\r" }
-        expect "Your GitHub username" { send "gdouzas\r" }
-        expect "Your repository namespace" { send "\r" }
-        expect "Your repository name" { send "test-repo\r" }
-        expect "The name of the person" { send "\r" }
-        expect "The email of the person" { send "\r" }
-        expect "The copyright date" { send "\r" }
-        expect "Your project* license" { send "\r" }
-        expect "Your Python package distribution name" { send "\r" }
-        expect "Your Python package import name" { send "\r" }
-        expect "The range of Python versions" { send "\r" }
-        expect "Your Git provider" { send "\r" }
-        expect "Your Python package manager" { send "\r" }
-        expect "Publish your project to PyPI" { send "\r" }
-        expect eof
-    '
+@test "Test no git provider copier" {
+    run copier copy "$TEMPLATE_DIR" test-repo --defaults --vcs-ref=HEAD \
+    --data project_description="A test project." \
+    --data author_fullname="Georgios Douzas" \
+    --data author_email="gdouzas@icloud.com" \
+    --data author_username="gdouzas" \
+    --data repository_name="test-repo" \
+    --data git_provider="None"
+
     [ "$status" -eq 0 ]
-    [ -d "test-repo" ]
-    [ -f "test-repo/README.md" ]
-    for expected_file in "$(dirname "$BATS_TEST_FILENAME")/repos/default"/*; do
-        if [ -f "$expected_file" ]; then
-            filename=$(basename "$expected_file")
-            [ -f "test-repo/$filename" ]
-            diff "$expected_file" "test-repo/$filename"
-        fi
-    done
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/no-git-provider" "test-repo"
 }

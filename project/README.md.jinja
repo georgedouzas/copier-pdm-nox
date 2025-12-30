@@ -43,10 +43,9 @@
 [ci badge]: <https://img.shields.io/bitbucket/pipelines/{{ repository_namespace }}/{{ repository_name }}/main>
 {% endif %}
 # {{ repository_name }}
-
-{% if git_provider == "GitHub" -%}
+{% if git_provider == "GitHub" %}
 [![ci][ci badge]][ci] [![doc][doc badge]][doc]
-{% elif git_provider != "None" -%}
+{% elif git_provider != "None" %}
 [![ci][ci badge]][ci]
 {% endif %}
 | Category          | Tools    |
@@ -73,8 +72,7 @@ install it via `pip`:
 ```bash
 pip install {{ python_package_distribution_name }}
 ```
-
-{% endif -%}
+{% endif %}
 Development installation requires to clone the repository and then use [PDM](https://github.com/pdm-project/pdm) to install the
 project as well as the main and development dependencies:
 
