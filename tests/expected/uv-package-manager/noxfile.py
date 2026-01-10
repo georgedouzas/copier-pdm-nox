@@ -1,13 +1,11 @@
 """Development tasks."""
 
-import os
 import shutil
 from pathlib import Path
 from typing import Any
 
 import nox
-
-os.environ.update({'PDM_IGNORE_SAVED_PYTHON': '1'})
+from git_changelog.cli import build_and_render
 
 PYTHON_VERSIONS: list[str] = ['3.11', '3.12', '3.13']
 FILES: list[str] = ['src', 'tests', 'docs', 'noxfile.py']
@@ -81,7 +79,7 @@ def docs(session: nox.Session) -> None:
         session: The nox session.
     """
     arg = check_cli(session, ['serve', 'build'])
-    session.run('pdm', 'install', '-dG', 'docs', external=True)
+    session.run('uv', 'sync', '--only-dev', '--active', external=True)
     session.run('mkdocs', arg)
 
 
@@ -95,7 +93,7 @@ def formatting(session: nox.Session, file: str) -> None:
         file: The file to be formatted.
     """
     arg = check_cli(session, ['all', 'code', 'docstrings'])
-    session.run('pdm', 'install', '-dG', 'formatting', '--no-default', external=True)
+    session.run('uv', 'sync', '--only-dev', '--active', external=True)
     if arg in ['code', 'all']:
         session.run('black', file)
     if arg in ['docstrings', 'all']:
@@ -112,27 +110,24 @@ def checks(session: nox.Session, file: str) -> None:
         file: The file to be checked.
     """
     arg = check_cli(session, ['all', 'quality', 'dependencies', 'types'])
-    session.run('pdm', 'install', '-dG', 'checks', '--no-default', external=True)
+    session.run('uv', 'sync', '--only-dev', '--active', external=True)
     if arg in ['quality', 'all']:
         session.run('ruff', 'check', file)
     if arg in ['types', 'all']:
         session.run('mypy', file)
     if arg in ['dependencies', 'all']:
         requirements_path = (Path(session.create_tmp()) / 'requirements.txt').as_posix()
-        args_groups = [['--prod']] + [['-dG', group] for group in ['tests', 'docs', 'maintenance']]
-        requirements_types = zip(FILES, args_groups, strict=True)
-        args = [
-            'pdm',
+        session.run(
+            'uv',
             'export',
-            '-f',
-            'requirements',
-            '--without-hashes',
-            '--no-default',
-            '--pyproject',
-            '-o',
+            '--format',
+            'requirements-txt',
+            '--group',
+            'dev',
+            '--output-file',
             requirements_path,
-        ]
-        session.run(*(args + dict(requirements_types)[file]), external=True)
+            external=True,
+        )
         session.run('safety', 'check', '-r', requirements_path)
 
 
@@ -143,7 +138,7 @@ def tests(session: nox.Session) -> None:
     Arguments:
         session: The nox session.
     """
-    session.run('pdm', 'install', '-dG', 'tests', external=True)
+    session.run('uv', 'sync', '--active', external=True)
     env = {'COVERAGE_FILE': f'.coverage.{session.python}'}
     if session.posargs:
         session.run('pytest', '-n', 'auto', '-k', *session.posargs, 'tests', env=env)
@@ -161,9 +156,7 @@ def changelog(session: nox.Session) -> None:
     Arguments:
         session: The nox session.
     """
-    session.run('pdm', 'install', '-dG', 'changelog', '--no-default', external=True)
-    from git_changelog.cli import build_and_render  # noqa: PLC0415
-
+    session.run('uv', 'sync', '--only-dev', '--active', external=True)
     build_and_render(**CHANGELOG_ARGS)
 
 
@@ -174,9 +167,7 @@ def release(session: nox.Session) -> None:
     Arguments:
         session: The nox session.
     """
-    session.run('pdm', 'install', '-dG', 'changelog', '-dG', 'release', '--no-default', external=True)
-    from git_changelog.cli import build_and_render  # noqa: PLC0415
-
+    session.run('uv', 'sync', '--only-dev', '--active', external=True)
     changelog, _ = build_and_render(**CHANGELOG_ARGS)
     if changelog.versions_list[0].tag:
         session.skip('Commit has already a tag. Release is aborted.')
@@ -201,5 +192,5 @@ def release(session: nox.Session) -> None:
     session.run('git', 'push', '--tags', external=True)
 
     # Build and upload artifacts
-    session.run('pdm', 'build', external=True)
+    session.run('uv', 'build', external=True)
     session.run('twine', 'upload', '--skip-existing', 'dist/*')

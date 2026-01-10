@@ -16,7 +16,10 @@ compare_repos() {
         if [ -f "$expected_item" ]; then
             filename=$(basename "$expected_item")
             [ -f "$generated_dir/$filename" ] || { echo "Missing file: $filename"; return 1; }
-            diff "$expected_item" "$generated_dir/$filename"
+            if ! diff "$expected_item" "$generated_dir/$filename"; then
+                echo "Difference found in file: $filename"
+                return 1
+            fi
         elif [ -d "$expected_item" ]; then
             dirname=$(basename "$expected_item")
             [ -d "$generated_dir/$dirname" ] || { echo "Missing directory: $dirname"; return 1; }
@@ -47,7 +50,7 @@ teardown() {
     rm -rf "$TEST_DIR"
 }
 
-@test "Test default copier" {
+@test "Test default choices" {
     run copier copy "$TEMPLATE_DIR" test-repo --defaults --vcs-ref=HEAD \
     --data project_description="A test project." \
     --data author_fullname="Georgios Douzas" \
@@ -59,7 +62,7 @@ teardown() {
     compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/default" "test-repo"
 }
 
-@test "Test no git provider copier" {
+@test "Test no git provider choice" {
     run copier copy "$TEMPLATE_DIR" test-repo --defaults --vcs-ref=HEAD \
     --data project_description="A test project." \
     --data author_fullname="Georgios Douzas" \
@@ -70,4 +73,17 @@ teardown() {
 
     [ "$status" -eq 0 ]
     compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/no-git-provider" "test-repo"
+}
+
+@test "Test uv package manager choice" {
+    run copier copy "$TEMPLATE_DIR" test-repo --defaults --vcs-ref=HEAD \
+    --data project_description="A test project." \
+    --data author_fullname="Georgios Douzas" \
+    --data author_email="gdouzas@icloud.com" \
+    --data author_username="gdouzas" \
+    --data repository_name="test-repo" \
+    --data package_manager="uv"
+
+    [ "$status" -eq 0 ]
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/uv-package-manager" "test-repo"
 }

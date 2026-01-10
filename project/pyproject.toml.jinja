@@ -1,7 +1,11 @@
 [build-system]
+{% if package_manager == "PDM" -%}
 requires = ["pdm-pep517"]
 build-backend = "pdm.pep517.api"
-
+{% else -%}
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+{% endif %}
 [project]
 name = "{{ python_package_distribution_name }}"
 description = "{{ project_description }}"
@@ -113,6 +117,7 @@ Issues = "https://github.com/{{ repository_namespace }}/{{ repository_name }}/is
 Discussions = "https://github.com/{{ repository_namespace }}/{{ repository_name }}/discussions"
 Funding = "https://github.com/sponsors/{{ repository_namespace }}"
 
+{% if package_manager == "PDM" -%}
 [tool.pdm]
 version = {source = "scm"}
 build = {package-dir = "src", editable-backend = "editables"}
@@ -170,7 +175,51 @@ changelog = [
 release = [
     "twine>=5.1.1",
 ]
+{% else -%}
+[dependency-groups]
+dev = [
+    "mkdocs>=1.6.0",
+    "mkdocs-coverage>=1.1.0",
+    "mkdocs-gen-files>=0.5.0",
+    "mkdocs-literate-nav>=0.6.1",
+    "mkdocs-material>=9.5.27",
+    "mkdocs-gallery>=0.10.1",
+    "mkdocs-section-index>=0.3.9",
+    "mkdocstrings[python]>=0.25.1",
+    "markdown-callouts>=0.4.0",
+    "markdown-exec>=1.9.3",
+    "pandas>=2.2.2",
+    "black>=24.4.2",
+    "docformatter>=1.7.5",
+    "ruff>=0.5.0",
+    "safety>=3.2.3",
+    "mypy>=1.10.1",
+    "types-markdown>=3.6.0.20240316",
+    "types-toml>=0.10.8.20240310",
+    "pytest>=8.2.2",
+    "pytest-cov>=5.0.0",
+    "pytest-randomly>=3.15.0",
+    "pytest-xdist>=3.6.1",
+    "git-changelog>=2.5.2",
+    "twine>=5.1.1",
+    "nox[uv]>=2024.4.15",
+]
 
+[project.scripts]
+formatting = "{{ python_package_import_name }}.cli:formatting"
+checks = "{{ python_package_import_name }}.cli:checks"
+tests = "{{ python_package_import_name }}.cli:tests"
+docs = "{{ python_package_import_name }}.cli:docs"
+changelog = "{{ python_package_import_name }}.cli:changelog"
+release = "{{ python_package_import_name }}.cli:release"
+clean = "{{ python_package_import_name }}.cli:clean"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/{{ python_package_import_name }}"]
+{% endif %}
 [tool.black]
 line-length = 120
 extend-exclude = "(tests/fixtures|docs/generated)"

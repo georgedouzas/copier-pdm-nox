@@ -9,43 +9,43 @@ the project for more details. You can run any of the following commands and subc
 
 ### Documentation
 
-- `pdm docs serve` or `pdm docs`: Serve the documentation.
-- `pdm docs build`: Build locally the documentation.
+- `uv run docs`: Serve the documentation.
+- `uv run docs -- build`: Build locally the documentation.
 
 ### Formatting
 
-- `pdm formatting all` or `pdm formatting`: Format both the code and docstrings.
-  - `pdm formatting code`: Format only the code.
-  - `pdm formatting docstrings`: Format only the docstrings.
+- `uv run formatting`: Format both the code and docstrings.
+  - `uv run formatting -- code`: Format only the code.
+  - `uv run formatting -- docstrings`: Format only the docstrings.
 
 ### Checks
 
-- `pdm checks all` or `pdm checks`: Run all checks.
-  - `pdm checks quality`: Check only code quality.
-  - `pdm checks types`: Check only type annotations.
-  - `pdm checks dependencies`: Check only for vulnerabilities in dependencies.
+- `uv run checks`: Run all checks.
+  - `uv run checks -- quality`: Check only code quality.
+  - `uv run checks -- types`: Check only type annotations.
+  - `uv run checks -- dependencies`: Check only for vulnerabilities in dependencies.
 
 ### Tests
 
-- `pdm tests`: Run the tests.
+- `uv run tests`: Run the tests.
 
 ### Changelog
 
-- `pdm changelog`: Build the changelog.
+- `uv run changelog`: Build the changelog.
 
 ### Release
 
-- `pdm release`: Release a new Python package with an updated version.
+- `uv run release`: Release a new Python package with an updated version.
 
 ## Development
 
 The next steps should be followed during development:
 
 - `git checkout -b new-branch-name` to create a new branch and then modify the code.
-- `pdm formatting` to auto-format the code and docstrings.
-- `pdm checks` to apply all checks.
-- `pdm tests` to run the tests.
-- `pdm docs serve` if you updated the documentation or the project dependencies to check that everything looks as expected.
+- `uv run formatting` to auto-format the code and docstrings.
+- `uv run checks` to apply all checks.
+- `uv run tests` to run the tests.
+- `uv run docs` if you updated the documentation or the project dependencies to check that everything looks as expected.
 
 ## Commit message convention
 

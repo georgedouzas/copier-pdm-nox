@@ -73,7 +73,7 @@ install it via `pip`:
 pip install {{ python_package_distribution_name }}
 ```
 {% endif %}
-Development installation requires to clone the repository and then use [PDM](https://github.com/pdm-project/pdm) to install the
+Development installation requires to clone the repository and then use [{% if package_manager == "PDM" %}PDM](https://github.com/pdm-project/pdm){% else %}uv](https://github.com/astral-sh/uv){% endif %} to install the
 project as well as the main and development dependencies:
 
 ```bash

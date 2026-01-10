@@ -1,15 +1,5 @@
 """Development tasks."""
 
-from __future__ import annotations
-
-import os
-from pathlib import Path
-from typing import Any
-
-import nox
-
-os.environ.update({'PDM_IGNORE_SAVED_PYTHON': '1'})
-
 {% set minor_versions = [] -%}
 {% for version in python_versions.rsplit(',') -%}
 {% set offset = (-1 if loop.index == 1 else 1) if '=' in version else 0 -%}
@@ -21,6 +11,21 @@ os.environ.update({'PDM_IGNORE_SAVED_PYTHON': '1'})
 {{ versions.append('3.' + minor_version|string) or '' -}}
 {% endfor -%}
 
+{%- if package_manager == "PDM" -%}
+import os
+{% endif -%}
+import shutil
+from pathlib import Path
+from typing import Any
+
+import nox
+{% if package_manager == "uv" -%}
+from git_changelog.cli import build_and_render
+{% endif -%}
+{% if package_manager == "PDM" %}
+os.environ.update({'PDM_IGNORE_SAVED_PYTHON': '1'})
+{% endif %}
+{% if package_manager == "uv" -%}{% endif -%}
 PYTHON_VERSIONS: list[str] = {{ versions }}
 FILES: list[str] = ['src', 'tests', 'docs', 'noxfile.py']
 CHANGELOG_ARGS: dict[str, Any] = {
@@ -35,7 +40,7 @@ CHANGELOG_ARGS: dict[str, Any] = {
 }
 
 
-def check_cli(session: nox.Session, args: list[str]) -> None:
+def check_cli(session: nox.Session, args: list[str]) -> str:
     """Check the CLI arguments.
 
     Arguments:
@@ -44,10 +49,45 @@ def check_cli(session: nox.Session, args: list[str]) -> None:
     """
     available_args = ', '.join([f'`{arg}`' for arg in args])
     msg = f'Available subcommands are one of {available_args}.'
-    if not session.posargs:
-        session.skip(f'{msg} No subbcommand was provided')
-    elif len(session.posargs) > 1 or session.posargs[0] not in args:
-        session.skip(f'{msg} Instead `{" ".join(session.posargs)}` was given')
+    session_args = list(session.posargs)
+    if not session_args:
+        session_args = ['all']
+    elif len(session_args) > 1 or session_args[0] not in args:
+        session.skip(f'{msg} Instead `{" ".join(session_args)}` was given')
+    return session_args[0]
+
+
+@nox.session
+def clean(session: nox.Session) -> None:
+    """Clean build artifacts and cache files.
+
+    Arguments:
+        session: The nox session.
+    """
+    paths = [
+        '.mypy_cache',
+        '.pytest_cache',
+        'tests/.pytest_cache',
+        'build',
+        'dist',
+        'htmlcov',
+        'pip-wheel-metadata',
+        'site',
+        '__pycache__',
+        'docs/generated',
+        '.nox',
+        '.ruff_cache',
+    ]
+    for path in paths:
+        shutil.rmtree(path, ignore_errors=True)
+    for cache_path in Path().rglob('__pycache__'):
+        shutil.rmtree(cache_path, ignore_errors=True)
+    for file in Path().rglob('*.rej'):
+        if file.exists():
+            file.unlink()
+    for file in Path().rglob('.coverage*'):
+        if file.exists():
+            file.unlink()
 
 
 @nox.session
@@ -57,9 +97,13 @@ def docs(session: nox.Session) -> None:
     Arguments:
         session: The nox session.
     """
-    check_cli(session, ['serve', 'build'])
+    arg = check_cli(session, ['serve', 'build'])
+    {% if package_manager == "PDM" -%}
     session.run('pdm', 'install', '-dG', 'docs', external=True)
-    session.run('mkdocs', session.posargs[0])
+    {% else -%}
+    session.run('uv', 'sync', '--only-dev', '--active', external=True)
+    {% endif -%}
+    session.run('mkdocs', arg)
 
 
 @nox.session
@@ -71,11 +115,15 @@ def formatting(session: nox.Session, file: str) -> None:
         session: The nox session.
         file: The file to be formatted.
     """
-    check_cli(session, ['all', 'code', 'docstrings'])
+    arg = check_cli(session, ['all', 'code', 'docstrings'])
+    {% if package_manager == "PDM" -%}
     session.run('pdm', 'install', '-dG', 'formatting', '--no-default', external=True)
-    if session.posargs[0] in ['code', 'all']:
+    {% else -%}
+    session.run('uv', 'sync', '--only-dev', '--active', external=True)
+    {% endif -%}
+    if arg in ['code', 'all']:
         session.run('black', file)
-    if session.posargs[0] in ['docstrings', 'all']:
+    if arg in ['docstrings', 'all']:
         session.run('docformatter', file)
 
 
@@ -88,14 +136,19 @@ def checks(session: nox.Session, file: str) -> None:
         session: The nox session.
         file: The file to be checked.
     """
-    check_cli(session, ['all', 'quality', 'dependencies', 'types'])
+    arg = check_cli(session, ['all', 'quality', 'dependencies', 'types'])
+    {% if package_manager == "PDM" -%}
     session.run('pdm', 'install', '-dG', 'checks', '--no-default', external=True)
-    if session.posargs[0] in ['quality', 'all']:
+    {% else -%}
+    session.run('uv', 'sync', '--only-dev', '--active', external=True)
+    {% endif -%}
+    if arg in ['quality', 'all']:
         session.run('ruff', 'check', file)
-    if session.posargs[0] in ['types', 'all']:
+    if arg in ['types', 'all']:
         session.run('mypy', file)
-    if session.posargs[0] in ['dependencies', 'all']:
+    if arg in ['dependencies', 'all']:
         requirements_path = (Path(session.create_tmp()) / 'requirements.txt').as_posix()
+        {% if package_manager == "PDM" -%}
         args_groups = [['--prod']] + [['-dG', group] for group in ['tests', 'docs', 'maintenance']]
         requirements_types = zip(FILES, args_groups, strict=True)
         args = [
@@ -110,6 +163,19 @@ def checks(session: nox.Session, file: str) -> None:
             requirements_path,
         ]
         session.run(*(args + dict(requirements_types)[file]), external=True)
+        {% else -%}
+        session.run(
+            'uv',
+            'export',
+            '--format',
+            'requirements-txt',
+            '--group',
+            'dev',
+            '--output-file',
+            requirements_path,
+            external=True,
+        )
+        {% endif -%}
         session.run('safety', 'check', '-r', requirements_path)
 
 
@@ -120,7 +186,11 @@ def tests(session: nox.Session) -> None:
     Arguments:
         session: The nox session.
     """
+    {% if package_manager == "PDM" -%}
     session.run('pdm', 'install', '-dG', 'tests', external=True)
+    {% else -%}
+    session.run('uv', 'sync', '--active', external=True)
+    {% endif -%}
     env = {'COVERAGE_FILE': f'.coverage.{session.python}'}
     if session.posargs:
         session.run('pytest', '-n', 'auto', '-k', *session.posargs, 'tests', env=env)
@@ -138,8 +208,13 @@ def changelog(session: nox.Session) -> None:
     Arguments:
         session: The nox session.
     """
+    {% if package_manager == "PDM" -%}
     session.run('pdm', 'install', '-dG', 'changelog', '--no-default', external=True)
-    from git_changelog.cli import build_and_render
+    from git_changelog.cli import build_and_render  # noqa: PLC0415
+
+    {% else -%}
+    session.run('uv', 'sync', '--only-dev', '--active', external=True)
+    {% endif -%}
 
     build_and_render(**CHANGELOG_ARGS)
 
@@ -151,8 +226,13 @@ def release(session: nox.Session) -> None:
     Arguments:
         session: The nox session.
     """
+    {% if package_manager == "PDM" -%}
     session.run('pdm', 'install', '-dG', 'changelog', '-dG', 'release', '--no-default', external=True)
-    from git_changelog.cli import build_and_render
+    from git_changelog.cli import build_and_render  # noqa: PLC0415
+
+    {% else -%}
+    session.run('uv', 'sync', '--only-dev', '--active', external=True)
+    {% endif -%}
 
     changelog, _ = build_and_render(**CHANGELOG_ARGS)
     if changelog.versions_list[0].tag:
@@ -178,5 +258,9 @@ def release(session: nox.Session) -> None:
     session.run('git', 'push', '--tags', external=True)
 
     # Build and upload artifacts
+    {% if package_manager == "PDM" -%}
     session.run('pdm', 'build', external=True)
+    {% else -%}
+    session.run('uv', 'build', external=True)
+    {% endif -%}
     session.run('twine', 'upload', '--skip-existing', 'dist/*')
