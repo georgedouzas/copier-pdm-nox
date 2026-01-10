@@ -6,6 +6,30 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.15.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.15.0) - 2026-01-10
+
+<small>[Compare with 0.14.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.14.0...0.15.0)</small>
+
+### Features
+
+- Remove /github when not needed ([bfec1a9](https://github.com/georgedouzas/copier-pdm-nox/commit/bfec1a901c011ec075af0648a69ef9e0805d1be3) by georgedouzas).
+- Add multiple git providers and options ([cd3e963](https://github.com/georgedouzas/copier-pdm-nox/commit/cd3e963e7b5e83c69109c8e25ec678cad647d785) by georgedouzas).
+
+### Bug Fixes
+
+- Format contribution file ([f155e21](https://github.com/georgedouzas/copier-pdm-nox/commit/f155e217e38a1346775d6066ae73c5f03977749d) by georgedouzas).
+
+### Docs
+
+- Fix list indentation ([373054d](https://github.com/georgedouzas/copier-pdm-nox/commit/373054d631fb3ed05d5e22b26916d19c12ea76bb) by georgedouzas).
+
+### Tests
+
+- Add no publish pypi full test ([4bd3b1e](https://github.com/georgedouzas/copier-pdm-nox/commit/4bd3b1e1cef6274dc120496b5b1329578dff9aa3) by georgedouzas).
+- Add uv package manager tests ([bb054db](https://github.com/georgedouzas/copier-pdm-nox/commit/bb054db28468ec2e59bef7804d127802e5697a7b) by georgedouzas).
+- Add all expected files ([9574bcd](https://github.com/georgedouzas/copier-pdm-nox/commit/9574bcd48677a6427649106ba17806d6309b43bf) by georgedouzas).
+- Add README validation ([5d721a0](https://github.com/georgedouzas/copier-pdm-nox/commit/5d721a0f193a44077d6330ae59e3c409fed1cc0e) by georgedouzas).
+
 ## [0.14.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.14.0) - 2025-03-17
 
 <small>[Compare with 0.13.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.13.0...0.14.0)</small>
@@ -13,6 +37,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Features
 
 - Update GitHub actions steps ([490a034](https://github.com/georgedouzas/copier-pdm-nox/commit/490a034102636b08fe49716951e5d5772ef0b77c) by georgedouzas).
+
+### Docs
+
+- Update changelog for version 0.14.0 ([db5aaf9](https://github.com/georgedouzas/copier-pdm-nox/commit/db5aaf960b18f3761245535b485bf1ef4683a7c6) by georgedouzas).
 
 ## [0.13.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.13.0) - 2025-03-09
 
