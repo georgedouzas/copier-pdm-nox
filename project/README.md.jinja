@@ -22,9 +22,13 @@
 [pre-commit]: <https://github.com/pre-commit/pre-commit>
 [nox badge]: <https://img.shields.io/badge/%F0%9F%A6%8A-Nox-D85E00.svg>
 [nox]: <https://github.com/wntrblm/nox>
+{% if publish_pypi -%}
 [version badge]: <https://img.shields.io/pypi/v/{{ repository_name }}.svg>
+{% endif -%}
 [pythonversion badge]: <https://img.shields.io/pypi/pyversions/{{ repository_name }}.svg>
+{% if publish_pypi -%}
 [downloads badge]: <https://img.shields.io/pypi/dd/{{ repository_name }}>
+{% endif -%}
 {% if git_provider == "GitHub" -%}
 [discussions]: <https://github.com/{{ repository_namespace }}/{{ repository_name }}/discussions>
 [discussions badge]: <https://img.shields.io/github/discussions/{{ repository_namespace }}/{{ repository_name }}>
@@ -54,7 +58,7 @@
 | **Testing**       | [![pytest][pytest badge]][pytest] [![coverage][coverage badge]][coverage] [![interrogate][interrogate badge]][interrogate] |
 | **Security**      | [![safety][safety badge]][safety] [![bandit][bandit badge]][bandit] |
 | **Automation**    | [![nox][nox badge]][nox] [![pre-commit][pre-commit badge]][pre-commit] |
-| **Package**       | ![version][version badge] ![pythonversion][pythonversion badge] ![downloads][downloads badge] |
+| **Package**       | {% if publish_pypi %}![version][version badge]{% endif %} ![pythonversion][pythonversion badge] {% if publish_pypi %}![downloads][downloads badge] {% endif %}|
 | **Documentation** | [![mkdocs][mkdocs badge]][mkdocs]|
 {% if git_provider == "GitHub" -%}
 | **Communication** | [![discussions][discussions badge]][discussions] |
@@ -64,8 +68,7 @@
 {{ project_description }}
 
 ## Installation
-
-{% if publish_pypi -%}
+{% if publish_pypi %}
 For user installation, `{{ python_package_distribution_name }}` is currently available on the PyPi's repository, and you can
 install it via `pip`:
 

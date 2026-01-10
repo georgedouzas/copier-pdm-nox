@@ -87,3 +87,16 @@ teardown() {
     [ "$status" -eq 0 ]
     compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/uv-package-manager" "test-repo"
 }
+
+@test "Test no publish PyPI choice" {
+    run copier copy "$TEMPLATE_DIR" test-repo --defaults --vcs-ref=HEAD \
+    --data project_description="A test project." \
+    --data author_fullname="Georgios Douzas" \
+    --data author_email="gdouzas@icloud.com" \
+    --data author_username="gdouzas" \
+    --data repository_name="test-repo" \
+    --data publish_pypi="False"
+
+    [ "$status" -eq 0 ]
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/no-publish-pypi" "test-repo"
+}
