@@ -1,4 +1,4 @@
-site_name: "Copier PDM and Nox"
+site_name: "Copier Modern Python"
 site_description: "Copier template for Python projects managed by PDM and Nox."
 site_url: "https://georgedouzas.github.io/copier-modern-python"
 repo_url: "https://github.com/georgedouzas/copier-modern-python"
@@ -41,6 +41,7 @@ markdown_extensions:
 - pymdownx.tabbed:
     alternate_style: true
 - pymdownx.tasklist
+- mdx_truly_sane_lists
 
 plugins:
 - section-index
