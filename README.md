@@ -6,9 +6,6 @@ This template provides a comprehensive, production-ready Python project structur
 supports both [PDM](https://github.com/pdm-project/pdm) and [uv](https://github.com/astral-sh/uv) package managers, includes
 automated testing and quality checks, comprehensive documentation setup, and CI/CD workflows for multiple Git providers.
 
-The template is designed to help you quickly bootstrap Python projects with industry-standard tools and configurations, allowing
-you to focus on writing code rather than setting up infrastructure.
-
 ## Features
 
 During the Copier generation process, you'll be prompted to select your preferences for package management, Git provider,
@@ -17,48 +14,54 @@ you need.
 
 ### Package Management
 
-Choose between two modern Python package managers. **PDM** offers cutting-edge dependency management with PEP 582 support,
-allowing you to avoid virtual environments entirely. **uv** provides blazing-fast package installation and resolution,
-significantly reducing setup times. Both managers handle dependency locking, virtual environment management, and script execution
-seamlessly.
+Choose between two modern Python package managers. [PDM](https://github.com/pdm-project/pdm) offers cutting-edge dependency
+management with PEP 582 support, allowing you to avoid virtual environments entirely. [uv](https://github.com/astral-sh/uv)
+provides blazing-fast package installation and resolution, significantly reducing setup times. Both managers handle dependency
+locking, virtual environment management, and script execution seamlessly.
 
 ### Task Runner
 
-**Nox** replaces traditional Makefiles with Python-based automation. The template includes pre-configured sessions for testing
-across multiple Python versions, code formatting, quality checks, and documentation building. This ensures consistent development
-workflows across different environments and team members.
+[Nox](https://github.com/wntrblm/nox) replaces traditional Makefiles with Python-based automation. The template includes
+pre-configured sessions for testing across multiple Python versions, code formatting, quality checks, and documentation building.
+This ensures consistent development workflows across different environments and team members.
 
 ### Documentation
 
-Automatic documentation generation using **MkDocs** with the beautiful **Material theme**. The **mkdocstrings** plugin extracts
+Automatic documentation generation using [MkDocs](https://github.com/mkdocs/mkdocs) with the beautiful
+[Material](https://squidfunk.github.io/mkdocs-material) theme. The [mkdocstrings](https://mkdocstrings.github.io/) plugin extracts
 API documentation directly from your docstrings, keeping documentation in sync with code. Includes example pages, custom CSS, and
 responsive design out of the box.
 
 ### Code Quality & Formatting
 
-Enforce consistent code style with **black** for uncompromising formatting and **docformatter** for PEP 257 compliant docstrings.
-**Ruff** provides extremely fast linting with hundreds of rules, replacing multiple tools like flake8, isort, and pyupgrade in a
-single, performant package. **interrogate** ensures your code is properly documented by checking docstring coverage.
+Enforce consistent code style with [black](https://github.com/psf/black) for uncompromising formatting and
+[docformatter](https://github.com/PyCQA/docformatter) for PEP 257 compliant docstrings. [Ruff](https://github.com/astral-sh/ruff)
+provides extremely fast linting with hundreds of rules, replacing multiple toolsin a single, performant package.
+[interrogate](https://interrogate.readthedocs.io/en/latest/) ensures your code is properly documented by checking docstring
+coverage.
 
 ### Security & Safety
 
-Proactive security scanning with **safety** to detect known vulnerabilities in dependencies and **bandit** to identify common
-security issues in your code. These tools integrate into CI/CD pipelines to catch security problems before deployment.
+Proactive security scanning with [safety](https://github.com/pyupio/safety) to detect known vulnerabilities in dependencies and
+[bandit](https://github.com/PyCQA/bandit) to identify common security issues in your code. These tools integrate into CI/CD
+pipelines to catch security problems before deployment.
 
 ### Type Checking
 
-**mypy** provides static type analysis to catch type-related bugs before runtime. The template includes sensible defaults and
-excludes common directories like tests and generated documentation.
+[mypy](https://github.com/python/mypy) provides static type analysis to catch type-related bugs before runtime. The template
+includes sensible defaults and excludes common directories like tests and generated documentation.
 
 ### Testing
 
-Comprehensive testing setup with **pytest** and essential plugins. **coverage** tracks code coverage with HTML reports.
-Tests run in parallel for faster feedback during development.
+Comprehensive testing setup with [pytest](https://github.com/pytest-dev/pytest) and essential plugins.
+[coverage](https://github.com/coveragepy/coveragepy) tracks code coverage with HTML reports. Tests run in parallel for faster
+feedback during development.
 
 ### Development Workflow
 
-**pre-commit** hooks automatically run quality checks before each commit, preventing broken code from entering the repository.
-**git-changelog** generates beautiful changelogs from conventional commit messages, automating release documentation.
+[pre-commit](https://github.com/pre-commit/pre-commit) hooks automatically run quality checks before each commit, preventing
+broken code from entering the repository. [git-changelog](https://github.com/pawamoy/git-changelog) generates beautiful changelogs
+from conventional commit messages, automating release documentation.
 
 ### Platform Support
 
@@ -72,25 +75,25 @@ Before using this template, ensure you have the following tools installed:
 
 ### Required Tools
 
-- **[Python](https://www.python.org/)** (>= 3.11)
-- **[Git](https://git-scm.com/)** (>= 2.30.0)
-- **[Copier](https://github.com/copier-org/copier)**
+- [Python](https://www.python.org/) (>= 3.11)
+- [Git](https://git-scm.com/) (>= 2.30.0)
+- [Copier](https://github.com/copier-org/copier)
 
 ### Package Manager
 
 Choose one of the following:
 
-- **[PDM](https://github.com/pdm-project/pdm)** (>= 2.9.0)
-- **[uv](https://github.com/astral-sh/uv)** (>= 0.1.0)
+- [PDM](https://github.com/pdm-project/pdm) (>= 2.9.0)
+- [uv](https://github.com/astral-sh/uv) (>= 0.1.0)
 
 ### Git Provider CLI Tools
 
 Depending on your chosen Git provider, install the corresponding CLI tool for automated releases:
 
-- **[GitHub CLI](https://cli.github.com/)**
-- **[GitLab CLI](https://gitlab.com/gitlab-org/cli)**
-- **[Azure CLI](https://docs.microsoft.com/en-us/cli/azure/)**
-- **[Atlassian CLI](https://developer.atlassian.com/cloud/acli)**
+- [GitHub](https://cli.github.com/)
+- [GitLab](https://gitlab.com/gitlab-org/cli)
+- [Azure](https://docs.microsoft.com/en-us/cli/azure/)
+- [Atlassian](https://developer.atlassian.com/cloud/acli)
 
 ## Usage
 
