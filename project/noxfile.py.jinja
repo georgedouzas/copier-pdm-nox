@@ -252,8 +252,19 @@ def release(session: nox.Session) -> None:
     session.run('git', 'push', '-u', 'origin', f'release_{version}', external=True)
 
     # Create and merge PR from release branch to main
+    {% if git_provider == "GitHub" -%}
     session.run('gh', 'pr', 'create', '--base', 'main', external=True)
     session.run('gh', 'pr', 'merge', '--rebase', '--delete-branch', external=True)
+    {% elif git_provider == "GitLab" -%}
+    session.run('glab', 'mr', 'create', '--target-branch', 'main', external=True)
+    session.run('glab', 'mr', 'merge', '--rebase', '--remove-source-branch', external=True)
+    {% elif git_provider == "Azure DevOps" -%}
+    session.run('az', 'repos', 'pr', 'create', '--target-branch', 'main', external=True)
+    session.run('az', 'repos', 'pr', 'complete', '--merge-commit-message', f'Release {version}', '--delete-source-branch', external=True)
+    {% elif git_provider == "Bitbucket" -%}
+    session.run('atlassian', 'bitbucket', 'pr', 'create', '--destination', 'main', external=True)
+    session.run('atlassian', 'bitbucket', 'pr', 'merge', '--delete-source-branch', external=True)
+    {% endif -%}
 
     # Create tag
     session.run('git', 'checkout', 'main', external=True)
@@ -261,6 +272,7 @@ def release(session: nox.Session) -> None:
     session.run('git', 'tag', version, external=True)
     session.run('git', 'push', '--tags', external=True)
 
+    {% if publish_pypi == "True" -%}
     # Build and upload artifacts
     {% if package_manager == "PDM" -%}
     session.run('pdm', 'build', external=True)
@@ -268,3 +280,4 @@ def release(session: nox.Session) -> None:
     session.run('uv', 'build', external=True)
     {% endif -%}
     session.run('twine', 'upload', '--skip-existing', 'dist/*')
+    {% endif -%}
