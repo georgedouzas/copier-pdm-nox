@@ -6,9 +6,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
-## [0.15.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/0.15.0) - 2026-01-10
+## [1.0.1](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/1.0.1) - 2026-01-11
 
-<small>[Compare with 0.14.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.14.0...0.15.0)</small>
+<small>[Compare with 1.0.0](https://github.com/georgedouzas/copier-pdm-nox/compare/1.0.0...1.0.1)</small>
+
+### Docs
+
+- Use correct project name ([9d9fefd](https://github.com/georgedouzas/copier-pdm-nox/commit/9d9fefd44b26a0dfe840e4a768ef8d34efe9257c) by georgedouzas).
+
+### Chore
+
+- Rename project ([2282b4f](https://github.com/georgedouzas/copier-pdm-nox/commit/2282b4f601e75d9fba9c583a7e4c7be19c321607) by georgedouzas).
+
+## [1.0.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/1.0.0) - 2026-01-10
+
+<small>[Compare with 0.14.0](https://github.com/georgedouzas/copier-pdm-nox/compare/0.14.0...1.0.0)</small>
 
 ### Features
 
@@ -21,6 +33,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Docs
 
+- Update changelog for version ([7da3da3](https://github.com/georgedouzas/copier-pdm-nox/commit/7da3da3fb40b5a5040e968aac2a73b5117412234) by georgedouzas).
 - Fix list indentation ([373054d](https://github.com/georgedouzas/copier-pdm-nox/commit/373054d631fb3ed05d5e22b26916d19c12ea76bb) by georgedouzas).
 
 ### Tests
