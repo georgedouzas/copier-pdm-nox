@@ -1,0 +1,142 @@
+image: python:3.11
+
+pipelines:
+  default:
+    - step:
+        name: Test
+        caches:
+          - pip
+        script:
+          {% if package_manager == "PDM" -%}
+          - pip install pdm
+          - pdm install
+          - pdm run tests
+          {% else -%}
+          - pip install uv
+          - uv sync
+          - uv run tests
+          {% endif -%}
+        artifacts:
+          - coverage.xml
+          - htmlcov/**
+
+    - step:
+        name: Quality Checks
+        caches:
+          - pip
+        script:
+          {% if package_manager == "PDM" -%}
+          - pip install pdm
+          - pdm install
+          - pdm run checks
+          {% else -%}
+          - pip install uv
+          - uv sync
+          - uv run checks
+          {% endif -%}
+
+  branches:
+    main:
+      - step:
+          name: Test
+          caches:
+            - pip
+          script:
+            {% if package_manager == "PDM" -%}
+            - pip install pdm
+            - pdm install
+            - pdm run tests
+            {% else -%}
+            - pip install uv
+            - uv sync
+            - uv run tests
+            {% endif -%}
+          artifacts:
+            - coverage.xml
+            - htmlcov/**
+
+      - step:
+          name: Quality Checks
+          caches:
+            - pip
+          script:
+            {% if package_manager == "PDM" -%}
+            - pip install pdm
+            - pdm install
+            - pdm run checks
+            {% else -%}
+            - pip install uv
+            - uv sync
+            - uv run checks
+            {% endif -%}
+
+      - step:
+          name: Build Documentation
+          caches:
+            - pip
+          script:
+            {% if package_manager == "PDM" -%}
+            - pip install pdm
+            - pdm install
+            - pdm run docs build
+            {% else -%}
+            - pip install uv
+            - uv sync
+            - uv run docs build
+            {% endif -%}
+          artifacts:
+            - site/**
+
+  tags:
+    '*':
+      - step:
+          name: Test
+          caches:
+            - pip
+          script:
+            {% if package_manager == "PDM" -%}
+            - pip install pdm
+            - pdm install
+            - pdm run tests
+            {% else -%}
+            - pip install uv
+            - uv sync
+            - uv run tests
+            {% endif -%}
+
+      - step:
+          name: Quality Checks
+          caches:
+            - pip
+          script:
+            {% if package_manager == "PDM" -%}
+            - pip install pdm
+            - pdm install
+            - pdm run checks
+            {% else -%}
+            - pip install uv
+            - uv sync
+            - uv run checks
+            {% endif -%}
+
+      {% if publish_pypi == "True" -%}
+      - step:
+          name: Release to PyPI
+          caches:
+            - pip
+          script:
+            {% if package_manager == "PDM" -%}
+            - pip install pdm
+            - pdm install
+            - pdm run release
+            {% else -%}
+            - pip install uv
+            - uv sync
+            - uv run release
+            {% endif -%}
+          trigger: manual
+      {% endif -%}
+
+definitions:
+  caches:
+    pip: ~/.cache/pip

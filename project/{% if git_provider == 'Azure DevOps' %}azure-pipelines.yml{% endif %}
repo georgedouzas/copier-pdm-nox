@@ -1,0 +1,147 @@
+trigger:
+  - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  pythonVersion: '3.11'
+
+stages:
+- stage: Test
+  jobs:
+  - job: TestJob
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(pythonVersion)'
+      displayName: 'Use Python $(pythonVersion)'
+
+    - script: |
+        python -m pip install --upgrade pip
+        {% if package_manager == "PDM" -%}
+        pip install pdm
+        {% else -%}
+        pip install uv
+        {% endif -%}
+      displayName: 'Install dependencies'
+
+    - script: |
+        {% if package_manager == "PDM" -%}
+        pdm install
+        pdm run tests
+        {% else -%}
+        uv sync
+        uv run tests
+        {% endif -%}
+      displayName: 'Run tests'
+
+    - task: PublishTestResults@2
+      condition: succeededOrFailed()
+      inputs:
+        testResultsFiles: '**/test-*.xml'
+        testRunTitle: 'Publish test results for Python $(pythonVersion)'
+
+    - task: PublishCodeCoverageResults@1
+      inputs:
+        codeCoverageTool: Cobertura
+        summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
+
+- stage: Quality
+  dependsOn: Test
+  jobs:
+  - job: QualityJob
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(pythonVersion)'
+      displayName: 'Use Python $(pythonVersion)'
+
+    - script: |
+        python -m pip install --upgrade pip
+        {% if package_manager == "PDM" -%}
+        pip install pdm
+        {% else -%}
+        pip install uv
+        {% endif -%}
+      displayName: 'Install dependencies'
+
+    - script: |
+        {% if package_manager == "PDM" -%}
+        pdm install
+        pdm run checks
+        {% else -%}
+        uv sync
+        uv run checks
+        {% endif -%}
+      displayName: 'Run quality checks'
+
+- stage: Docs
+  dependsOn: Quality
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  jobs:
+  - job: DocsJob
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(pythonVersion)'
+      displayName: 'Use Python $(pythonVersion)'
+
+    - script: |
+        python -m pip install --upgrade pip
+        {% if package_manager == "PDM" -%}
+        pip install pdm
+        {% else -%}
+        pip install uv
+        {% endif -%}
+      displayName: 'Install dependencies'
+
+    - script: |
+        {% if package_manager == "PDM" -%}
+        pdm install
+        pdm run docs build
+        {% else -%}
+        uv sync
+        uv run docs build
+        {% endif -%}
+      displayName: 'Build documentation'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: 'site'
+        artifactName: 'documentation'
+
+{% if publish_pypi == "True" -%}
+- stage: Release
+  dependsOn: Docs
+  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
+  jobs:
+  - job: ReleaseJob
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(pythonVersion)'
+      displayName: 'Use Python $(pythonVersion)'
+
+    - script: |
+        python -m pip install --upgrade pip
+        {% if package_manager == "PDM" -%}
+        pip install pdm
+        {% else -%}
+        pip install uv
+        {% endif -%}
+      displayName: 'Install dependencies'
+
+    - script: |
+        {% if package_manager == "PDM" -%}
+        pdm install
+        pdm run release
+        {% else -%}
+        uv sync
+        uv run release
+        {% endif -%}
+      displayName: 'Release to PyPI'
+      env:
+        TWINE_USERNAME: $(TWINE_USERNAME)
+        TWINE_PASSWORD: $(TWINE_PASSWORD)
+{% endif -%}
