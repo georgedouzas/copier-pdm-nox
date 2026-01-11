@@ -111,12 +111,16 @@ def checks(session: nox.Session, file: str) -> None:
         session: The nox session.
         file: The file to be checked.
     """
-    arg = check_cli(session, ['all', 'quality', 'dependencies', 'types'])
+    arg = check_cli(session, ['all', 'quality', 'dependencies', 'types', 'security', 'docs'])
     session.run('pdm', 'install', '-dG', 'checks', '--no-default', external=True)
     if arg in ['quality', 'all']:
         session.run('ruff', 'check', file)
     if arg in ['types', 'all']:
         session.run('mypy', file)
+    if arg in ['security', 'all']:
+        session.run('bandit', '-r', file)
+    if arg in ['docs', 'all'] and file == 'src':
+        session.run('interrogate', file)
     if arg in ['dependencies', 'all']:
         requirements_path = (Path(session.create_tmp()) / 'requirements.txt').as_posix()
         args_groups = [['--prod']] + [['-dG', group] for group in ['tests', 'docs', 'maintenance']]
