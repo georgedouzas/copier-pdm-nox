@@ -52,7 +52,7 @@ To use the template's development tasks, the following command-line tools are re
 To use the template for a new project:
 
 ```bash
-copier copy "gh:georgedouzas/copier-pdm-nox.git" /path/to/your/new/project
+copier copy "gh:georgedouzas/copier-modern-python.git" /path/to/your/new/project
 ```
 
 To update the project using a new version of the template:
