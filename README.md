@@ -1,6 +1,6 @@
-# Copier PDM and Nox
+# Copier Modern Python
 
-[Copier](https://github.com/copier-org/copier) template for Python projects managed by [PDM](https://github.com/pdm-project/pdm) with the help of [Nox](https://github.com/wntrblm/nox).
+[Copier](https://github.com/copier-org/copier) template for modern Python projects.
 
 ## Features
 
@@ -60,8 +60,3 @@ To update the project using a new version of the template:
 ```bash
 copier update
 ```
-
-## Credits
-
-This template is based on [copier-pdm](https://github.com/pawamoy/copier-pdm) from [Timothée
-Mazzucotelli](https://pawamoy.github.io/). You may also check his other amazing projects.
