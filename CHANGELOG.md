@@ -6,12 +6,31 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
-## [1.0.1](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/1.0.1) - 2026-01-11
+## [1.1.1](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/1.1.1) - 2026-01-11
 
-<small>[Compare with 1.0.0](https://github.com/georgedouzas/copier-pdm-nox/compare/1.0.0...1.0.1)</small>
+<small>[Compare with 1.1.0](https://github.com/georgedouzas/copier-pdm-nox/compare/1.1.0...1.1.1)</small>
+
+### Bug Fixes
+
+- Remove pass keyword ([b5ee77d](https://github.com/georgedouzas/copier-pdm-nox/commit/b5ee77dacf1554752c30ae5e05a9ff63a92b2e2e) by georgedouzas).
+- Modify templates ([33c8b96](https://github.com/georgedouzas/copier-pdm-nox/commit/33c8b963bf4aa12e4d31df5728a98720ca3b73b7) by georgedouzas).
 
 ### Docs
 
+- Add deps for new checks ([6c10133](https://github.com/georgedouzas/copier-pdm-nox/commit/6c101330e13af374f1605f44f94b63dadd182e30) by georgedouzas).
+- Fix list indent ([51dac3b](https://github.com/georgedouzas/copier-pdm-nox/commit/51dac3b33b9994ab7ad939b8f2bf444276f573ce) by georgedouzas).
+
+### Tests
+
+- Add updated expected outcome ([55d73cd](https://github.com/georgedouzas/copier-pdm-nox/commit/55d73cd0835d5454c867cbcb79a6835c5098faf4) by georgedouzas).
+
+## [1.1.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/1.1.0) - 2026-01-11
+
+<small>[Compare with 1.0.0](https://github.com/georgedouzas/copier-pdm-nox/compare/1.0.0...1.1.0)</small>
+
+### Docs
+
+- Update changelog for version 1.1.0 ([7c2cabf](https://github.com/georgedouzas/copier-pdm-nox/commit/7c2cabf5bead8c6d4b5681e4ca0da5b24e8557ee) by georgedouzas).
 - Use correct project name ([9d9fefd](https://github.com/georgedouzas/copier-pdm-nox/commit/9d9fefd44b26a0dfe840e4a768ef8d34efe9257c) by georgedouzas).
 
 ### Chore
