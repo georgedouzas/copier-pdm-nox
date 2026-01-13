@@ -80,7 +80,7 @@ pages:
   only:
     - main
 
-{% if publish_pypi == "True" -%}
+{% if publish_pypi -%}
 release:
   <<: *python_template
   stage: release

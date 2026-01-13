@@ -119,7 +119,7 @@ pipelines:
             - uv run checks
             {% endif -%}
 
-      {% if publish_pypi == "True" -%}
+      {% if publish_pypi -%}
       - step:
           name: Release to PyPI
           caches:

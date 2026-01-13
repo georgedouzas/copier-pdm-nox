@@ -188,21 +188,10 @@ def release(session: nox.Session) -> None:
     if version is None:
         session.skip('Next version was not possible to be specified. Release is aborted.')
 
-    # Create release branch and commit changelog
-    session.run('git', 'checkout', '-b', f'release_{version}', external=True)
+    # Commit changelog and create tag
     session.run('git', 'add', 'CHANGELOG.md', external=True)
     session.run('git', 'commit', '-m', f'chore: Release {version}', '--allow-empty', external=True)
-    session.run('git', 'push', '-u', 'origin', f'release_{version}', external=True)
-
-    # Create and merge PR from release branch to main
-    session.run('gh', 'pr', 'create', '--base', 'main', external=True)
-    session.run('gh', 'pr', 'merge', '--rebase', '--delete-branch', external=True)
-
-    # Create tag
-    session.run('git', 'checkout', 'main', external=True)
-    session.run('git', 'pull', '--rebase', external=True)
     session.run('git', 'tag', version, external=True)
-    session.run('git', 'push', '--tags', external=True)
 
     # Build and upload artifacts
     session.run('pdm', 'build', external=True)

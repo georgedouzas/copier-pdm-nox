@@ -111,7 +111,7 @@ stages:
         pathToPublish: 'site'
         artifactName: 'documentation'
 
-{% if publish_pypi == "True" -%}
+{% if publish_pypi -%}
 - stage: Release
   dependsOn: Docs
   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))

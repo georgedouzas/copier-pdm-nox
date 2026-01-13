@@ -172,6 +172,7 @@ def release(session: nox.Session) -> None:
         session: The nox session.
     """
     session.run('uv', 'sync', '--only-dev', '--active', external=True)
+
     changelog, _ = build_and_render(**CHANGELOG_ARGS)
     if changelog.versions_list[0].tag:
         session.skip('Commit has already a tag. Release is aborted.')

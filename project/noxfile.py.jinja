@@ -230,54 +230,77 @@ def release(session: nox.Session) -> None:
     Arguments:
         session: The nox session.
     """
-    {% if package_manager == "PDM" -%}
+{%- if package_manager == "PDM" %}
     session.run('pdm', 'install', '-dG', 'changelog', '-dG', 'release', '--no-default', external=True)
     from git_changelog.cli import build_and_render  # noqa: PLC0415
-
-    {% else -%}
+{% else %}
     session.run('uv', 'sync', '--only-dev', '--active', external=True)
-    {% endif -%}
-
+{% endif %}
     changelog, _ = build_and_render(**CHANGELOG_ARGS)
     if changelog.versions_list[0].tag:
         session.skip('Commit has already a tag. Release is aborted.')
     version = changelog.versions_list[0].planned_tag
     if version is None:
         session.skip('Next version was not possible to be specified. Release is aborted.')
-
+{% if git_provider != "None" %}
     # Create release branch and commit changelog
     session.run('git', 'checkout', '-b', f'release_{version}', external=True)
     session.run('git', 'add', 'CHANGELOG.md', external=True)
     session.run('git', 'commit', '-m', f'chore: Release {version}', '--allow-empty', external=True)
     session.run('git', 'push', '-u', 'origin', f'release_{version}', external=True)
-
+{% if git_provider == "GitHub" %}
     # Create and merge PR from release branch to main
-    {% if git_provider == "GitHub" -%}
     session.run('gh', 'pr', 'create', '--base', 'main', external=True)
     session.run('gh', 'pr', 'merge', '--rebase', '--delete-branch', external=True)
-    {% elif git_provider == "GitLab" -%}
-    session.run('glab', 'mr', 'create', '--target-branch', 'main', external=True)
-    session.run('glab', 'mr', 'merge', '--rebase', '--remove-source-branch', external=True)
-    {% elif git_provider == "Azure DevOps" -%}
-    session.run('az', 'repos', 'pr', 'create', '--target-branch', 'main', external=True)
-    session.run('az', 'repos', 'pr', 'complete', '--merge-commit-message', f'Release {version}', '--delete-source-branch', external=True)
-    {% elif git_provider == "Bitbucket" -%}
-    session.run('atlassian', 'bitbucket', 'pr', 'create', '--destination', 'main', external=True)
-    session.run('atlassian', 'bitbucket', 'pr', 'merge', '--delete-source-branch', external=True)
-    {% endif -%}
 
     # Create tag
     session.run('git', 'checkout', 'main', external=True)
     session.run('git', 'pull', '--rebase', external=True)
     session.run('git', 'tag', version, external=True)
     session.run('git', 'push', '--tags', external=True)
+{% elif git_provider == "GitLab" %}
+    # Create and merge PR from release branch to main
+    session.run('glab', 'mr', 'create', '--target-branch', 'main', external=True)
+    session.run('glab', 'mr', 'merge', '--rebase', '--remove-source-branch', external=True)
 
-    {% if publish_pypi == "True" -%}
+    # Create tag
+    session.run('git', 'checkout', 'main', external=True)
+    session.run('git', 'pull', '--rebase', external=True)
+    session.run('git', 'tag', version, external=True)
+    session.run('git', 'push', '--tags', external=True)
+{% elif git_provider == "Azure DevOps" %}
+    # Create and merge PR from release branch to main
+    session.run('az', 'repos', 'pr', 'create', '--target-branch', 'main', external=True)
+    session.run('az', 'repos', 'pr', 'complete', '--merge-commit-message', f'Release {version}', '--delete-source-branch', external=True)
+
+    # Create tag
+    session.run('git', 'checkout', 'main', external=True)
+    session.run('git', 'pull', '--rebase', external=True)
+    session.run('git', 'tag', version, external=True)
+    session.run('git', 'push', '--tags', external=True)
+{% elif git_provider == "Bitbucket" %}
+    # Create and merge PR from release branch to main
+    session.run('atlassian', 'bitbucket', 'pr', 'create', '--destination', 'main', external=True)
+    session.run('atlassian', 'bitbucket', 'pr', 'merge', '--delete-source-branch', external=True)
+
+    # Create tag
+    session.run('git', 'checkout', 'main', external=True)
+    session.run('git', 'pull', '--rebase', external=True)
+    session.run('git', 'tag', version, external=True)
+    session.run('git', 'push', '--tags', external=True)
+{% endif %}
+{%- else %}
+    # Commit changelog and create tag
+    session.run('git', 'add', 'CHANGELOG.md', external=True)
+    session.run('git', 'commit', '-m', f'chore: Release {version}', '--allow-empty', external=True)
+    session.run('git', 'tag', version, external=True)
+{% endif %}
+{%- if publish_pypi and package_manager == "PDM"%}
     # Build and upload artifacts
-    {% if package_manager == "PDM" -%}
     session.run('pdm', 'build', external=True)
-    {% else -%}
-    session.run('uv', 'build', external=True)
-    {% endif -%}
     session.run('twine', 'upload', '--skip-existing', 'dist/*')
-    {% endif -%}
+{% elif publish_pypi and package_manager == "uv"%}
+    # Build and upload artifacts
+    session.run('uv', 'build', external=True)
+    session.run('twine', 'upload', '--skip-existing', 'dist/*')
+{% endif %}
