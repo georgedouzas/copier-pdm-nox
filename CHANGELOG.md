@@ -6,9 +6,27 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
-## [1.1.1](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/1.1.1) - 2026-01-11
+## [1.3.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/1.3.0) - 2026-01-13
 
-<small>[Compare with 1.1.0](https://github.com/georgedouzas/copier-pdm-nox/compare/1.1.0...1.1.1)</small>
+<small>[Compare with 1.2.0](https://github.com/georgedouzas/copier-pdm-nox/compare/1.2.0...1.3.0)</small>
+
+### Features
+
+- Expand release logic ([9b2b7b2](https://github.com/georgedouzas/copier-pdm-nox/commit/9b2b7b21fb4597581cc347bd943b9c82388dba3b) by georgedouzas).
+- Add all CI/CD configuration files ([b432b1a](https://github.com/georgedouzas/copier-pdm-nox/commit/b432b1af16831aaba48e49fe5a736069a70fdfc7) by georgedouzas).
+
+### Bug Fixes
+
+- Modify noxfile for all options ([ebd5ed3](https://github.com/georgedouzas/copier-pdm-nox/commit/ebd5ed36b28fb62ce7879d138ee80b9677d0961c) by georgedouzas).
+
+### Docs
+
+- Fix README description ([7b5abe0](https://github.com/georgedouzas/copier-pdm-nox/commit/7b5abe0f5baa241dc11396573659f6a5ba6bec43) by georgedouzas).
+- Expand README description ([5b27f0d](https://github.com/georgedouzas/copier-pdm-nox/commit/5b27f0d805c886cb5f8048c11284b60314ad4864) by georgedouzas).
+
+## [1.2.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/1.2.0) - 2026-01-11
+
+<small>[Compare with 1.1.0](https://github.com/georgedouzas/copier-pdm-nox/compare/1.1.0...1.2.0)</small>
 
 ### Bug Fixes
 
@@ -17,6 +35,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Docs
 
+- Update changelog for version 1.2.0 ([c438d7f](https://github.com/georgedouzas/copier-pdm-nox/commit/c438d7f1541185bf5e42b190cc9cff08a9603c7e) by georgedouzas).
 - Add deps for new checks ([6c10133](https://github.com/georgedouzas/copier-pdm-nox/commit/6c101330e13af374f1605f44f94b63dadd182e30) by georgedouzas).
 - Fix list indent ([51dac3b](https://github.com/georgedouzas/copier-pdm-nox/commit/51dac3b33b9994ab7ad939b8f2bf444276f573ce) by georgedouzas).
 
