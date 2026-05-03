@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [1.4.1](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/1.4.1) - 2026-05-03
+
+<small>[Compare with 1.4.0](https://github.com/georgedouzas/copier-pdm-nox/compare/1.4.0...1.4.1)</small>
+
+### Chore
+
+- Update default year ([8f6583c](https://github.com/georgedouzas/copier-pdm-nox/commit/8f6583ceb6071a4e36f54b3fec09704f57276e0a) by georgedouzas).
+
 ## [1.4.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/1.4.0) - 2026-04-26
 
 <small>[Compare with 1.3.0](https://github.com/georgedouzas/copier-pdm-nox/compare/1.3.0...1.4.0)</small>
