@@ -6,9 +6,30 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
-## [1.4.1](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/1.4.1) - 2026-05-03
+## [1.6.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/1.6.0) - 2026-05-03
 
-<small>[Compare with 1.4.0](https://github.com/georgedouzas/copier-pdm-nox/compare/1.4.0...1.4.1)</small>
+<small>[Compare with 1.5.1](https://github.com/georgedouzas/copier-pdm-nox/compare/1.5.1...1.6.0)</small>
+
+### Features
+
+- Auto-derive release version from changelog ([dcfbef6](https://github.com/georgedouzas/copier-pdm-nox/commit/dcfbef6777c4ff708c8790a56f31875884c9220d) by georgedouzas).
+
+### Bug Fixes
+
+- Run pre-commit before release commit ([96245ae](https://github.com/georgedouzas/copier-pdm-nox/commit/96245ae81d4b2a1fbe936ba951e9659086c04140) by georgedouzas).
+- Process pre-commit config as Jinja template ([2b59e8f](https://github.com/georgedouzas/copier-pdm-nox/commit/2b59e8fdd030b1ec8269f8eb90bb32a728b78264) by georgedouzas).
+
+### Tests
+
+- Update fixture year to 2026 ([277dbcf](https://github.com/georgedouzas/copier-pdm-nox/commit/277dbcf40937cd4b4c06007bf176d471720cc243) by georgedouzas).
+
+## [1.5.1](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/1.5.1) - 2026-05-03
+
+<small>[Compare with 1.4.0](https://github.com/georgedouzas/copier-pdm-nox/compare/1.4.0...1.5.1)</small>
+
+### Docs
+
+- Update changelog for version 1.5.1 ([84e5547](https://github.com/georgedouzas/copier-pdm-nox/commit/84e554724ab7a3dfab962b4939ec9bec6a966dac) by georgedouzas).
 
 ### Chore
 
