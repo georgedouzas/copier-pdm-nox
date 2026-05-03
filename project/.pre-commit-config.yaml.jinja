@@ -27,7 +27,7 @@ repos:
     hooks:
       - id: pytest
         name: Check pytest unit tests pass
-        entry: pdm tests
+        entry: '{{ "pdm" if package_manager == "PDM" else "uv" }} run tests'
         pass_filenames: false
         language: system
         types: [python]
