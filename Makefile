@@ -15,6 +15,8 @@ changelog:
 release: changelog
 	$(eval version := $(shell grep -m1 -oE '^## \[[^]]+\]' CHANGELOG.md | sed 's/^## \[//;s/\]$$//'))
 	@git add CHANGELOG.md
+	-@pre-commit run --files CHANGELOG.md
+	@git add CHANGELOG.md
 	@git commit -m "docs: Update changelog for version $(version)"
 	@git tag $(version)
 	@git push --force
