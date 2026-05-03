@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [1.6.1](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/1.6.1) - 2026-05-03
+
+<small>[Compare with 1.6.0](https://github.com/georgedouzas/copier-pdm-nox/compare/1.6.0...1.6.1)</small>
+
+### Chore
+
+- Organize gitignore files ([3051457](https://github.com/georgedouzas/copier-pdm-nox/commit/3051457799587cc3873091bdf5c461a3fc56f1bf) by georgedouzas).
+
 ## [1.6.0](https://github.com/georgedouzas/copier-pdm-nox/releases/tag/1.6.0) - 2026-05-03
 
 <small>[Compare with 1.5.1](https://github.com/georgedouzas/copier-pdm-nox/compare/1.5.1...1.6.0)</small>
@@ -18,6 +26,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Run pre-commit before release commit ([96245ae](https://github.com/georgedouzas/copier-pdm-nox/commit/96245ae81d4b2a1fbe936ba951e9659086c04140) by georgedouzas).
 - Process pre-commit config as Jinja template ([2b59e8f](https://github.com/georgedouzas/copier-pdm-nox/commit/2b59e8fdd030b1ec8269f8eb90bb32a728b78264) by georgedouzas).
+
+### Docs
+
+- Update changelog for version 1.6.0 ([f49dfe7](https://github.com/georgedouzas/copier-pdm-nox/commit/f49dfe7e33ad91a4e686e44c7807fc5e8e1cee75) by georgedouzas).
 
 ### Tests
 
