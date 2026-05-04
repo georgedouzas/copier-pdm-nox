@@ -6,13 +6,31 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
-## [1.6.2](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.6.2) - 2026-05-04
+## [1.7.0](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.7.0) - 2026-05-04
 
-<small>[Compare with 1.6.1](https://github.com/georgedouzas/copier-modern-python/compare/1.6.1...1.6.2)</small>
+<small>[Compare with 1.6.1](https://github.com/georgedouzas/copier-modern-python/compare/1.6.1...1.7.0)</small>
+
+### Features
+
+- Add release workflow triggered on tag push ([fa3e205](https://github.com/georgedouzas/copier-modern-python/commit/fa3e20594a2ee6b6e887696f2104ae064ba5f068) by georgedouzas).
+- Generate uv-aware CI and docs workflows ([a6a6c47](https://github.com/georgedouzas/copier-modern-python/commit/a6a6c47707207859e7c8ea1ab3c3100e76905483) by georgedouzas).
 
 ### Bug Fixes
 
 - Stop force-pushing on release ([5b5d27f](https://github.com/georgedouzas/copier-modern-python/commit/5b5d27fc040462549e91e575695717dd489a5ef7) by georgedouzas).
+
+### Docs
+
+- Regenerate changelog with current repo URL ([f90db7f](https://github.com/georgedouzas/copier-modern-python/commit/f90db7f3756c8a26e55024c4d6ea7eb7c8cd66a9) by georgedouzas).
+
+### Code Refactoring
+
+- Consolidate ci.yml and ci-docs.yml ([144fe90](https://github.com/georgedouzas/copier-modern-python/commit/144fe90b3e2f0a3cdcdfe4d9e99fda2b55c5fdbe) by georgedouzas).
+- Hoist Python-version computation in CI workflows ([96b01c2](https://github.com/georgedouzas/copier-modern-python/commit/96b01c27cbfba710d4b7bf524bb407af5749f28c) by georgedouzas).
+
+### Tests
+
+- Compare generated repos recursively ([adfc350](https://github.com/georgedouzas/copier-modern-python/commit/adfc350b58cf5f8abdfd84731d041aa65db8503a) by georgedouzas).
 
 ### Chore
 
