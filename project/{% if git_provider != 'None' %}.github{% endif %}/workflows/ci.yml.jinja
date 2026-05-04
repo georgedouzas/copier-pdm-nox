@@ -39,6 +39,7 @@ jobs:
             {{ version }}
             {%- endfor %}
 
+    {% if package_manager == "PDM" -%}
     - name: Set up PDM
       uses: pdm-project/setup-pdm@v4
       with:
@@ -56,6 +57,25 @@ jobs:
 
     - name: Check vulnerabilities in dependencies
       run: pdm checks dependencies
+    {%- else -%}
+    - name: Set up uv
+      uses: astral-sh/setup-uv@v5
+      with:
+        enable-cache: true
+        cache-dependency-glob: pyproject.toml
+
+    - name: Install dependencies
+      run: uv sync --only-dev
+
+    - name: Check code quality
+      run: uv run checks quality
+
+    - name: Check type annotations
+      run: uv run checks types
+
+    - name: Check vulnerabilities in dependencies
+      run: uv run checks dependencies
+    {%- endif %}
 
   tests:
 
@@ -80,6 +100,7 @@ jobs:
             {{ version }}
             {%- endfor %}
 
+    {% if package_manager == "PDM" -%}
     - name: Set up PDM
       uses: pdm-project/setup-pdm@v4
       with:
@@ -91,6 +112,19 @@ jobs:
 
     - name: Run the test suite
       run: pdm tests
+    {%- else -%}
+    - name: Set up uv
+      uses: astral-sh/setup-uv@v5
+      with:
+        enable-cache: true
+        cache-dependency-glob: pyproject.toml
+
+    - name: Install dependencies
+      run: uv sync
+
+    - name: Run the test suite
+      run: uv run tests
+    {%- endif %}
 
   doc:
 
@@ -106,6 +140,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
+    {% if package_manager == "PDM" -%}
     - name: Set up PDM
       uses: pdm-project/setup-pdm@v4
       with:
@@ -117,3 +152,17 @@ jobs:
 
     - name: Build documentation with Python {% raw %}${{ matrix.python-version }}{% endraw %}
       run: pdm docs build
+    {%- else -%}
+    - name: Set up uv
+      uses: astral-sh/setup-uv@v5
+      with:
+        enable-cache: true
+        cache-dependency-glob: pyproject.toml
+        python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
+
+    - name: Install dependencies
+      run: uv sync
+
+    - name: Build documentation with Python {% raw %}${{ matrix.python-version }}{% endraw %}
+      run: uv run docs build
+    {%- endif %}
