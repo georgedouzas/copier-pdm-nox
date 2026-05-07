@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [1.8.0](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.8.0) - 2026-05-07
+
+<small>[Compare with 1.7.2](https://github.com/georgedouzas/copier-modern-python/compare/1.7.2...1.8.0)</small>
+
+### Features
+
+- Collect Azure DevOps project name and render CI configs ([3113862](https://github.com/georgedouzas/copier-modern-python/commit/31138620a296e0fa2283f6c22f7a6491420b1bed) by georgedouzas).
+
+### Bug Fixes
+
+- URL-encode names and gate .github on GitHub only ([ba66f56](https://github.com/georgedouzas/copier-modern-python/commit/ba66f5631ded85596d9a134446f7ada505578dca) by georgedouzas).
+
 ## [1.7.2](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.7.2) - 2026-05-07
 
 <small>[Compare with 1.7.1](https://github.com/georgedouzas/copier-modern-python/compare/1.7.1...1.7.2)</small>
@@ -16,6 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Docs
 
+- Update changelog for version 1.7.2 ([9fa0472](https://github.com/georgedouzas/copier-modern-python/commit/9fa04729f8814d4f0ef19693fc7fb10ef3a5b512) by georgedouzas).
 - Update changelog for version 1.7.1 ([774fa8c](https://github.com/georgedouzas/copier-modern-python/commit/774fa8c5e4e17a94b15f8904411a4ff6d9254107) by georgedouzas).
 
 ### Tests
