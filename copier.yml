@@ -7,9 +7,13 @@ _templates_suffix: .jinja
 _skip_if_exists:
 - CHANGELOG.md
 
+# Project
+
 project_description:
   type: str
   help: Your project description
+
+# Author
 
 author_fullname:
   type: str
@@ -19,33 +23,67 @@ author_email:
   type: str
   help: Your email
 
+# Repository
+
+git_provider:
+  type: str
+  help: Your Git provider
+  default: GitHub
+  choices:
+    - GitHub
+    - Azure DevOps
+    - Bitbucket
+    - GitLab
+    - None
+
 author_username:
   type: str
-  help: Your GitHub username
+  help: Your account on the chosen Git provider (used for commit links and your profile)
 
 repository_namespace:
   type: str
-  help: Your repository namespace
+  help: Owner of the repository on the Git provider (e.g. your username for personal projects, or your company or organization)
   default: "{{ author_username }}"
 
 repository_name:
   type: str
   help: Your repository name
 
-copyright_holder:
-  type: str
-  help: The name of the person/entity holding the copyright
-  default: "{{ author_fullname }}"
+# Python
 
-copyright_holder_email:
+python_versions:
   type: str
-  help: The email of the person/entity holding the copyright
-  default: "{{ author_email }}"
+  help: The range of Python versions that your project supports
+  default: ">=3.11, <3.14"
+  validator: >-
+    {% set min_version = python_versions.split(',')[0] %}
+    {% set last_part = min_version.split('.')[-1] | int %}
+    {% if last_part < 11 %}Minimum version is Python 3.11{% endif %}
 
-copyright_date:
+python_package_distribution_name:
   type: str
-  help: The copyright date
-  default: "2026"
+  help: Your Python package distribution name (for `pip install NAME`)
+  default: "{{ repository_name|lower|replace('-', '_')|replace(' ', '_') }}"
+
+python_package_import_name:
+  type: str
+  help: Your Python package import name (for `import NAME` in Python code)
+  default: "{{ repository_name|lower|replace('-', '_')|replace(' ', '_') }}"
+
+package_manager:
+  type: str
+  help: Your Python package manager
+  default: PDM
+  choices:
+    - PDM
+    - uv
+
+publish_pypi:
+  type: bool
+  help: Publish your project to PyPI
+  default: true
+
+# Legal
 
 copyright_license:
   type: str
@@ -87,45 +125,17 @@ copyright_license:
     - zlib License
     - None
 
-python_package_distribution_name:
+copyright_holder:
   type: str
-  help: Your Python package distribution name (for `pip install NAME`)
-  default: "{{ repository_name|lower|replace('-', '_')|replace(' ', '_') }}"
+  help: Person or organization holding the copyright (often the company that owns the repository, not the author)
+  default: "{{ author_fullname }}"
 
-python_package_import_name:
+copyright_holder_email:
   type: str
-  help: Your Python package import name (for `import NAME` in Python code)
-  default: "{{ repository_name|lower|replace('-', '_')|replace(' ', '_') }}"
+  help: The email of the person/entity holding the copyright
+  default: "{{ author_email }}"
 
-python_versions:
+copyright_date:
   type: str
-  help: The range of Python versions that your project supports
-  default: ">=3.11, <3.14"
-  validator: >-
-    {% set min_version = python_versions.split(',')[0] %}
-    {% set last_part = min_version.split('.')[-1] | int %}
-    {% if last_part < 11 %}Minimum version is Python 3.11{% endif %}
-
-git_provider:
-  type: str
-  help: Your Git provider
-  default: GitHub
-  choices:
-    - GitHub
-    - Azure DevOps
-    - Bitbucket
-    - GitLab
-    - None
-
-package_manager:
-  type: str
-  help: Your Python package manager
-  default: PDM
-  choices:
-    - PDM
-    - uv
-
-publish_pypi:
-  type: bool
-  help: Publish your project to PyPI
-  default: true
+  help: The copyright date
+  default: "2026"
