@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Docs
 
+- Update changelog for version 1.7.1 ([a235631](https://github.com/georgedouzas/copier-modern-python/commit/a23563159b4e3c595fb3f9da23bbdbd346541ea5) by georgedouzas).
 - Update changelog for version 1.7.0 ([951880c](https://github.com/georgedouzas/copier-modern-python/commit/951880c178f39a69e4b128678f75fe38c7eb4c7e) by georgedouzas).
 
 ### Chore
