@@ -23,7 +23,7 @@ author_email:
   type: str
   help: Your email
 
-# Repository
+# Git hosting
 
 git_provider:
   type: str
@@ -39,10 +39,13 @@ git_provider:
 author_username:
   type: str
   help: Your account on the chosen Git provider (used for commit links and your profile)
+  when: "{{ git_provider != 'None' }}"
+  default: ""
 
 repository_namespace:
   type: str
   help: Owner of the repository on the Git provider (e.g. your username for personal projects, or your company or organization)
+  when: "{{ git_provider != 'None' }}"
   default: "{{ author_username }}"
 
 repository_name:
@@ -60,6 +63,21 @@ python_versions:
     {% set last_part = min_version.split('.')[-1] | int %}
     {% if last_part < 11 %}Minimum version is Python 3.11{% endif %}
 
+package_manager:
+  type: str
+  help: Your Python package manager
+  default: PDM
+  choices:
+    - PDM
+    - uv
+
+# Distribution
+
+publish_pypi:
+  type: bool
+  help: Publish your project to PyPI
+  default: true
+
 python_package_distribution_name:
   type: str
   help: Your Python package distribution name (for `pip install NAME`)
@@ -69,19 +87,6 @@ python_package_import_name:
   type: str
   help: Your Python package import name (for `import NAME` in Python code)
   default: "{{ repository_name|lower|replace('-', '_')|replace(' ', '_') }}"
-
-package_manager:
-  type: str
-  help: Your Python package manager
-  default: PDM
-  choices:
-    - PDM
-    - uv
-
-publish_pypi:
-  type: bool
-  help: Publish your project to PyPI
-  default: true
 
 # Legal
 
