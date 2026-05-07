@@ -108,29 +108,30 @@ classifiers = [
     "Topic :: Utilities",
     "Typing :: Typed",
 ]
+{%- set namespace_path = repository_namespace | urlencode if repository_namespace is defined else "" -%}
+{%- set repo_path = repository_name | urlencode -%}
 dependencies = []
 {% if git_provider != "None" %}
 [project.urls]
 {% if git_provider == "GitHub" -%}
-Homepage = "https://{{ repository_namespace }}.github.io/{{ repository_name }}"
-Documentation = "https://{{ repository_namespace }}.github.io/{{ repository_name }}"
-Changelog = "https://{{ repository_namespace }}.github.io/{{ repository_name }}/changelog"
-Repository = "https://github.com/{{ repository_namespace }}/{{ repository_name }}"
-Issues = "https://github.com/{{ repository_namespace }}/{{ repository_name }}/issues"
-Discussions = "https://github.com/{{ repository_namespace }}/{{ repository_name }}/discussions"
-Funding = "https://github.com/sponsors/{{ repository_namespace }}"
+Homepage = "https://{{ namespace_path }}.github.io/{{ repo_path }}"
+Documentation = "https://{{ namespace_path }}.github.io/{{ repo_path }}"
+Changelog = "https://{{ namespace_path }}.github.io/{{ repo_path }}/changelog"
+Repository = "https://github.com/{{ namespace_path }}/{{ repo_path }}"
+Issues = "https://github.com/{{ namespace_path }}/{{ repo_path }}/issues"
+Discussions = "https://github.com/{{ namespace_path }}/{{ repo_path }}/discussions"
+Funding = "https://github.com/sponsors/{{ namespace_path }}"
 {% elif git_provider == "GitLab" -%}
-Homepage = "https://{{ repository_namespace }}.gitlab.io/{{ repository_name }}"
-Documentation = "https://{{ repository_namespace }}.gitlab.io/{{ repository_name }}"
-Changelog = "https://{{ repository_namespace }}.gitlab.io/{{ repository_name }}/changelog"
-Repository = "https://gitlab.com/{{ repository_namespace }}/{{ repository_name }}"
-Issues = "https://gitlab.com/{{ repository_namespace }}/{{ repository_name }}/-/issues"
+Homepage = "https://{{ namespace_path }}.gitlab.io/{{ repo_path }}"
+Documentation = "https://{{ namespace_path }}.gitlab.io/{{ repo_path }}"
+Changelog = "https://{{ namespace_path }}.gitlab.io/{{ repo_path }}/changelog"
+Repository = "https://gitlab.com/{{ namespace_path }}/{{ repo_path }}"
+Issues = "https://gitlab.com/{{ namespace_path }}/{{ repo_path }}/-/issues"
 {% elif git_provider == "Azure DevOps" -%}
-Repository = "https://dev.azure.com/{{ repository_namespace }}/{{ repository_name }}"
-Issues = "https://dev.azure.com/{{ repository_namespace }}/{{ repository_name }}/_workitems"
+Repository = "https://dev.azure.com/{{ namespace_path }}/_git/{{ repo_path }}"
 {% elif git_provider == "Bitbucket" -%}
-Repository = "https://bitbucket.org/{{ repository_namespace }}/{{ repository_name }}"
-Issues = "https://bitbucket.org/{{ repository_namespace }}/{{ repository_name }}/issues"
+Repository = "https://bitbucket.org/{{ namespace_path }}/{{ repo_path }}"
+Issues = "https://bitbucket.org/{{ namespace_path }}/{{ repo_path }}/issues"
 {% endif -%}
 {% endif -%}
 {% if package_manager == "PDM" %}

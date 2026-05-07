@@ -1,17 +1,20 @@
+{%- set namespace_path = repository_namespace | urlencode if repository_namespace is defined else "" -%}
+{%- set repo_path = repository_name | urlencode -%}
+{%- set username_path = author_username | urlencode if author_username is defined else "" -%}
 {%- if git_provider == "GitHub" -%}
-{%- set docs_url = "https://" ~ repository_namespace ~ ".github.io/" ~ repository_name -%}
-{%- set repo_url = "https://github.com/" ~ repository_namespace ~ "/" ~ repository_name -%}
-{%- set author_url = "https://github.com/" ~ author_username -%}
+{%- set docs_url = "https://" ~ namespace_path ~ ".github.io/" ~ repo_path -%}
+{%- set repo_url = "https://github.com/" ~ namespace_path ~ "/" ~ repo_path -%}
+{%- set author_url = "https://github.com/" ~ username_path -%}
 {%- elif git_provider == "GitLab" -%}
-{%- set docs_url = "https://" ~ repository_namespace ~ ".gitlab.io/" ~ repository_name -%}
-{%- set repo_url = "https://gitlab.com/" ~ repository_namespace ~ "/" ~ repository_name -%}
-{%- set author_url = "https://gitlab.com/" ~ author_username -%}
+{%- set docs_url = "https://" ~ namespace_path ~ ".gitlab.io/" ~ repo_path -%}
+{%- set repo_url = "https://gitlab.com/" ~ namespace_path ~ "/" ~ repo_path -%}
+{%- set author_url = "https://gitlab.com/" ~ username_path -%}
 {%- elif git_provider == "Azure DevOps" -%}
-{%- set repo_url = "https://dev.azure.com/" ~ repository_namespace ~ "/" ~ repository_name -%}
-{%- set author_url = "https://dev.azure.com/" ~ author_username -%}
+{%- set repo_url = "https://dev.azure.com/" ~ namespace_path ~ "/_git/" ~ repo_path -%}
+{%- set author_url = "https://dev.azure.com/" ~ username_path -%}
 {%- elif git_provider == "Bitbucket" -%}
-{%- set repo_url = "https://bitbucket.org/" ~ repository_namespace ~ "/" ~ repository_name -%}
-{%- set author_url = "https://bitbucket.org/" ~ author_username -%}
+{%- set repo_url = "https://bitbucket.org/" ~ namespace_path ~ "/" ~ repo_path -%}
+{%- set author_url = "https://bitbucket.org/" ~ username_path -%}
 {%- endif -%}
 site_name: "{{ repository_name }}"
 site_description: "{{ project_description }}"

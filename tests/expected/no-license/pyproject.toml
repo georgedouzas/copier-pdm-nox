@@ -23,8 +23,7 @@ classifiers = [
     "Topic :: Software Development",
     "Topic :: Utilities",
     "Typing :: Typed",
-]
-dependencies = []
+]dependencies = []
 
 [project.urls]
 Homepage = "https://gdouzas.github.io/test-repo"
