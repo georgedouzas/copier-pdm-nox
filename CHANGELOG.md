@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [1.7.1](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.7.1) - 2026-05-07
+
+<small>[Compare with 1.7.0](https://github.com/georgedouzas/copier-modern-python/compare/1.7.0...1.7.1)</small>
+
+### Docs
+
+- Update changelog for version 1.7.0 ([951880c](https://github.com/georgedouzas/copier-modern-python/commit/951880c178f39a69e4b128678f75fe38c7eb4c7e) by georgedouzas).
+
+### Chore
+
+- Sanitize all copier prompt steps ([61e536d](https://github.com/georgedouzas/copier-modern-python/commit/61e536d363111601f99c6375428d54502d912c11) by georgedouzas).
+- Reorder and clarify copier prompts ([b88b0b4](https://github.com/georgedouzas/copier-modern-python/commit/b88b0b4c8dac39984f45c28c5b29202745b508f3) by georgedouzas).
+
 ## [1.7.0](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.7.0) - 2026-05-04
 
 <small>[Compare with 1.6.1](https://github.com/georgedouzas/copier-modern-python/compare/1.6.1...1.7.0)</small>
