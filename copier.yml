@@ -52,6 +52,12 @@ repository_name:
   type: str
   help: Your repository name
 
+azure_devops_project:
+  type: str
+  help: Azure DevOps project that contains the repository (organizations group repositories under projects)
+  when: "{{ git_provider == 'Azure DevOps' }}"
+  default: "{{ repository_name }}"
+
 # Python
 
 python_versions:

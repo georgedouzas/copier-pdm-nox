@@ -42,7 +42,8 @@
 [ci]: <https://gitlab.com/{{ namespace_path }}/{{ repo_path }}/-/pipelines>
 [ci badge]: <https://gitlab.com/{{ namespace_path }}/{{ repo_path }}/badges/main/pipeline.svg>
 {% elif git_provider == "Azure DevOps" -%}
-[ci]: <https://dev.azure.com/{{ namespace_path }}/_git/{{ repo_path }}>
+[ci]: <https://dev.azure.com/{{ namespace_path }}/{{ azure_devops_project | urlencode }}/_build>
+[ci badge]: <https://dev.azure.com/{{ namespace_path }}/{{ azure_devops_project | urlencode }}/_apis/build/status/ci?branchName=main>
 {% elif git_provider == "Bitbucket" -%}
 [ci]: <https://bitbucket.org/{{ namespace_path }}/{{ repo_path }}/addon/pipelines/home>
 [ci badge]: <https://img.shields.io/bitbucket/pipelines/{{ namespace_path }}/{{ repo_path }}/main>
@@ -86,7 +87,7 @@ git clone https://github.com/{{ namespace_path }}/{{ repo_path }}.git
 {% elif git_provider == "GitLab" -%}
 git clone https://gitlab.com/{{ namespace_path }}/{{ repo_path }}.git
 {% elif git_provider == "Azure DevOps" -%}
-git clone https://dev.azure.com/{{ namespace_path }}/_git/{{ repo_path }}
+git clone https://dev.azure.com/{{ namespace_path }}/{{ azure_devops_project | urlencode }}/_git/{{ repo_path }}
 {% elif git_provider == "Bitbucket" -%}
 git clone https://bitbucket.org/{{ namespace_path }}/{{ repo_path }}.git
 {% endif -%}
