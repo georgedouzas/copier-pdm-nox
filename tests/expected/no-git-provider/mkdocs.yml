@@ -1,8 +1,5 @@
 site_name: "test-repo"
 site_description: "A test project."
-site_url: "https://gdouzas.github.io/test-repo"
-repo_url: "https://github.com/gdouzas/test-repo"
-repo_name: "gdouzas/test-repo"
 site_dir: "site"
 watch: [README.md, CONTRIBUTING.md, CHANGELOG.md, src/test_repo]
 
@@ -71,8 +68,3 @@ plugins:
               ignore_init_summary: yes
             merge_init_into_class: yes
             show_submodules: no
-
-extra:
-  social:
-  - icon: fontawesome/brands/github
-    link: https://github.com/gdouzas

@@ -1,8 +1,25 @@
+{%- if git_provider == "GitHub" -%}
+{%- set docs_url = "https://" ~ repository_namespace ~ ".github.io/" ~ repository_name -%}
+{%- set repo_url = "https://github.com/" ~ repository_namespace ~ "/" ~ repository_name -%}
+{%- set author_url = "https://github.com/" ~ author_username -%}
+{%- elif git_provider == "GitLab" -%}
+{%- set docs_url = "https://" ~ repository_namespace ~ ".gitlab.io/" ~ repository_name -%}
+{%- set repo_url = "https://gitlab.com/" ~ repository_namespace ~ "/" ~ repository_name -%}
+{%- set author_url = "https://gitlab.com/" ~ author_username -%}
+{%- elif git_provider == "Azure DevOps" -%}
+{%- set repo_url = "https://dev.azure.com/" ~ repository_namespace ~ "/" ~ repository_name -%}
+{%- set author_url = "https://dev.azure.com/" ~ author_username -%}
+{%- elif git_provider == "Bitbucket" -%}
+{%- set repo_url = "https://bitbucket.org/" ~ repository_namespace ~ "/" ~ repository_name -%}
+{%- set author_url = "https://bitbucket.org/" ~ author_username -%}
+{%- endif -%}
 site_name: "{{ repository_name }}"
 site_description: "{{ project_description }}"
-site_url: "https://{{ repository_namespace }}.github.io/{{ repository_name }}"
-repo_url: "https://github.com/{{ repository_namespace }}/{{ repository_name }}"
+{% if docs_url %}site_url: "{{ docs_url }}"
+{% endif -%}
+{% if repo_url %}repo_url: "{{ repo_url }}"
 repo_name: "{{ repository_namespace }}/{{ repository_name }}"
+{% endif -%}
 site_dir: "site"
 watch: [README.md, CONTRIBUTING.md, CHANGELOG.md, src/{{ python_package_import_name }}]
 
@@ -21,7 +38,9 @@ nav:
     - index.md
     - User guide: overview/user_guide.md
     - Changelog: overview/changelog.md
+    {%- if copyright_license != "None" %}
     - License: overview/license.md
+    {%- endif %}
   - API: api/
   - Examples: generated/gallery
   - Development:
@@ -71,8 +90,10 @@ plugins:
               ignore_init_summary: yes
             merge_init_into_class: yes
             show_submodules: no
+{%- if author_url %}
 
 extra:
   social:
-  - icon: fontawesome/brands/github
-    link: https://github.com/{{ author_username }}
+  - icon: fontawesome/brands/{{ git_provider|lower|replace(' ', '-') }}
+    link: {{ author_url }}
+{%- endif %}

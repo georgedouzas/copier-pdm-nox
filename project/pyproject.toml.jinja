@@ -10,6 +10,7 @@ build-backend = "hatchling.build"
 name = "{{ python_package_distribution_name }}"
 description = "{{ project_description }}"
 authors = [{name = "{{ author_fullname }}", email = "{{ author_email }}"}]
+{% if copyright_license != "None" -%}
 license = "
     {%- if copyright_license == "Academic Free License v3.0" -%}
     AFL-3.0
@@ -78,6 +79,7 @@ license = "
     {%- elif copyright_license == "zlib License" -%}
     Zlib
     {%- endif %}"
+{% endif -%}
 readme = "README.md"
 requires-python = "{{ python_versions }}"
 keywords = []
@@ -107,8 +109,9 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = []
-
+{% if git_provider != "None" %}
 [project.urls]
+{% if git_provider == "GitHub" -%}
 Homepage = "https://{{ repository_namespace }}.github.io/{{ repository_name }}"
 Documentation = "https://{{ repository_namespace }}.github.io/{{ repository_name }}"
 Changelog = "https://{{ repository_namespace }}.github.io/{{ repository_name }}/changelog"
@@ -116,8 +119,21 @@ Repository = "https://github.com/{{ repository_namespace }}/{{ repository_name }
 Issues = "https://github.com/{{ repository_namespace }}/{{ repository_name }}/issues"
 Discussions = "https://github.com/{{ repository_namespace }}/{{ repository_name }}/discussions"
 Funding = "https://github.com/sponsors/{{ repository_namespace }}"
-
-{% if package_manager == "PDM" -%}
+{% elif git_provider == "GitLab" -%}
+Homepage = "https://{{ repository_namespace }}.gitlab.io/{{ repository_name }}"
+Documentation = "https://{{ repository_namespace }}.gitlab.io/{{ repository_name }}"
+Changelog = "https://{{ repository_namespace }}.gitlab.io/{{ repository_name }}/changelog"
+Repository = "https://gitlab.com/{{ repository_namespace }}/{{ repository_name }}"
+Issues = "https://gitlab.com/{{ repository_namespace }}/{{ repository_name }}/-/issues"
+{% elif git_provider == "Azure DevOps" -%}
+Repository = "https://dev.azure.com/{{ repository_namespace }}/{{ repository_name }}"
+Issues = "https://dev.azure.com/{{ repository_namespace }}/{{ repository_name }}/_workitems"
+{% elif git_provider == "Bitbucket" -%}
+Repository = "https://bitbucket.org/{{ repository_namespace }}/{{ repository_name }}"
+Issues = "https://bitbucket.org/{{ repository_namespace }}/{{ repository_name }}/issues"
+{% endif -%}
+{% endif -%}
+{% if package_manager == "PDM" %}
 [tool.pdm]
 version = {source = "scm"}
 build = {package-dir = "src", editable-backend = "editables"}
