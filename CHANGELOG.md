@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [1.7.2](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.7.2) - 2026-05-07
+
+<small>[Compare with 1.7.1](https://github.com/georgedouzas/copier-modern-python/compare/1.7.1...1.7.2)</small>
+
+### Bug Fixes
+
+- Respect None choices for git_provider and copyright_license ([b7c714d](https://github.com/georgedouzas/copier-modern-python/commit/b7c714dafa3fad5849d25211c054c441975def0a) by georgedouzas).
+
+### Docs
+
+- Update changelog for version 1.7.1 ([774fa8c](https://github.com/georgedouzas/copier-modern-python/commit/774fa8c5e4e17a94b15f8904411a4ff6d9254107) by georgedouzas).
+
+### Tests
+
+- Add no-license fixture and case ([9c782bc](https://github.com/georgedouzas/copier-modern-python/commit/9c782bc97fbe40a18ced9404a634e387cfcd080d) by georgedouzas).
+
 ## [1.7.1](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.7.1) - 2026-05-07
 
 <small>[Compare with 1.7.0](https://github.com/georgedouzas/copier-modern-python/compare/1.7.0...1.7.1)</small>
