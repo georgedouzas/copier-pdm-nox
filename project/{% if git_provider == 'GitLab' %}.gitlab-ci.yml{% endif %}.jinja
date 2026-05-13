@@ -30,7 +30,7 @@ test:
     - pdm run tests
     {% else -%}
     - uv sync
-    - uv run tests
+    - uv run nox -s tests
     {% endif -%}
   coverage: '/TOTAL.*\s+(\d+%)$/'
   artifacts:
@@ -48,7 +48,7 @@ quality:
     - pdm run checks
     {% else -%}
     - uv sync
-    - uv run checks
+    - uv run nox -s checks
     {% endif -%}
 
 docs:
@@ -60,7 +60,7 @@ docs:
     - pdm run docs build
     {% else -%}
     - uv sync
-    - uv run docs build
+    - uv run nox -s docs -- build
     {% endif -%}
   artifacts:
     paths:
@@ -90,7 +90,7 @@ release:
     - pdm run release
     {% else -%}
     - uv sync
-    - uv run release
+    - uv run nox -s release
     {% endif -%}
   only:
     - tags

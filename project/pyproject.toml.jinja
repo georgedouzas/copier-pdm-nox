@@ -223,15 +223,6 @@ dev = [
     "nox[uv]>=2024.4.15",
 ]
 
-[project.scripts]
-formatting = "{{ python_package_import_name }}.cli:formatting"
-checks = "{{ python_package_import_name }}.cli:checks"
-tests = "{{ python_package_import_name }}.cli:tests"
-docs = "{{ python_package_import_name }}.cli:docs"
-changelog = "{{ python_package_import_name }}.cli:changelog"
-release = "{{ python_package_import_name }}.cli:release"
-clean = "{{ python_package_import_name }}.cli:clean"
-
 [tool.hatch.version]
 source = "vcs"
 

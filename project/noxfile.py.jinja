@@ -25,7 +25,11 @@ from git_changelog.cli import build_and_render
 {% if package_manager == "PDM" %}
 os.environ.update({'PDM_IGNORE_SAVED_PYTHON': '1'})
 {% endif %}
-{% if package_manager == "uv" -%}{% endif -%}
+{% if package_manager == "uv" -%}
+nox.options.default_venv_backend = 'uv'
+nox.options.error_on_external_run = True
+nox.options.reuse_existing_virtualenvs = True
+{% endif %}
 PYTHON_VERSIONS: list[str] = {{ versions }}
 FILES: list[str] = ['src', 'tests', 'docs', 'noxfile.py']
 CHANGELOG_ARGS: dict[str, Any] = {

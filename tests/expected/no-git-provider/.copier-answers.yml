@@ -1,8 +1,7 @@
-_commit: 1.2.0-5-gccf0ee0
-_src_path: .
+_commit: 1.8.0-1-gb0d35e5
+_src_path: /Users/gdouzas/Projects/Personal/copier-modern-python
 author_email: gdouzas@icloud.com
 author_fullname: Georgios Douzas
-author_username: gdouzas
 copyright_date: '2026'
 copyright_holder: Georgios Douzas
 copyright_holder_email: gdouzas@icloud.com
@@ -15,4 +14,3 @@ python_package_distribution_name: test_repo
 python_package_import_name: test_repo
 python_versions: '>=3.11, <3.14'
 repository_name: test-repo
-repository_namespace: gdouzas

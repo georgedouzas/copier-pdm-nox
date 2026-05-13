@@ -14,7 +14,7 @@ pipelines:
           {% else -%}
           - pip install uv
           - uv sync
-          - uv run tests
+          - uv run nox -s tests
           {% endif -%}
         artifacts:
           - coverage.xml
@@ -32,7 +32,7 @@ pipelines:
           {% else -%}
           - pip install uv
           - uv sync
-          - uv run checks
+          - uv run nox -s checks
           {% endif -%}
 
   branches:
@@ -49,7 +49,7 @@ pipelines:
             {% else -%}
             - pip install uv
             - uv sync
-            - uv run tests
+            - uv run nox -s tests
             {% endif -%}
           artifacts:
             - coverage.xml
@@ -67,7 +67,7 @@ pipelines:
             {% else -%}
             - pip install uv
             - uv sync
-            - uv run checks
+            - uv run nox -s checks
             {% endif -%}
 
       - step:
@@ -82,7 +82,7 @@ pipelines:
             {% else -%}
             - pip install uv
             - uv sync
-            - uv run docs build
+            - uv run nox -s docs -- build
             {% endif -%}
           artifacts:
             - site/**
@@ -101,7 +101,7 @@ pipelines:
             {% else -%}
             - pip install uv
             - uv sync
-            - uv run tests
+            - uv run nox -s tests
             {% endif -%}
 
       - step:
@@ -116,7 +116,7 @@ pipelines:
             {% else -%}
             - pip install uv
             - uv sync
-            - uv run checks
+            - uv run nox -s checks
             {% endif -%}
 
       {% if publish_pypi -%}
@@ -132,7 +132,7 @@ pipelines:
             {% else -%}
             - pip install uv
             - uv sync
-            - uv run release
+            - uv run nox -s release
             {% endif -%}
           trigger: manual
       {% endif -%}

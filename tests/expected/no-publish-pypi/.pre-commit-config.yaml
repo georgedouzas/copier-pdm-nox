@@ -27,7 +27,7 @@ repos:
     hooks:
       - id: pytest
         name: Check pytest unit tests pass
-        entry: 'pdm run tests'
+        entry: 'pdm tests'
         pass_filenames: false
         language: system
         types: [python]

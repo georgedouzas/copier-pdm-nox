@@ -27,7 +27,7 @@ repos:
     hooks:
       - id: pytest
         name: Check pytest unit tests pass
-        entry: 'uv run tests'
+        entry: 'uv run nox -s tests'
         pass_filenames: false
         language: system
         types: [python]

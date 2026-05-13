@@ -68,13 +68,13 @@ jobs:
       run: uv sync --only-dev
 
     - name: Check code quality
-      run: uv run checks quality
+      run: uv run nox -s checks -- quality
 
     - name: Check type annotations
-      run: uv run checks types
+      run: uv run nox -s checks -- types
 
     - name: Check vulnerabilities in dependencies
-      run: uv run checks dependencies
+      run: uv run nox -s checks -- dependencies
     {%- endif %}
 
   tests:
@@ -123,7 +123,7 @@ jobs:
       run: uv sync
 
     - name: Run the test suite
-      run: uv run tests
+      run: uv run nox -s tests
     {%- endif %}
 
   doc:
@@ -164,5 +164,5 @@ jobs:
       run: uv sync
 
     - name: Build documentation with Python {% raw %}${{ matrix.python-version }}{% endraw %}
-      run: uv run docs build
+      run: uv run nox -s docs -- build
     {%- endif %}

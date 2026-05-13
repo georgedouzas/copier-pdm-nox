@@ -32,7 +32,7 @@ stages:
         pdm run tests
         {% else -%}
         uv sync
-        uv run tests
+        uv run nox -s tests
         {% endif -%}
       displayName: 'Run tests'
 
@@ -72,7 +72,7 @@ stages:
         pdm run checks
         {% else -%}
         uv sync
-        uv run checks
+        uv run nox -s checks
         {% endif -%}
       displayName: 'Run quality checks'
 
@@ -102,7 +102,7 @@ stages:
         pdm run docs build
         {% else -%}
         uv sync
-        uv run docs build
+        uv run nox -s docs -- build
         {% endif -%}
       displayName: 'Build documentation'
 
@@ -138,7 +138,7 @@ stages:
         pdm run release
         {% else -%}
         uv sync
-        uv run release
+        uv run nox -s release
         {% endif -%}
       displayName: 'Release to PyPI'
       env:

@@ -9,43 +9,43 @@ the project for more details. You can run any of the following commands and subc
 
 ### Documentation
 
-- `{%- if package_manager == "PDM" -%}pdm docs serve` or `pdm docs{%- else -%}uv run docs{%- endif -%}`: Serve the documentation.
-- `{%- if package_manager == "PDM" -%}pdm docs build{%- else -%}uv run docs -- build{%- endif -%}`: Build locally the documentation.
+- `{%- if package_manager == "PDM" -%}pdm docs serve` or `pdm docs{%- else -%}uv run nox -s docs{%- endif -%}`: Serve the documentation.
+- `{%- if package_manager == "PDM" -%}pdm docs build{%- else -%}uv run nox -s docs -- build{%- endif -%}`: Build locally the documentation.
 
 ### Formatting
 
-- `{%- if package_manager == "PDM" -%}pdm formatting all` or `pdm formatting{%- else -%}uv run formatting{%- endif -%}`: Format both the code and docstrings.
-  - `{%- if package_manager == "PDM" -%}pdm formatting code{%- else -%}uv run formatting -- code{%- endif -%}`: Format only the code.
-  - `{%- if package_manager == "PDM" -%}pdm formatting docstrings{%- else -%}uv run formatting -- docstrings{%- endif -%}`: Format only the docstrings.
+- `{%- if package_manager == "PDM" -%}pdm formatting all` or `pdm formatting{%- else -%}uv run nox -s formatting{%- endif -%}`: Format both the code and docstrings.
+  - `{%- if package_manager == "PDM" -%}pdm formatting code{%- else -%}uv run nox -s formatting -- code{%- endif -%}`: Format only the code.
+  - `{%- if package_manager == "PDM" -%}pdm formatting docstrings{%- else -%}uv run nox -s formatting -- docstrings{%- endif -%}`: Format only the docstrings.
 
 ### Checks
 
-- `{%- if package_manager == "PDM" -%}pdm checks all` or `pdm checks{%- else -%}uv run checks{%- endif -%}`: Run all checks.
-  - `{%- if package_manager == "PDM" -%}pdm checks quality{%- else -%}uv run checks -- quality{%- endif -%}`: Check only code quality.
-  - `{%- if package_manager == "PDM" -%}pdm checks types{%- else -%}uv run checks -- types{%- endif -%}`: Check only type annotations.
-  - `{%- if package_manager == "PDM" -%}pdm checks dependencies{%- else -%}uv run checks -- dependencies{%- endif -%}`: Check only for vulnerabilities in dependencies.
+- `{%- if package_manager == "PDM" -%}pdm checks all` or `pdm checks{%- else -%}uv run nox -s checks{%- endif -%}`: Run all checks.
+  - `{%- if package_manager == "PDM" -%}pdm checks quality{%- else -%}uv run nox -s checks -- quality{%- endif -%}`: Check only code quality.
+  - `{%- if package_manager == "PDM" -%}pdm checks types{%- else -%}uv run nox -s checks -- types{%- endif -%}`: Check only type annotations.
+  - `{%- if package_manager == "PDM" -%}pdm checks dependencies{%- else -%}uv run nox -s checks -- dependencies{%- endif -%}`: Check only for vulnerabilities in dependencies.
 
 ### Tests
 
-- `{%- if package_manager == "PDM" -%}pdm tests{%- else -%}uv run tests{%- endif -%}`: Run the tests.
+- `{%- if package_manager == "PDM" -%}pdm tests{%- else -%}uv run nox -s tests{%- endif -%}`: Run the tests.
 
 ### Changelog
 
-- `{%- if package_manager == "PDM" -%}pdm changelog{%- else -%}uv run changelog{%- endif -%}`: Build the changelog.
+- `{%- if package_manager == "PDM" -%}pdm changelog{%- else -%}uv run nox -s changelog{%- endif -%}`: Build the changelog.
 
 ### Release
 
-- `{%- if package_manager == "PDM" -%}pdm release{%- else -%}uv run release{%- endif -%}`: Release a new Python package with an updated version.
+- `{%- if package_manager == "PDM" -%}pdm release{%- else -%}uv run nox -s release{%- endif -%}`: Release a new Python package with an updated version.
 
 ## Development
 
 The next steps should be followed during development:
 
 - `git checkout -b new-branch-name` to create a new branch and then modify the code.
-- `{%- if package_manager == "PDM" -%}pdm formatting{%- else -%}uv run formatting{%- endif -%}` to auto-format the code and docstrings.
-- `{%- if package_manager == "PDM" -%}pdm checks{%- else -%}uv run checks{%- endif -%}` to apply all checks.
-- `{%- if package_manager == "PDM" -%}pdm tests{%- else -%}uv run tests{%- endif -%}` to run the tests.
-- `{%- if package_manager == "PDM" -%}pdm docs serve{%- else -%}uv run docs{%- endif -%}` if you updated the documentation or the project dependencies to check that everything looks as expected.
+- `{%- if package_manager == "PDM" -%}pdm formatting{%- else -%}uv run nox -s formatting{%- endif -%}` to auto-format the code and docstrings.
+- `{%- if package_manager == "PDM" -%}pdm checks{%- else -%}uv run nox -s checks{%- endif -%}` to apply all checks.
+- `{%- if package_manager == "PDM" -%}pdm tests{%- else -%}uv run nox -s tests{%- endif -%}` to run the tests.
+- `{%- if package_manager == "PDM" -%}pdm docs serve{%- else -%}uv run nox -s docs{%- endif -%}` if you updated the documentation or the project dependencies to check that everything looks as expected.
 
 ## Commit message convention
 

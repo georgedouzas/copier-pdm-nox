@@ -65,15 +65,6 @@ dev = [
     "nox[uv]>=2024.4.15",
 ]
 
-[project.scripts]
-formatting = "test_repo.cli:formatting"
-checks = "test_repo.cli:checks"
-tests = "test_repo.cli:tests"
-docs = "test_repo.cli:docs"
-changelog = "test_repo.cli:changelog"
-release = "test_repo.cli:release"
-clean = "test_repo.cli:clean"
-
 [tool.hatch.version]
 source = "vcs"
 
