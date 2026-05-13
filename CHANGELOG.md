@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [1.8.1](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.8.1) - 2026-05-13
+
+<small>[Compare with 1.8.0](https://github.com/georgedouzas/copier-modern-python/compare/1.8.0...1.8.1)</small>
+
+### Bug Fixes
+
+- Stop exposing dev tasks as published entry points for uv ([49bae86](https://github.com/georgedouzas/copier-modern-python/commit/49bae86d49be8063400e9114721f86d66cb1b56e) by georgedouzas).
+
 ## [1.8.0](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.8.0) - 2026-05-07
 
 <small>[Compare with 1.7.2](https://github.com/georgedouzas/copier-modern-python/compare/1.7.2...1.8.0)</small>
@@ -17,6 +25,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Bug Fixes
 
 - URL-encode names and gate .github on GitHub only ([ba66f56](https://github.com/georgedouzas/copier-modern-python/commit/ba66f5631ded85596d9a134446f7ada505578dca) by georgedouzas).
+
+### Docs
+
+- Update changelog for version 1.8.0 ([9e058bd](https://github.com/georgedouzas/copier-modern-python/commit/9e058bd9f0c4c778898c3a991793b5ea96655708) by georgedouzas).
 
 ## [1.7.2](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.7.2) - 2026-05-07
 
