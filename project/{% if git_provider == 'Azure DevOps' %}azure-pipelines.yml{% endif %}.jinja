@@ -36,17 +36,6 @@ stages:
         {% endif -%}
       displayName: 'Run tests'
 
-    - task: PublishTestResults@2
-      condition: succeededOrFailed()
-      inputs:
-        testResultsFiles: '**/test-*.xml'
-        testRunTitle: 'Publish test results for Python $(pythonVersion)'
-
-    - task: PublishCodeCoverageResults@1
-      inputs:
-        codeCoverageTool: Cobertura
-        summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
-
 - stage: Quality
   dependsOn: Test
   jobs:
