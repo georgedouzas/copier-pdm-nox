@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [1.8.2](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.8.2) - 2026-05-18
+
+<small>[Compare with 1.8.1](https://github.com/georgedouzas/copier-modern-python/compare/1.8.1...1.8.2)</small>
+
+### Bug Fixes
+
+- Remove broken publish tasks from Azure Pipelines ([c037f80](https://github.com/georgedouzas/copier-modern-python/commit/c037f80d0d993e419c3ab9bbe9244157fea08b7e) by georgedouzas).
+- Drop Issues URL for Azure DevOps ([9d4bc42](https://github.com/georgedouzas/copier-modern-python/commit/9d4bc427536456865fe306438d6b8b27ef6efc31) by georgedouzas).
+
+### Chore
+
+- Skip distribution name prompt when not publishing to PyPI ([73b73fb](https://github.com/georgedouzas/copier-modern-python/commit/73b73fb67f2372ff3b0eff08df123a2eb308f2cf) by georgedouzas).
+
 ## [1.8.1](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.8.1) - 2026-05-13
 
 <small>[Compare with 1.8.0](https://github.com/georgedouzas/copier-modern-python/compare/1.8.0...1.8.1)</small>
@@ -13,6 +26,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Bug Fixes
 
 - Stop exposing dev tasks as published entry points for uv ([49bae86](https://github.com/georgedouzas/copier-modern-python/commit/49bae86d49be8063400e9114721f86d66cb1b56e) by georgedouzas).
+
+### Docs
+
+- Update changelog for version 1.8.1 ([92a4b6d](https://github.com/georgedouzas/copier-modern-python/commit/92a4b6d714f84a17a7737cc863c8c61607e7968c) by georgedouzas).
 
 ## [1.8.0](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.8.0) - 2026-05-07
 
