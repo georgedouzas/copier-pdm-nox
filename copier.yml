@@ -87,6 +87,7 @@ publish_pypi:
 python_package_distribution_name:
   type: str
   help: Your Python package distribution name (for `pip install NAME`)
+  when: "{{ publish_pypi }}"
   default: "{{ repository_name|lower|replace('-', '_')|replace(' ', '_') }}"
 
 python_package_import_name:
