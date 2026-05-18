@@ -28,7 +28,6 @@ classifiers = [
 
 [project.urls]
 Repository = "https://dev.azure.com/gdouzas/test-repo/_git/test-repo"
-Issues = "https://dev.azure.com/gdouzas/test-repo/_workitems"
 
 [tool.pdm]
 version = {source = "scm"}

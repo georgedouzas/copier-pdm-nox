@@ -129,7 +129,6 @@ Repository = "https://gitlab.com/{{ namespace_path }}/{{ repo_path }}"
 Issues = "https://gitlab.com/{{ namespace_path }}/{{ repo_path }}/-/issues"
 {% elif git_provider == "Azure DevOps" -%}
 Repository = "https://dev.azure.com/{{ namespace_path }}/{{ azure_devops_project | urlencode }}/_git/{{ repo_path }}"
-Issues = "https://dev.azure.com/{{ namespace_path }}/{{ azure_devops_project | urlencode }}/_workitems"
 {% elif git_provider == "Bitbucket" -%}
 Repository = "https://bitbucket.org/{{ namespace_path }}/{{ repo_path }}"
 Issues = "https://bitbucket.org/{{ namespace_path }}/{{ repo_path }}/issues"
