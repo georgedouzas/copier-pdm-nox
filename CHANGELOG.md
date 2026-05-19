@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [1.8.3](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.8.3) - 2026-05-19
+
+<small>[Compare with 1.8.2](https://github.com/georgedouzas/copier-modern-python/compare/1.8.2...1.8.3)</small>
+
+### Docs
+
+- Document and run all check subcommands ([36b0191](https://github.com/georgedouzas/copier-modern-python/commit/36b0191b3d67c880531d781d8a54d5dd5faa158d) by georgedouzas).
+
 ## [1.8.2](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.8.2) - 2026-05-18
 
 <small>[Compare with 1.8.1](https://github.com/georgedouzas/copier-modern-python/compare/1.8.1...1.8.2)</small>
@@ -14,6 +22,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Remove broken publish tasks from Azure Pipelines ([c037f80](https://github.com/georgedouzas/copier-modern-python/commit/c037f80d0d993e419c3ab9bbe9244157fea08b7e) by georgedouzas).
 - Drop Issues URL for Azure DevOps ([9d4bc42](https://github.com/georgedouzas/copier-modern-python/commit/9d4bc427536456865fe306438d6b8b27ef6efc31) by georgedouzas).
+
+### Docs
+
+- Update changelog for version 1.8.2 ([a222398](https://github.com/georgedouzas/copier-modern-python/commit/a222398afbcc8f518a2ff977360d7812d87bf951) by georgedouzas).
 
 ### Chore
 
