@@ -24,7 +24,8 @@ classifiers = [
     "Topic :: Software Development",
     "Topic :: Utilities",
     "Typing :: Typed",
-]dependencies = []
+]
+dependencies = []
 
 [project.urls]
 Homepage = "https://gdouzas.github.io/test-repo"
@@ -95,6 +96,7 @@ release = [
 line-length = 120
 extend-exclude = "(tests/fixtures|docs/generated)"
 skip-string-normalization = true
+target-version = ["py311"]
 
 [tool.docformatter]
 in-place = true

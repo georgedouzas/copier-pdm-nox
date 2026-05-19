@@ -108,8 +108,8 @@ classifiers = [
     "Topic :: Utilities",
     "Typing :: Typed",
 ]
-{%- set namespace_path = repository_namespace | urlencode if repository_namespace is defined else "" -%}
-{%- set repo_path = repository_name | urlencode -%}
+{% set namespace_path = repository_namespace | urlencode if repository_namespace is defined else "" -%}
+{% set repo_path = repository_name | urlencode -%}
 dependencies = []
 {% if git_provider != "None" %}
 [project.urls]
@@ -228,10 +228,15 @@ source = "vcs"
 [tool.hatch.build.targets.wheel]
 packages = ["src/{{ python_package_import_name }}"]
 {% endif %}
+{% set version = python_versions.rsplit(',')[0] -%}
+{% set offset = 1 if '=' not in version else 0 -%}
+{% set version = version.rsplit('.')[-1] -%}
+{% set version = version|int + offset -%}
 [tool.black]
 line-length = 120
 extend-exclude = "(tests/fixtures|docs/generated)"
 skip-string-normalization = true
+target-version = ["py3{{ version }}"]
 
 [tool.docformatter]
 in-place = true
@@ -244,10 +249,6 @@ wrap-summaries = 120
 extend-exclude = ["docs/generated"]
 force-exclude = true
 line-length = 120
-{% set version = python_versions.rsplit(',')[0] -%}
-{% set offset = 1 if '=' not in version else 0 -%}
-{% set version = version.rsplit('.')[-1] -%}
-{% set version = version|int + offset -%}
 target-version = "py3{{ version }}"
 
 [tool.ruff.lint]
