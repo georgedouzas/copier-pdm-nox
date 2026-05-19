@@ -24,6 +24,8 @@ the project for more details. You can run any of the following commands and subc
   - `{%- if package_manager == "PDM" -%}pdm checks quality{%- else -%}uv run nox -s checks -- quality{%- endif -%}`: Check only code quality.
   - `{%- if package_manager == "PDM" -%}pdm checks types{%- else -%}uv run nox -s checks -- types{%- endif -%}`: Check only type annotations.
   - `{%- if package_manager == "PDM" -%}pdm checks dependencies{%- else -%}uv run nox -s checks -- dependencies{%- endif -%}`: Check only for vulnerabilities in dependencies.
+  - `{%- if package_manager == "PDM" -%}pdm checks security{%- else -%}uv run nox -s checks -- security{%- endif -%}`: Run only security checks with bandit.
+  - `{%- if package_manager == "PDM" -%}pdm checks docs{%- else -%}uv run nox -s checks -- docs{%- endif -%}`: Check only docstring coverage with interrogate.
 
 ### Tests
 

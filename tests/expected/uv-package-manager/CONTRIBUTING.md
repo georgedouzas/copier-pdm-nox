@@ -24,6 +24,8 @@ the project for more details. You can run any of the following commands and subc
   - `uv run nox -s checks -- quality`: Check only code quality.
   - `uv run nox -s checks -- types`: Check only type annotations.
   - `uv run nox -s checks -- dependencies`: Check only for vulnerabilities in dependencies.
+  - `uv run nox -s checks -- security`: Run only security checks with bandit.
+  - `uv run nox -s checks -- docs`: Check only docstring coverage with interrogate.
 
 ### Tests
 

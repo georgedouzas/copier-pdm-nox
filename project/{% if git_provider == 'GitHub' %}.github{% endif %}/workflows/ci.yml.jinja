@@ -57,6 +57,12 @@ jobs:
 
     - name: Check vulnerabilities in dependencies
       run: pdm checks dependencies
+
+    - name: Check security issues
+      run: pdm checks security
+
+    - name: Check docstring coverage
+      run: pdm checks docs
     {%- else -%}
     - name: Set up uv
       uses: astral-sh/setup-uv@v5
@@ -75,6 +81,12 @@ jobs:
 
     - name: Check vulnerabilities in dependencies
       run: uv run nox -s checks -- dependencies
+
+    - name: Check security issues
+      run: uv run nox -s checks -- security
+
+    - name: Check docstring coverage
+      run: uv run nox -s checks -- docs
     {%- endif %}
 
   tests:

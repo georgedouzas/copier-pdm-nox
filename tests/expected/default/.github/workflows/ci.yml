@@ -47,6 +47,12 @@ jobs:
     - name: Check vulnerabilities in dependencies
       run: pdm checks dependencies
 
+    - name: Check security issues
+      run: pdm checks security
+
+    - name: Check docstring coverage
+      run: pdm checks docs
+
   tests:
 
     strategy:
