@@ -94,3 +94,29 @@ teardown() {
     [ -d test-repo ]
     compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/azure-devops" "test-repo"
 }
+
+@test "Test GitLab choice" {
+    run copier copy "$TEMPLATE_DIR" test-repo --defaults --vcs-ref=HEAD \
+    --data project_description="A test project." \
+    --data author_fullname="Georgios Douzas" \
+    --data author_email="gdouzas@icloud.com" \
+    --data author_username="gdouzas" \
+    --data repository_name="test-repo" \
+    --data git_provider="GitLab"
+
+    [ -d test-repo ]
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/gitlab" "test-repo"
+}
+
+@test "Test Bitbucket choice" {
+    run copier copy "$TEMPLATE_DIR" test-repo --defaults --vcs-ref=HEAD \
+    --data project_description="A test project." \
+    --data author_fullname="Georgios Douzas" \
+    --data author_email="gdouzas@icloud.com" \
+    --data author_username="gdouzas" \
+    --data repository_name="test-repo" \
+    --data git_provider="Bitbucket"
+
+    [ -d test-repo ]
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/bitbucket" "test-repo"
+}

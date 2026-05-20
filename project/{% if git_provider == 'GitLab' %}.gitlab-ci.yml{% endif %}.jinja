@@ -15,23 +15,23 @@ cache:
 .python_template: &python_template
   image: python:3.11
   before_script:
-    {% if package_manager == "PDM" -%}
+    {%- if package_manager == "PDM" %}
     - pip install pdm
-    {% else -%}
+    {%- else %}
     - pip install uv
-    {% endif -%}
+    {%- endif %}
 
 test:
   <<: *python_template
   stage: test
   script:
-    {% if package_manager == "PDM" -%}
+    {%- if package_manager == "PDM" %}
     - pdm install
-    - pdm run tests
-    {% else -%}
+    - pdm tests
+    {%- else %}
     - uv sync
     - uv run nox -s tests
-    {% endif -%}
+    {%- endif %}
   coverage: '/TOTAL.*\s+(\d+%)$/'
   artifacts:
     reports:
@@ -43,25 +43,25 @@ quality:
   <<: *python_template
   stage: quality
   script:
-    {% if package_manager == "PDM" -%}
+    {%- if package_manager == "PDM" %}
     - pdm install
-    - pdm run checks
-    {% else -%}
+    - pdm checks
+    {%- else %}
     - uv sync
     - uv run nox -s checks
-    {% endif -%}
+    {%- endif %}
 
 docs:
   <<: *python_template
   stage: docs
   script:
-    {% if package_manager == "PDM" -%}
+    {%- if package_manager == "PDM" %}
     - pdm install
-    - pdm run docs build
-    {% else -%}
+    - pdm docs build
+    {%- else %}
     - uv sync
     - uv run nox -s docs -- build
-    {% endif -%}
+    {%- endif %}
   artifacts:
     paths:
       - site/
@@ -79,20 +79,20 @@ pages:
       - public
   only:
     - main
+{%- if publish_pypi %}
 
-{% if publish_pypi -%}
 release:
   <<: *python_template
   stage: release
   script:
-    {% if package_manager == "PDM" -%}
+    {%- if package_manager == "PDM" %}
     - pdm install
-    - pdm run release
-    {% else -%}
+    - pdm release
+    {%- else %}
     - uv sync
     - uv run nox -s release
-    {% endif -%}
+    {%- endif %}
   only:
     - tags
   when: manual
-{% endif -%}
+{%- endif %}

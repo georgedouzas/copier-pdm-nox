@@ -7,15 +7,15 @@ pipelines:
         caches:
           - pip
         script:
-          {% if package_manager == "PDM" -%}
+          {%- if package_manager == "PDM" %}
           - pip install pdm
           - pdm install
-          - pdm run tests
-          {% else -%}
+          - pdm tests
+          {%- else %}
           - pip install uv
           - uv sync
           - uv run nox -s tests
-          {% endif -%}
+          {%- endif %}
         artifacts:
           - coverage.xml
           - htmlcov/**
@@ -25,15 +25,15 @@ pipelines:
         caches:
           - pip
         script:
-          {% if package_manager == "PDM" -%}
+          {%- if package_manager == "PDM" %}
           - pip install pdm
           - pdm install
-          - pdm run checks
-          {% else -%}
+          - pdm checks
+          {%- else %}
           - pip install uv
           - uv sync
           - uv run nox -s checks
-          {% endif -%}
+          {%- endif %}
 
   branches:
     main:
@@ -42,15 +42,15 @@ pipelines:
           caches:
             - pip
           script:
-            {% if package_manager == "PDM" -%}
+            {%- if package_manager == "PDM" %}
             - pip install pdm
             - pdm install
-            - pdm run tests
-            {% else -%}
+            - pdm tests
+            {%- else %}
             - pip install uv
             - uv sync
             - uv run nox -s tests
-            {% endif -%}
+            {%- endif %}
           artifacts:
             - coverage.xml
             - htmlcov/**
@@ -60,30 +60,30 @@ pipelines:
           caches:
             - pip
           script:
-            {% if package_manager == "PDM" -%}
+            {%- if package_manager == "PDM" %}
             - pip install pdm
             - pdm install
-            - pdm run checks
-            {% else -%}
+            - pdm checks
+            {%- else %}
             - pip install uv
             - uv sync
             - uv run nox -s checks
-            {% endif -%}
+            {%- endif %}
 
       - step:
           name: Build Documentation
           caches:
             - pip
           script:
-            {% if package_manager == "PDM" -%}
+            {%- if package_manager == "PDM" %}
             - pip install pdm
             - pdm install
-            - pdm run docs build
-            {% else -%}
+            - pdm docs build
+            {%- else %}
             - pip install uv
             - uv sync
             - uv run nox -s docs -- build
-            {% endif -%}
+            {%- endif %}
           artifacts:
             - site/**
 
@@ -94,48 +94,48 @@ pipelines:
           caches:
             - pip
           script:
-            {% if package_manager == "PDM" -%}
+            {%- if package_manager == "PDM" %}
             - pip install pdm
             - pdm install
-            - pdm run tests
-            {% else -%}
+            - pdm tests
+            {%- else %}
             - pip install uv
             - uv sync
             - uv run nox -s tests
-            {% endif -%}
+            {%- endif %}
 
       - step:
           name: Quality Checks
           caches:
             - pip
           script:
-            {% if package_manager == "PDM" -%}
+            {%- if package_manager == "PDM" %}
             - pip install pdm
             - pdm install
-            - pdm run checks
-            {% else -%}
+            - pdm checks
+            {%- else %}
             - pip install uv
             - uv sync
             - uv run nox -s checks
-            {% endif -%}
+            {%- endif %}
+      {%- if publish_pypi %}
 
-      {% if publish_pypi -%}
       - step:
           name: Release to PyPI
           caches:
             - pip
           script:
-            {% if package_manager == "PDM" -%}
+            {%- if package_manager == "PDM" %}
             - pip install pdm
             - pdm install
-            - pdm run release
-            {% else -%}
+            - pdm release
+            {%- else %}
             - pip install uv
             - uv sync
             - uv run nox -s release
-            {% endif -%}
+            {%- endif %}
           trigger: manual
-      {% endif -%}
+      {%- endif %}
 
 definitions:
   caches:

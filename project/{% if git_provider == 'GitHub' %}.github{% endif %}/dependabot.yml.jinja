@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+  - package-ecosystem: {{ "pip" if package_manager == "PDM" else "uv" }}
+    directory: /
+    schedule:
+      interval: weekly

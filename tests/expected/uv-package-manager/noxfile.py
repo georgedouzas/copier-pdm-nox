@@ -62,6 +62,7 @@ def clean(session: nox.Session) -> None:
         'docs/generated',
         '.nox',
         '.ruff_cache',
+        'coverage.xml',
         'uv.lock',
     ]
     for path in paths:
@@ -137,7 +138,7 @@ def checks(session: nox.Session, file: str) -> None:
             requirements_path,
             external=True,
         )
-        session.run('safety', 'check', '-r', requirements_path)
+        session.run('pip-audit', '-r', requirements_path)
 
 
 @nox.session(python=PYTHON_VERSIONS)
@@ -156,6 +157,7 @@ def tests(session: nox.Session) -> None:
     session.run('coverage', 'combine')
     session.run('coverage', 'report')
     session.run('coverage', 'html')
+    session.run('coverage', 'xml')
 
 
 @nox.session
