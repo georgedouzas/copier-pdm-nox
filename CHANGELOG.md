@@ -6,12 +6,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [1.8.4](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.8.4) - 2026-05-21
+
+<small>[Compare with 1.8.3](https://github.com/georgedouzas/copier-modern-python/compare/1.8.3...1.8.4)</small>
+
+### Bug Fixes
+
+- Repair non-GitHub CI, generate coverage.xml, modernize tooling ([a10c761](https://github.com/georgedouzas/copier-modern-python/commit/a10c7616426bf123a746b7547e4d6bf91c4f2f12) by georgedouzas).
+- Add black target-version and unbreak pyproject.toml whitespace ([1c1239d](https://github.com/georgedouzas/copier-modern-python/commit/1c1239d8e748f4912038d1b0b9a8881c129200f1) by georgedouzas).
+
 ## [1.8.3](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.8.3) - 2026-05-19
 
 <small>[Compare with 1.8.2](https://github.com/georgedouzas/copier-modern-python/compare/1.8.2...1.8.3)</small>
 
 ### Docs
 
+- Update changelog for version 1.8.3 ([206526d](https://github.com/georgedouzas/copier-modern-python/commit/206526d21533c5d2ccd77812c7560a4bc26b2ae8) by georgedouzas).
 - Document and run all check subcommands ([36b0191](https://github.com/georgedouzas/copier-modern-python/commit/36b0191b3d67c880531d781d8a54d5dd5faa158d) by georgedouzas).
 
 ## [1.8.2](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.8.2) - 2026-05-18
