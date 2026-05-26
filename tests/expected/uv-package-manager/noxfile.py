@@ -134,6 +134,7 @@ def checks(session: nox.Session, file: str) -> None:
             'requirements-txt',
             '--group',
             'dev',
+            '--no-emit-project',
             '--output-file',
             requirements_path,
             external=True,
