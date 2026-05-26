@@ -1,4 +1,4 @@
-.PHONY: install docs tests changelog release
+.PHONY: install docs tests tests-integration changelog release
 
 install:
 	@pip install -r requirements.txt
@@ -7,7 +7,10 @@ docs:
 	@mkdocs serve
 
 tests:
-	@bats tests
+	@bats tests/test_copier.bats
+
+tests-integration:
+	@bats tests/test_integration.bats
 
 changelog:
 	@git-changelog -T --bump=auto -o CHANGELOG.md -c angular -t keepachangelog -s feat,fix,docs,style,refactor,tests,chore

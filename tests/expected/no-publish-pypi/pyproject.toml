@@ -133,8 +133,9 @@ warn_unused_ignores = true
 show_error_codes = true
 
 [tool.pip-audit]
-# Advisory IDs to ignore, e.g. ["PYSEC-2022-42969"], read by the checks nox session.
-ignore-vulns = []
+# Advisory IDs to ignore, read by the checks nox session. PYSEC-2022-42969 is a
+# won't-fix ReDoS in py, pulled in transitively by interrogate.
+ignore-vulns = ["PYSEC-2022-42969"]
 
 [tool.pytest.ini_options]
 python_files = ["test_*.py"]
