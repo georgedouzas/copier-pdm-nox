@@ -130,6 +130,10 @@ exclude = ["tests/fixtures/", "docs/examples/", "docs/generated/"]
 warn_unused_ignores = true
 show_error_codes = true
 
+[tool.pip-audit]
+# Advisory IDs to ignore, e.g. ["PYSEC-2022-42969"], read by the checks nox session.
+ignore-vulns = []
+
 [tool.pytest.ini_options]
 python_files = ["test_*.py"]
 addopts = "--cov"

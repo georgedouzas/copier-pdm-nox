@@ -2,6 +2,7 @@
 
 import os
 import shutil
+import tomllib
 from pathlib import Path
 from typing import Any
 
@@ -140,7 +141,9 @@ def checks(session: nox.Session, file: str) -> None:
             requirements_path,
         ]
         session.run(*(args + dict(requirements_types)[file]), external=True)
-        session.run('pip-audit', '-r', requirements_path)
+        ignored = tomllib.loads(Path('pyproject.toml').read_text()).get('tool', {}).get('pip-audit', {}).get('ignore-vulns', [])
+        ignore_args = [flag for vuln in ignored for flag in ('--ignore-vuln', vuln)]
+        session.run('pip-audit', '-r', requirements_path, *ignore_args)
 
 
 @nox.session(python=PYTHON_VERSIONS)
