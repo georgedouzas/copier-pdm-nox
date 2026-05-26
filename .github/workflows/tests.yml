@@ -1,0 +1,64 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * 1'
+
+jobs:
+
+  fixtures:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+
+    - name: Install copier and bats
+      run: |
+        pip install copier
+        sudo apt-get update && sudo apt-get install -y bats
+
+    - name: Run fixture tests
+      run: make tests
+
+  integration:
+
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Install Python versions
+      uses: actions/setup-python@v5
+      with:
+        python-version: |
+          3.11
+          3.12
+          3.13
+
+    - name: Set up uv
+      uses: astral-sh/setup-uv@v5
+      with:
+        enable-cache: true
+
+    - name: Install copier, pdm and bats
+      run: |
+        pip install copier pdm
+        sudo apt-get update && sudo apt-get install -y bats
+
+    - name: Run integration tests
+      run: make tests-integration
