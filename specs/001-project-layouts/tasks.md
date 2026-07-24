@@ -50,10 +50,10 @@ Paths containing `{% ... %}` are literal directory names on disk, not placeholde
 
 **Purpose**: Introduce the answer and prove it changed nothing. **No layout work may begin until T007 passes.**
 
-- [ ] T004 Add the `project_layout` question to `copier.yml` in the Project section beside `package_manager`, with `choices` of `library`, `script`, `ml` and `default: library`, per [data-model.md](./data-model.md)
-- [ ] T005 Add help text to `project_layout` in `copier.yml` describing each value as the kind of project it produces, not as a file tree
-- [ ] T006 Run `make regen-fixtures` and confirm `git diff --exit-code tests/expected/` reports no change — the question alone must not alter rendering
-- [ ] T007 Run `make tests` and confirm all existing fixture cases still pass
+- [X] T004 Add the `project_layout` question to `copier.yml` in the Project section beside `package_manager`, with `choices` of `library`, `script`, `ml` and `default: library`, per [data-model.md](./data-model.md)
+- [X] T005 Add help text to `project_layout` in `copier.yml` describing each value as the kind of project it produces, not as a file tree
+- [X] T006 Run `make regen-fixtures` and confirm `git diff --exit-code tests/expected/` reports no change — the question alone must not alter rendering
+- [X] T007 Run `make tests` and confirm all existing fixture cases still pass
 
 **Checkpoint (contract C7 proven)**: the library layout is frozen and the proof is a `git diff` exit code, not a review. If T006 shows any change, stop and find out why before continuing — do not regenerate the fixture to make it pass.
 

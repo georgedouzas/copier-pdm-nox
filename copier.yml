@@ -77,6 +77,15 @@ package_manager:
     - PDM
     - uv
 
+project_layout:
+  type: str
+  help: The kind of project you are starting
+  default: library
+  choices:
+    "Library, an importable package you distribute to others": library
+    "Command line tool, a program people run from a terminal": script
+    "Machine learning, experiments and models with notebooks alongside code": ml
+
 # Distribution
 
 publish_pypi:
