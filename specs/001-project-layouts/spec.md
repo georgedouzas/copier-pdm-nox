@@ -146,10 +146,12 @@ the previously shipped layouts produce identical output to before.
   predictably and report what it did.
 - **FR-014**: The documentation MUST state which kinds exist, what each produces, and which
   tasks differ for each.
-- **FR-015**: The kinds offered in the first release MUST include the library kind plus
-  [NEEDS CLARIFICATION: which additional kinds ship first — script/CLI, machine learning and
-  data engineering were all named as wanted, and each adds matrix coverage cost, so shipping
-  all three at once may not be desirable].
+- **FR-015**: The first release MUST offer exactly three kinds: library, script or CLI tool,
+  and machine learning. Data engineering is wanted but deferred, and MUST be addable later
+  under FR-012 without changing the three that shipped.
+- **FR-016**: The machine learning kind MUST be the case that proves FR-009: it produces no
+  artifact published to a package index, so its generated project MUST omit publishing while
+  still carrying the full quality floor of FR-006 and FR-007.
 
 ### Key Entities
 
@@ -198,3 +200,7 @@ the previously shipped layouts produce identical output to before.
   toolchains are acceptable; a weaker quality floor is not.
 - This feature implies no change to the generator's own release process, test harness structure
   or supported provider set.
+- Three kinds ship first (library, script/CLI, machine learning) and data engineering is
+  deferred. Machine learning is included ahead of it deliberately: it is the case least like
+  the library layout, so it stresses the abstraction before further kinds are built on it.
+  Data engineering is expected to reuse whatever that stress reveals.

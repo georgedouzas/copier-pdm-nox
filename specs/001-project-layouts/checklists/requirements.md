@@ -13,7 +13,7 @@
 
 ## Requirement Completeness
 
-- [ ] No [NEEDS CLARIFICATION] markers remain
+- [x] No [NEEDS CLARIFICATION] markers remain
 - [x] Requirements are testable and unambiguous
 - [x] Success criteria are measurable
 - [x] Success criteria are technology-agnostic (no implementation details)
@@ -35,10 +35,12 @@
 
 ### Outstanding
 
-One `[NEEDS CLARIFICATION]` marker remains, on **FR-015**: which additional layouts ship in
-the first release. This is a scope decision with no reasonable default — script/CLI, machine
-learning and data engineering were all named as wanted, and each one multiplies fixture and
-integration coverage cost. It is presented to the user as Q1 rather than guessed.
+None. All checklist items pass.
+
+**Resolved**: FR-015 carried the sole `[NEEDS CLARIFICATION]`, on which layouts ship first.
+Answered by the user: library, script/CLI and machine learning, with data engineering
+deferred. FR-016 was added to capture the consequence — machine learning is the kind that
+demonstrates publishing being omitted rather than generated broken.
 
 ### Validation notes
 
