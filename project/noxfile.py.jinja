@@ -115,7 +115,7 @@ def docs(session: nox.Session) -> None:
     # Not `--only-dev`: mkdocstrings imports the package to document it.
     session.run('uv', 'sync', '--active', external=True)
     {% endif -%}
-    session.run('mkdocs', arg)
+    session.run('properdocs', arg)
 
 
 @nox.session
