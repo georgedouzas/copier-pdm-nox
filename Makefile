@@ -1,4 +1,7 @@
-.PHONY: install docs tests tests-integration changelog release
+.PHONY: install docs tests tests-integration regen-fixtures changelog release
+
+# Override to use a specific interpreter, e.g. `make tests PYTHON=.venv/bin/python`.
+PYTHON ?= python3
 
 install:
 	@pip install -r requirements.txt
@@ -8,9 +11,13 @@ docs:
 
 tests:
 	@bats tests/test_copier.bats
+	@$(PYTHON) scripts/check_pipelines.py
 
 tests-integration:
 	@bats tests/test_integration.bats
+
+regen-fixtures:
+	@$(PYTHON) scripts/regen_fixtures.py
 
 changelog:
 	@git-changelog -T --bump=auto -o CHANGELOG.md -c angular -t keepachangelog -s feat,fix,docs,style,refactor,tests,chore

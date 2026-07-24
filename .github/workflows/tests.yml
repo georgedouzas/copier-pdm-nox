@@ -26,7 +26,7 @@ jobs:
 
     - name: Install copier and bats
       run: |
-        pip install copier
+        pip install copier pyyaml
         sudo apt-get update && sudo apt-get install -y bats
 
     - name: Run fixture tests

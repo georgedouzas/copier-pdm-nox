@@ -38,9 +38,9 @@ Paths containing `{% ... %}` are literal directory names on disk, not placeholde
 
 **Purpose**: Make the freeze checkable before anything can break it.
 
-- [ ] T001 Add a `regen-fixtures` target to `Makefile` that renders all fixture combinations and rsyncs them into `tests/expected/`, replacing the ad-hoc script used during the CI work
-- [ ] T002 [P] Add a `scripts/check_pipelines.py` helper that loads every `tests/expected/*/**/*.yml` with a YAML parser and asserts each step name is a real mapping key, per quickstart S5
-- [ ] T003 Wire `scripts/check_pipelines.py` into `make tests` so structural pipeline validation runs with the fixture diff
+- [X] T001 Add a `regen-fixtures` target to `Makefile` that renders all fixture combinations and rsyncs them into `tests/expected/`, replacing the ad-hoc script used during the CI work
+- [X] T002 [P] Add a `scripts/check_pipelines.py` helper that loads every `tests/expected/*/**/*.yml` with a YAML parser and asserts each step name is a real mapping key, per quickstart S5
+- [X] T003 Wire `scripts/check_pipelines.py` into `make tests` so structural pipeline validation runs with the fixture diff
 
 **Checkpoint**: `make tests` now fails on a pipeline whose keys were swallowed into a script block — the defect class from the Azure `displayName` bug.
 
