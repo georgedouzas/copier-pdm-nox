@@ -86,7 +86,8 @@ def docs(session: nox.Session) -> None:
         session: The nox session.
     """
     arg = check_cli(session, ['serve', 'build'])
-    session.run('uv', 'sync', '--only-dev', '--active', external=True)
+    # Not `--only-dev`: mkdocstrings imports the package to document it.
+    session.run('uv', 'sync', '--active', external=True)
     session.run('mkdocs', arg)
 
 

@@ -112,7 +112,8 @@ def docs(session: nox.Session) -> None:
     {% if package_manager == "PDM" -%}
     session.run('pdm', 'install', '-dG', 'docs', external=True)
     {% else -%}
-    session.run('uv', 'sync', '--only-dev', '--active', external=True)
+    # Not `--only-dev`: mkdocstrings imports the package to document it.
+    session.run('uv', 'sync', '--active', external=True)
     {% endif -%}
     session.run('mkdocs', arg)
 
