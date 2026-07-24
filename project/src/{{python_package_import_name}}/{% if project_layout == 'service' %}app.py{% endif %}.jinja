@@ -1,0 +1,26 @@
+"""The web API for `{{ python_package_import_name }}`.
+
+Run it locally with `uvicorn {{ python_package_import_name }}.app:app --reload`. No broker,
+database or other service is required to start it.
+"""
+
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI(title='{{ repository_name }}', description='{{ project_description }}')
+
+
+class Health(BaseModel):
+    """The response returned by the health endpoint."""
+
+    status: str
+
+
+@app.get('/health')
+def health() -> Health:
+    """Report that the service is up.
+
+    Returns:
+        The service status.
+    """
+    return Health(status='ok')

@@ -118,6 +118,12 @@ dependencies = [
 dependencies = [
     "metaflow>=2.19",
 ]
+{% elif project_layout == "service" -%}
+dependencies = [
+    "fastapi>=0.115",
+    "pydantic>=2.0",
+    "uvicorn[standard]>=0.34",
+]
 {% else -%}
 dependencies = []
 {% endif -%}
@@ -209,6 +215,9 @@ tests = [
     "ipykernel>=6.29.0",
     "nbmake>=1.5.0",
     {%- endif %}
+    {%- if project_layout == "service" %}
+    "httpx>=0.28.0",
+    {%- endif %}
 ]
 changelog = [
     "git-changelog>=2.5.2",
@@ -253,6 +262,9 @@ dev = [
     {%- if project_layout == "ml" %}
     "ipykernel>=6.29.0",
     "nbmake>=1.5.0",
+    {%- endif %}
+    {%- if project_layout == "service" %}
+    "httpx>=0.28.0",
     {%- endif %}
     "git-changelog>=2.5.2",
     {%- if publish_pypi %}
@@ -324,6 +336,13 @@ arg-type-hints-in-docstring = false
 check-return-types = false
 check-yield-types = false
 
+{% if project_layout == "service" -%}
+[tool.deptry.per_rule_ignores]
+# uvicorn is the server the container runs, invoked as a command rather than imported.
+# Declared because deploying without it fails; unimported because nothing should import it.
+DEP002 = ["uvicorn"]
+
+{% endif -%}
 [tool.bandit]
 # Read by the checks nox session, which passes `-c pyproject.toml`. B101 is the
 # bandit counterpart of the ruff S101 ignore above: asserts are how tests assert.

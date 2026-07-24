@@ -85,6 +85,7 @@ project_layout:
     "Library, an importable package you distribute to others": library
     "Command line tool, a program people run from a terminal": script
     "Machine learning, experiments and models with notebooks alongside code": ml
+    "Service, a web API you deploy and run": service
 
 # Distribution
 
@@ -93,8 +94,8 @@ publish_pypi:
   help: Publish your project to PyPI
   # Not asked when the layout produces nothing to publish. Asking and then ignoring the
   # answer would be worse than not asking: the contradiction simply cannot arise this way.
-  when: "{{ project_layout != 'ml' }}"
-  default: "{{ project_layout != 'ml' }}"
+  when: "{{ project_layout not in ['ml', 'service'] }}"
+  default: "{{ project_layout not in ['ml', 'service'] }}"
 
 python_package_distribution_name:
   type: str

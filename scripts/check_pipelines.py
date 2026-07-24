@@ -99,7 +99,7 @@ def check_release_topology(fixture: Path) -> list[str]:
     publishes = 'pypi-release' in jobs
     # A fixture is publishable unless its answers turned publishing off. The ML layout and the
     # no-publish-pypi fixture are the two that should carry no publish job.
-    expected = fixture.name not in {'ml-layout', 'no-publish-pypi'}
+    expected = fixture.name not in {'ml-layout', 'service-layout', 'no-publish-pypi'}
 
     failures = []
     if publishes != expected:

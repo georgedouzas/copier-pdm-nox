@@ -113,4 +113,14 @@ python -m {{ python_package_import_name }}.flow run
 
 Notebooks live in `notebooks/` and are executed by the test suite, so a notebook that stops
 working fails the build. Anything placed in `data/` stays out of version control.
+{% elif project_layout == "service" %}
+## Usage
+
+Run the service locally:
+
+```bash
+uvicorn {{ python_package_import_name }}.app:app --reload
+```
+
+Then `GET /health`, or read the generated OpenAPI documentation at `/docs`.
 {% endif -%}

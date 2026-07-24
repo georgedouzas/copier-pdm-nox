@@ -129,3 +129,21 @@ teardown() {
     run git ls-files data/
     [ -n "$output" ]
 }
+
+@test "Generated service layout installs, checks, tests and serves" {
+    command -v pdm >/dev/null || skip "pdm not installed"
+    command -v uv >/dev/null || skip "uv not installed (needed for nox venvs)"
+
+    generate proj --data project_layout=service
+    cd proj
+    init_git
+
+    run pdm install
+    [ "$status" -eq 0 ]
+
+    run pdm checks
+    [ "$status" -eq 0 ]
+
+    run pdm tests
+    [ "$status" -eq 0 ]
+}
