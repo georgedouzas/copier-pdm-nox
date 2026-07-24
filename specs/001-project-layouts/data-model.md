@@ -43,10 +43,13 @@ keeping them named and in one place is what stops the conditionals sprawling.
 | Derived value | Rule | Governs |
 | ------------- | ---- | ------- |
 | `is_publishable` | `project_layout != 'ml'` | Whether `publish_pypi` is asked at all |
-| `has_api_docs` | `project_layout in ['library', 'script']` | Whether `docs/generate_api.py` renders and the API nav entry exists |
 | `has_cli` | `project_layout == 'script'` | Whether `cli.py` and `[project.scripts]` render |
 | `has_notebooks` | `project_layout == 'ml'` | Whether `notebooks/` and `data/` render, whether notebook tooling is declared (FR-020), and whether lint/coverage carry notebook rules |
 | `has_flow` | `project_layout == 'ml'` | Whether `flow.py` and the workflow dependency render (research R4a). Kept separate from `has_notebooks` so a future layout can take one without the other |
+
+`has_api_docs` was planned and then dropped: it was true for every layout, because every layout
+exposes an importable package. See research R6. A derived value that never varies is a
+conditional waiting to be mis-set, not an abstraction.
 
 ## Relationships to existing answers
 

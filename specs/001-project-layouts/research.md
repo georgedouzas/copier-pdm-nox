@@ -188,20 +188,28 @@ matters is between *releasing* (versioning, changelog, tagging — universal) an
 
 ## R6: Documentation shape per layout
 
-**Decision**: The API-reference generator (`docs/generate_api.py.jinja`, driven by
-`mkdocstrings`) is library-and-script only. The ML layout gets a narrative documentation
-nav instead, and `properdocs.yml.jinja`'s `watch` list follows the layout's source paths.
+**Revised during implementation.** The original decision was to drop the API reference for
+the ML layout. Building the generated project showed the premise was wrong.
 
-**Rationale**: `generate_api.py` imports the package to document it. For a layout whose
-centre of gravity is notebooks, an API reference over a thin `src/` package is the
-"present-but-broken" artifact the spec's fourth edge case names. This is also the
-`--only-dev` bug from the uv docs session in a different costume: documentation tooling that
-assumes an importable package fails loudly when the layout does not guarantee one.
+**Original decision**: the API-reference generator (`docs/generate_api.py.jinja`, driven by
+`mkdocstrings`) is library-and-script only, on the grounds that an API reference over a thin
+`src/` package is the "present-but-broken" artifact the spec's fourth edge case names.
 
-**Alternatives considered**:
+**Why it was wrong**: the premise was that an ML layout might not expose an importable
+package. It does — `data-model.md` says so explicitly, and the flow lives in it. Generating an
+ML project and running `docs build` produces a working API reference over real code. The edge
+case the original reasoning invoked is about a task that is *broken*, and this one is not.
 
-- *Keep the API reference for all layouts*. Rejected: generates a near-empty page, and
-  couples the ML layout to having an importable package at all times.
+**Decision in force**: every layout keeps the API reference. The only documentation difference
+is that `properdocs.yml.jinja`'s `watch` list gains `notebooks` for the ML layout, so editing a
+notebook rebuilds the docs during `docs serve`.
+
+**Consequence for the data model**: the `has_api_docs` derived value turned out to be true for
+every layout, so it does not exist. A derived value that never varies is a conditional waiting
+to be mis-set, not an abstraction.
+
+**Verified by**: `pdm docs build` on a generated ML project — builds clean, and the API page is
+populated rather than empty.
 
 ## R7: Fixture coverage strategy
 

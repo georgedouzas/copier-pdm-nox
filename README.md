@@ -25,6 +25,24 @@ locking, virtual environment management, and script execution seamlessly.
 pre-configured sessions for testing across multiple Python versions, code formatting, quality checks, and documentation building.
 This ensures consistent development workflows across different environments and team members.
 
+### Project layouts
+
+Choose the kind of project you are starting and the generated tree fits it, so nothing has to be deleted before work begins:
+
+| Layout | What you get | Published |
+| ------ | ------------ | --------- |
+| `library` (default) | An importable `src/` package you distribute to others | Yes |
+| `script` | The same, plus a [click](https://click.palletsprojects.com) command and a console entry point | Yes |
+| `ml` | A [Metaflow](https://metaflow.org) flow, a `notebooks/` directory executed as part of the test suite, and a `data/` directory kept out of version control | No |
+
+Every layout carries the same quality floor: the same task names, the same checks at the same strictness, and the same release
+topology. Layouts differ in what they generate, never in whether that floor applies. The machine learning layout publishes
+nothing to a package index, so publishing is simply absent rather than generated and left broken.
+
+Layouts add only what a task actually exercises, and any framework they add runs locally with no account or server to
+provision. Changing a project's layout after generation is out of scope: the answer can be changed, but the result is whatever
+the update merge produces, and it is neither supported nor tested.
+
 ### Documentation
 
 Automatic documentation generation using [properdocs](https://github.com/properdocs/properdocs) with the beautiful

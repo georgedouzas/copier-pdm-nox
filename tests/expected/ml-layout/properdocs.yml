@@ -4,7 +4,7 @@ site_url: "https://gdouzas.github.io/test-repo"
 repo_url: "https://github.com/gdouzas/test-repo"
 repo_name: "gdouzas/test-repo"
 site_dir: "site"
-watch: [README.md, CONTRIBUTING.md, CHANGELOG.md, src/test_repo]
+watch: [README.md, CONTRIBUTING.md, CHANGELOG.md, src/test_repo, notebooks]
 
 theme:
   name: material

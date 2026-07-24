@@ -67,3 +67,11 @@ git clone https://github.com/gdouzas/test-repo.git
 cd test_repo
 pdm install
 ```
+
+## Usage
+
+Run the command:
+
+```bash
+test-repo --name world
+```

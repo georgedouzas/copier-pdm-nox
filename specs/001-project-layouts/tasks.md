@@ -104,12 +104,12 @@ Paths containing `{% ... %}` are literal directory names on disk, not placeholde
 
 **Independent test**: List and run every task for each layout; confirm names match and any difference is documented (quickstart S3).
 
-- [ ] T021 [US2] Verify the `[tool.pdm.scripts]` table renders identically across `tests/expected/default`, `script-layout` and `ml-layout`, and fix `project/pyproject.toml.jinja` if it does not (contract C2)
-- [ ] T022 [US2] Verify the `[tool.ruff]`, `[tool.mypy]`, `[tool.bandit]` and `[tool.interrogate]` sections are identical across layouts except for the documented notebook additions, per contract C3
-- [ ] T023 [US2] Add per-layout cases to `tests/test_integration.bats` that generate and run `install`, `checks`, `tests` and `docs build` for each layout (contract C1, quickstart S2)
-- [ ] T024 [US2] Adapt the `docs` session and `project/properdocs.yml.jinja` so the nav and `watch` paths follow the layout, keeping the session name and meaning unchanged, per research R6
-- [ ] T025 [US2] Gate `project/docs/generate_api.py.jinja` on `has_api_docs` so no API reference renders for `ml`, per research R6 and contract C5
-- [ ] T026 [US2] Extend `scripts/check_pipelines.py` to assert a publish step exists **iff** the layout is publishable and depends on the test and quality stages, per contract C4
+- [X] T021 [US2] Verify the `[tool.pdm.scripts]` table renders identically across `tests/expected/default`, `script-layout` and `ml-layout`, and fix `project/pyproject.toml.jinja` if it does not (contract C2)
+- [X] T022 [US2] Verify the `[tool.ruff]`, `[tool.mypy]`, `[tool.bandit]` and `[tool.interrogate]` sections are identical across layouts except for the documented notebook additions, per contract C3
+- [X] T023 [US2] Add per-layout cases to `tests/test_integration.bats` that generate and run `install`, `checks`, `tests` and `docs build` for each layout (contract C1, quickstart S2)
+- [X] T024 [US2] Adapt the `docs` session and `project/properdocs.yml.jinja` so the nav and `watch` paths follow the layout, keeping the session name and meaning unchanged, per research R6
+- [X] T025 [US2] Gate `project/docs/generate_api.py.jinja` on `has_api_docs` so no API reference renders for `ml`, per research R6 and contract C5
+- [X] T026 [US2] Extend `scripts/check_pipelines.py` to assert a publish step exists **iff** the layout is publishable and depends on the test and quality stages, per contract C4
 - [ ] T027 [US2] Run `make tests-integration` and confirm every layout and package-manager combination passes
 
 **Checkpoint**: the floor is demonstrably identical, by execution rather than by claim.
@@ -122,7 +122,7 @@ Paths containing `{% ... %}` are literal directory names on disk, not placeholde
 
 **Independent test**: Follow the documented procedure to add a layout and confirm existing fixtures are unchanged.
 
-- [ ] T028 [P] [US3] Document the procedure for adding a layout in `CONTRIBUTING.md`: the answer value, the derived values, the conditional path-name convention, and the required fixture
+- [X] T028 [P] [US3] Document the procedure for adding a layout in `CONTRIBUTING.md`: the answer value, the derived values, the conditional path-name convention, and the required fixture
 - [ ] T029 [US3] Dry-run the procedure by sketching the deferred data-engineering layout far enough to confirm no spine change is needed, then revert — recording what was learned in [research.md](./research.md)
 - [ ] T030 [US3] Confirm `git diff --exit-code tests/expected/` is clean after the dry-run revert
 
@@ -132,14 +132,14 @@ Paths containing `{% ... %}` are literal directory names on disk, not placeholde
 
 ## Phase 6: Polish & Cross-Cutting
 
-- [ ] T031 [P] Update `README.md` to describe the three layouts and what each produces (FR-014, and the ⚠ item in the constitution's Sync Impact Report)
-- [ ] T031a [P] State in `README.md` that changing a project's layout on update is out of scope, per FR-018 — a published boundary rather than a surprise
-- [ ] T032 [P] Update `project/README.md.jinja` so a generated project's README reflects its own layout
-- [ ] T033 Verify `copier update` on a pre-feature project does not prompt for `project_layout` and does not change its kind (FR-011, quickstart S6)
-- [ ] T033a Verify FR-019 by adding a file under the ML fixture's `data/` and confirming version control status stays clean while the directory itself remains tracked (quickstart S7)
+- [X] T031 [P] Update `README.md` to describe the three layouts and what each produces (FR-014, and the ⚠ item in the constitution's Sync Impact Report)
+- [X] T031a [P] State in `README.md` that changing a project's layout on update is out of scope, per FR-018 — a published boundary rather than a surprise
+- [X] T032 [P] Update `project/README.md.jinja` so a generated project's README reflects its own layout
+- [X] T033 Verify `copier update` on a pre-feature project does not prompt for `project_layout` and does not change its kind (FR-011, quickstart S6)
+- [X] T033a Verify FR-019 by adding a file under the ML fixture's `data/` and confirming version control status stays clean while the directory itself remains tracked (quickstart S7)
 - [ ] T034 Run every quickstart scenario S1-S8 end to end
 - [ ] T035 Confirm the constitution's Principle VI holds for the shipped result: every added dependency is configured, invoked by a session, and exercised by CI — specifically that `click` and `metaflow` each trace to a task that runs them (SC-008)
-- [ ] T036 Confirm FR-021 by generating an ML project on a machine with no cloud credentials and running its flow test — no account, server or provisioning may be required
+- [X] T036 Confirm FR-021 by generating an ML project on a machine with no cloud credentials and running its flow test — no account, server or provisioning may be required
 
 ---
 

@@ -82,6 +82,40 @@ def check_azure_steps(path: Path, document: Any) -> list[str]:
     return failures
 
 
+def check_release_topology(fixture: Path) -> list[str]:
+    """Assert a fixture publishes if and only if its layout is publishable, and only when green.
+
+    Arguments:
+        fixture: The fixture directory.
+
+    Returns:
+        A list of failure messages.
+    """
+    release = fixture / '.github' / 'workflows' / 'release.yml'
+    if not release.is_file():
+        return []
+    document = yaml.safe_load(release.read_text(encoding='utf-8')) or {}
+    jobs = document.get('jobs', {})
+    publishes = 'pypi-release' in jobs
+    # A fixture is publishable unless its answers turned publishing off. The ML layout and the
+    # no-publish-pypi fixture are the two that should carry no publish job.
+    expected = fixture.name not in {'ml-layout', 'no-publish-pypi'}
+
+    failures = []
+    if publishes != expected:
+        state = 'has' if publishes else 'has no'
+        want = 'should' if expected else 'should not'
+        failures.append(f'{fixture.name}: {state} a pypi-release job but {want} publish')
+    if publishes and 'ci' not in jobs.get('pypi-release', {}).get('needs', ['build']):
+        build_needs = jobs.get('build', {}).get('needs')
+        if build_needs != 'ci' and 'ci' not in (build_needs or []):
+            failures.append(
+                f'{fixture.name}: publishing does not depend on the CI job, so a red test '
+                f'suite would not stop a release',
+            )
+    return failures
+
+
 def main() -> None:
     """Validate every generated fixture."""
     if not EXPECTED.is_dir():
@@ -90,6 +124,9 @@ def main() -> None:
     failures: list[str] = []
     parsed = 0
     scanned = 0
+
+    for fixture in sorted(p for p in EXPECTED.iterdir() if p.is_dir()):
+        failures += check_release_topology(fixture)
 
     for path in sorted(EXPECTED.rglob('*')):
         if not path.is_file() or path.suffix in SKIP_SUFFIXES:

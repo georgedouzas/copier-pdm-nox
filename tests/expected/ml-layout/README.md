@@ -58,3 +58,14 @@ git clone https://github.com/gdouzas/test-repo.git
 cd test_repo
 pdm install
 ```
+
+## Usage
+
+Run the flow locally. No account or server is needed; Metaflow's local mode is the default:
+
+```bash
+python -m test_repo.flow run
+```
+
+Notebooks live in `notebooks/` and are executed by the test suite, so a notebook that stops
+working fails the build. Anything placed in `data/` stays out of version control.

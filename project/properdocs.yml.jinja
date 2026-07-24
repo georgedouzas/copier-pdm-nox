@@ -25,7 +25,7 @@ site_description: "{{ project_description }}"
 repo_name: "{{ repository_namespace }}/{{ repository_name }}"
 {% endif -%}
 site_dir: "site"
-watch: [README.md, CONTRIBUTING.md, CHANGELOG.md, src/{{ python_package_import_name }}]
+watch: [README.md, CONTRIBUTING.md, CHANGELOG.md, src/{{ python_package_import_name }}{% if project_layout == "ml" %}, notebooks{% endif %}]
 
 theme:
   name: material

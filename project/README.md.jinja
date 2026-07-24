@@ -94,3 +94,23 @@ git clone https://bitbucket.org/{{ namespace_path }}/{{ repo_path }}.git
 cd {{ python_package_distribution_name }}
 {% if package_manager == "PDM" %}pdm install{% else %}uv sync{% endif %}
 ```
+{% if project_layout == "script" %}
+## Usage
+
+Run the command:
+
+```bash
+{{ repository_name }} --name world
+```
+{% elif project_layout == "ml" %}
+## Usage
+
+Run the flow locally. No account or server is needed; Metaflow's local mode is the default:
+
+```bash
+python -m {{ python_package_import_name }}.flow run
+```
+
+Notebooks live in `notebooks/` and are executed by the test suite, so a notebook that stops
+working fails the build. Anything placed in `data/` stays out of version control.
+{% endif -%}
