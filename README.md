@@ -27,7 +27,7 @@ This ensures consistent development workflows across different environments and 
 
 ### Documentation
 
-Automatic documentation generation using [MkDocs](https://github.com/mkdocs/mkdocs) with the beautiful
+Automatic documentation generation using [properdocs](https://github.com/properdocs/properdocs) with the beautiful
 [Material](https://squidfunk.github.io/mkdocs-material) theme. The [mkdocstrings](https://mkdocstrings.github.io/) plugin extracts
 API documentation directly from your docstrings, keeping documentation in sync with code. Includes example pages, custom CSS, and
 responsive design out of the box.

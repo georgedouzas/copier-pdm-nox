@@ -4,7 +4,7 @@ install:
 	@pip install -r requirements.txt
 
 docs:
-	@mkdocs serve
+	@properdocs serve
 
 tests:
 	@bats tests/test_copier.bats
