@@ -1,7 +1,7 @@
 [build-system]
 {% if package_manager == "PDM" -%}
-requires = ["pdm-pep517"]
-build-backend = "pdm.pep517.api"
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
 {% else -%}
 requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
@@ -135,9 +135,12 @@ Issues = "https://bitbucket.org/{{ namespace_path }}/{{ repo_path }}/issues"
 {% endif -%}
 {% endif -%}
 {% if package_manager == "PDM" %}
-[tool.pdm]
-version = {source = "scm"}
-build = {package-dir = "src", editable-backend = "editables"}
+[tool.pdm.version]
+source = "scm"
+
+[tool.pdm.build]
+package-dir = "src"
+editable-backend = "editables"
 
 [tool.pdm.scripts]
 clean = "nox --error-on-external-run -R -s clean"
