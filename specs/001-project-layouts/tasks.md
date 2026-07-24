@@ -110,7 +110,7 @@ Paths containing `{% ... %}` are literal directory names on disk, not placeholde
 - [X] T024 [US2] Adapt the `docs` session and `project/properdocs.yml.jinja` so the nav and `watch` paths follow the layout, keeping the session name and meaning unchanged, per research R6
 - [X] T025 [US2] Gate `project/docs/generate_api.py.jinja` on `has_api_docs` so no API reference renders for `ml`, per research R6 and contract C5
 - [X] T026 [US2] Extend `scripts/check_pipelines.py` to assert a publish step exists **iff** the layout is publishable and depends on the test and quality stages, per contract C4
-- [ ] T027 [US2] Run `make tests-integration` and confirm every layout and package-manager combination passes
+- [X] T027 [US2] Run `make tests-integration` and confirm every layout and package-manager combination passes
 
 **Checkpoint**: the floor is demonstrably identical, by execution rather than by claim.
 
@@ -123,8 +123,8 @@ Paths containing `{% ... %}` are literal directory names on disk, not placeholde
 **Independent test**: Follow the documented procedure to add a layout and confirm existing fixtures are unchanged.
 
 - [X] T028 [P] [US3] Document the procedure for adding a layout in `CONTRIBUTING.md`: the answer value, the derived values, the conditional path-name convention, and the required fixture
-- [ ] T029 [US3] Dry-run the procedure by sketching the deferred data-engineering layout far enough to confirm no spine change is needed, then revert — recording what was learned in [research.md](./research.md)
-- [ ] T030 [US3] Confirm `git diff --exit-code tests/expected/` is clean after the dry-run revert
+- [X] T029 [US3] Dry-run the procedure by sketching the deferred data-engineering layout far enough to confirm no spine change is needed, then revert — recording what was learned in [research.md](./research.md)
+- [X] T030 [US3] Confirm `git diff --exit-code tests/expected/` is clean after the dry-run revert
 
 **Checkpoint**: the feature is a foundation rather than a one-off.
 
@@ -137,8 +137,8 @@ Paths containing `{% ... %}` are literal directory names on disk, not placeholde
 - [X] T032 [P] Update `project/README.md.jinja` so a generated project's README reflects its own layout
 - [X] T033 Verify `copier update` on a pre-feature project does not prompt for `project_layout` and does not change its kind (FR-011, quickstart S6)
 - [X] T033a Verify FR-019 by adding a file under the ML fixture's `data/` and confirming version control status stays clean while the directory itself remains tracked (quickstart S7)
-- [ ] T034 Run every quickstart scenario S1-S8 end to end
-- [ ] T035 Confirm the constitution's Principle VI holds for the shipped result: every added dependency is configured, invoked by a session, and exercised by CI — specifically that `click` and `metaflow` each trace to a task that runs them (SC-008)
+- [X] T034 Run every quickstart scenario S1-S8 end to end
+- [X] T035 Confirm the constitution's Principle VI holds for the shipped result: every added dependency is configured, invoked by a session, and exercised by CI — specifically that `click` and `metaflow` each trace to a task that runs them (SC-008)
 - [X] T036 Confirm FR-021 by generating an ML project on a machine with no cloud credentials and running its flow test — no account, server or provisioning may be required
 
 ---
