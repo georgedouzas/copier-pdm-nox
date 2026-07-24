@@ -88,6 +88,13 @@ project_layout:
     "Data engineering, pipelines that move and shape data": dataeng
     "Service, a web API you deploy and run": service
 
+include_dockerfile:
+  type: bool
+  help: Include a Dockerfile for building a container image
+  # Defaults on for the layouts that are deployed rather than installed, and off for the
+  # ones distributed as packages, where a container is something to delete rather than use.
+  default: "{{ project_layout in ['dataeng', 'service'] }}"
+
 # Distribution
 
 publish_pypi:

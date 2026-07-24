@@ -164,8 +164,12 @@ the user wants a pipeline project with a defined shape.
 The telemetry dependency remains a genuine concern for any layout, and MUST be decided
 explicitly rather than inherited silently when data engineering is specified.
 
-**Deferred, not decided**: this is a note for the future layout's own research phase, recorded
-here so the analysis is not repeated from scratch.
+**Resolved (post-first-release)**: the `dataeng` layout shipped on Kedro. The telemetry concern
+was settled the way this note demanded — the generated project writes a `.telemetry` file with
+`consent: false`, so a project made from a template declines the data collection its owner never
+had the chance to opt into. Set it to `true` to send usage data. This was added under FR-012
+alongside the `service` (FastAPI) layout, without disturbing the three that shipped first, which
+is the extension path US3 anticipated.
 
 ## R5: Publishing for a layout that publishes nothing
 

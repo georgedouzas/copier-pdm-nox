@@ -130,24 +130,6 @@ teardown() {
     [ -n "$output" ]
 }
 
-@test "Generated service layout installs, checks, tests and serves" {
-    command -v pdm >/dev/null || skip "pdm not installed"
-    command -v uv >/dev/null || skip "uv not installed (needed for nox venvs)"
-
-    generate proj --data project_layout=service
-    cd proj
-    init_git
-
-    run pdm install
-    [ "$status" -eq 0 ]
-
-    run pdm checks
-    [ "$status" -eq 0 ]
-
-    run pdm tests
-    [ "$status" -eq 0 ]
-}
-
 @test "Generated data engineering layout installs, checks and tests, with telemetry declined" {
     command -v pdm >/dev/null || skip "pdm not installed"
     command -v uv >/dev/null || skip "uv not installed (needed for nox venvs)"
@@ -169,4 +151,61 @@ teardown() {
     # than inherit consent its owner never gave.
     run grep -q "consent: false" .telemetry
     [ "$status" -eq 0 ]
+
+    # Deployed rather than distributed, so a container is the artifact.
+    [ -f Dockerfile ]
+}
+
+@test "Generated service layout installs, checks, tests and serves" {
+    command -v pdm >/dev/null || skip "pdm not installed"
+    command -v uv >/dev/null || skip "uv not installed (needed for nox venvs)"
+
+    generate proj --data project_layout=service
+    cd proj
+    init_git
+
+    run pdm install
+    [ "$status" -eq 0 ]
+
+    run pdm checks
+    [ "$status" -eq 0 ]
+
+    run pdm tests
+    [ "$status" -eq 0 ]
+
+    [ -f Dockerfile ]
+}
+
+@test "Library and script layouts carry no Dockerfile by default" {
+    generate proj
+    [ ! -f proj/Dockerfile ]
+
+    rm -rf proj
+    generate proj --data project_layout=script
+    [ ! -f proj/Dockerfile ]
+}
+
+@test "A Dockerfile can be opted into for any layout" {
+    generate proj --data include_dockerfile=True
+    [ -f proj/Dockerfile ]
+}
+
+@test "Generated Dockerfile builds and the image runs" {
+    command -v docker >/dev/null || skip "docker not installed"
+    docker info >/dev/null 2>&1 || skip "docker daemon not running"
+
+    generate proj --data project_layout=service
+    cd proj
+    init_git
+
+    # A generated Dockerfile is a claim that the project containerises. Build it rather than
+    # check it exists: the version comes from the SCM tags, which needs git in the build
+    # stage and the .git directory in the context, and only a real build proves both.
+    run docker build -t cmp-integration-test .
+    [ "$status" -eq 0 ]
+
+    run docker run --rm cmp-integration-test python -c "import test_repo.app"
+    [ "$status" -eq 0 ]
+
+    docker rmi -f cmp-integration-test || true
 }

@@ -25,6 +25,12 @@ A kind of project the generator can produce. Represented by the `project_layout`
 | `library` | Importable package distributed to others | Yes | `src/<pkg>/` |
 | `script` | Command line tool with an entry point | Yes | `src/<pkg>/` + `cli.py` |
 | `ml` | Experiments and models, notebooks alongside code | No | `src/<pkg>/` + `flow.py`, `notebooks/`, `data/` |
+| `dataeng` | Pipelines that move and shape data | No | `src/<pkg>/` + `pipeline.py`, `conf/`, `data/` |
+| `service` | A web API you deploy and run | No | `src/<pkg>/` + `app.py` |
+
+`dataeng` and `service` shipped after the first three, added under FR-012 without changing them —
+the procedure US3 anticipated, exercised for real. `dataeng` is built on Kedro with telemetry
+declined (research R8 resolved), `service` on FastAPI.
 
 ### Validation rules
 
@@ -42,8 +48,9 @@ keeping them named and in one place is what stops the conditionals sprawling.
 
 | Derived value | Rule | Governs |
 | ------------- | ---- | ------- |
-| `is_publishable` | `project_layout != 'ml'` | Whether `publish_pypi` is asked at all |
+| `is_publishable` | `project_layout not in ['ml', 'dataeng', 'service']` | Whether `publish_pypi` is asked at all |
 | `has_cli` | `project_layout == 'script'` | Whether `cli.py` and `[project.scripts]` render |
+| `include_dockerfile` | asked; defaults to `project_layout in ['dataeng', 'service']` | Whether a `Dockerfile` and `.dockerignore` render. A real question, not a derived value: deployed layouts default it on, any layout can opt in. |
 | `has_notebooks` | `project_layout == 'ml'` | Whether `notebooks/` and `data/` render, whether notebook tooling is declared (FR-020), and whether lint/coverage carry notebook rules |
 | `has_flow` | `project_layout == 'ml'` | Whether `flow.py` and the workflow dependency render (research R4a). Kept separate from `has_notebooks` so a future layout can take one without the other |
 

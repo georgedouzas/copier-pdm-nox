@@ -97,13 +97,14 @@ def check_release_topology(fixture: Path) -> list[str]:
     document = yaml.safe_load(release.read_text(encoding='utf-8')) or {}
     jobs = document.get('jobs', {})
     publishes = 'pypi-release' in jobs
-    # A fixture is publishable unless its answers turned publishing off. The ML layout and the
-    # no-publish-pypi fixture are the two that should carry no publish job.
-    expected = fixture.name not in {'ml-layout', 'dataeng-layout', 'service-layout', 'no-publish-pypi'}
+    # A fixture is publishable unless its answers turned publishing off. Layouts that deploy
+    # rather than distribute publish nothing to an index, as does the no-publish-pypi fixture.
+    unpublishable = {'ml-layout', 'dataeng-layout', 'service-layout', 'no-publish-pypi'}
+    expected = fixture.name not in unpublishable
 
     failures = []
     if publishes != expected:
-        state = 'has' if publishes else 'has no'
+        state = 'has' if publishes else 'lacks'
         want = 'should' if expected else 'should not'
         failures.append(f'{fixture.name}: {state} a pypi-release job but {want} publish')
     if publishes and 'ci' not in jobs.get('pypi-release', {}).get('needs', ['build']):

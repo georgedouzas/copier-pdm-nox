@@ -45,6 +45,11 @@ generated project's own tasks exercises it, and any framework it does add must r
 no account or server to provision. Both exist because every generated project pays for each
 dependency, including the projects that wanted a different choice.
 
+A layout that is deployed rather than installed should default `include_dockerfile` on. A
+layout whose framework collects telemetry must decline it in generated output rather than
+inherit consent the project's owner never gave — see the `.telemetry` file the `dataeng`
+layout ships.
+
 Layouts differ in what they generate, never in whether the quality floor applies: the same task
 names, the same checks at the same strictness, the same release topology.
 

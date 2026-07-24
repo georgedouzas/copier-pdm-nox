@@ -29,11 +29,17 @@ This ensures consistent development workflows across different environments and 
 
 Choose the kind of project you are starting and the generated tree fits it, so nothing has to be deleted before work begins:
 
-| Layout | What you get | Published |
-| ------ | ------------ | --------- |
-| `library` (default) | An importable `src/` package you distribute to others | Yes |
-| `script` | The same, plus a [click](https://click.palletsprojects.com) command and a console entry point | Yes |
-| `ml` | A [Metaflow](https://metaflow.org) flow, a `notebooks/` directory executed as part of the test suite, and a `data/` directory kept out of version control | No |
+| Layout | What you get | Published | Container |
+| ------ | ------------ | --------- | --------- |
+| `library` (default) | An importable `src/` package you distribute to others | Yes | Opt-in |
+| `script` | The same, plus a [click](https://click.palletsprojects.com) command and a console entry point | Yes | Opt-in |
+| `ml` | A [Metaflow](https://metaflow.org) flow, a `notebooks/` directory executed as part of the test suite and rendered into the docs, and a `data/` directory kept out of version control | No | Opt-in |
+| `dataeng` | A [Kedro](https://kedro.org) pipeline with a `conf/` catalog, plus `data/` kept out of version control | No | Yes |
+| `service` | A [FastAPI](https://fastapi.tiangolo.com) application with a health endpoint, served by uvicorn | No | Yes |
+
+A Dockerfile is generated for the layouts that are deployed rather than installed, and can be opted into for any of the others.
+Kedro ships telemetry as a core dependency, so the `dataeng` layout writes a `.telemetry` file declining it — a project generated
+from a template never had the chance to consent, so consent is not assumed.
 
 Every layout carries the same quality floor: the same task names, the same checks at the same strictness, and the same release
 topology. Layouts differ in what they generate, never in whether that floor applies. The machine learning layout publishes
