@@ -1,0 +1,24 @@
+<!-- Before submitting, please search existing issues to make sure the bug hasn't already been reported. -->
+/label ~fix
+
+### Describe the bug
+
+A clear and concise description of what the bug is.
+
+### Steps or code to reproduce
+
+Please add a minimal code example that reproduces the error. If it is too long, link a snippet.
+
+### Expected results
+
+What you expected to happen.
+
+### Actual results
+
+What happened instead. If there is an error, paste the **full traceback**.
+
+### Environment
+
+- `test-repo` version:
+- Python version:
+- OS:

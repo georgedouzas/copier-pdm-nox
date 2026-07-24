@@ -1,0 +1,7 @@
+# Data stays out of version control. The directory itself is tracked, via this file, so the
+# structure survives a clone without carrying anything that was put in it.
+#
+# A dataset reaching a shared repository is not undone by a later commit, so the safe default
+# is the one that is on by default.
+*
+!.gitignore

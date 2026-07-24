@@ -1,0 +1,79 @@
+trigger:
+  branches:
+    include:
+      - '*'
+  tags:
+    include:
+      - '*'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  pythonVersion: '3.11'
+
+stages:
+- stage: Test
+  jobs:
+  - job: TestJob
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(pythonVersion)'
+      displayName: 'Use Python $(pythonVersion)'
+
+    - script: |
+        python -m pip install --upgrade pip
+        pip install uv
+      displayName: 'Install dependencies'
+
+    - script: |
+        uv sync
+        uv run nox -s tests
+      displayName: 'Run tests'
+
+- stage: Quality
+  dependsOn: Test
+  jobs:
+  - job: QualityJob
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(pythonVersion)'
+      displayName: 'Use Python $(pythonVersion)'
+
+    - script: |
+        python -m pip install --upgrade pip
+        pip install uv
+      displayName: 'Install dependencies'
+
+    - script: |
+        uv sync
+        uv run nox -s checks
+      displayName: 'Run quality checks'
+
+- stage: Docs
+  dependsOn: Quality
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  jobs:
+  - job: DocsJob
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(pythonVersion)'
+      displayName: 'Use Python $(pythonVersion)'
+
+    - script: |
+        python -m pip install --upgrade pip
+        pip install uv
+      displayName: 'Install dependencies'
+
+    - script: |
+        uv sync
+        uv run nox -s docs -- build
+      displayName: 'Build documentation'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: 'site'
+        artifactName: 'documentation'

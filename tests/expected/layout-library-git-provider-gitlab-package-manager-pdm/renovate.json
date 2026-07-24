@@ -1,0 +1,20 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommits"
+  ],
+  "semanticCommitType": "chore",
+  "labels": ["dependencies"],
+  "schedule": ["before 6am on monday"],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "description": "Group development tooling so the checks move together rather than one pull request at a time.",
+      "matchDepTypes": ["dev-dependencies", "devDependencies"],
+      "groupName": "development tooling"
+    }
+  ]
+}

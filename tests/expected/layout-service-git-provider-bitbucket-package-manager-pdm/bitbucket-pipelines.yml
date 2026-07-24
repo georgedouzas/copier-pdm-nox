@@ -1,0 +1,82 @@
+image: python:3.11
+
+pipelines:
+  default:
+    - step:
+        name: Test
+        caches:
+          - pip
+        script:
+          - pip install pdm
+          - pdm install
+          - pdm tests
+        artifacts:
+          - coverage.xml
+          - htmlcov/**
+
+    - step:
+        name: Quality Checks
+        caches:
+          - pip
+        script:
+          - pip install pdm
+          - pdm install
+          - pdm checks
+
+  branches:
+    main:
+      - step:
+          name: Test
+          caches:
+            - pip
+          script:
+            - pip install pdm
+            - pdm install
+            - pdm tests
+          artifacts:
+            - coverage.xml
+            - htmlcov/**
+
+      - step:
+          name: Quality Checks
+          caches:
+            - pip
+          script:
+            - pip install pdm
+            - pdm install
+            - pdm checks
+
+      - step:
+          name: Build Documentation
+          caches:
+            - pip
+          script:
+            - pip install pdm
+            - pdm install
+            - pdm docs build
+          artifacts:
+            - site/**
+
+  tags:
+    '*':
+      - step:
+          name: Test
+          caches:
+            - pip
+          script:
+            - pip install pdm
+            - pdm install
+            - pdm tests
+
+      - step:
+          name: Quality Checks
+          caches:
+            - pip
+          script:
+            - pip install pdm
+            - pdm install
+            - pdm checks
+
+definitions:
+  caches:
+    pip: ~/.cache/pip

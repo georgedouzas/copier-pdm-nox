@@ -11,10 +11,15 @@ Two trees matter and are easy to confuse:
 - `tests/expected/` holds the rendered output for each supported combination of answers.
 
 Fixtures are the specification. Regenerate them with `make regen-fixtures`; never edit one by
-hand to match an expectation. Run `make tests` before every commit, and `make tests-integration`
-whenever you touch `project/noxfile.py.jinja`, `project/pyproject.toml.jinja` or a pipeline
-template — that target generates real projects and runs their toolchains, which is the only way
-to know a change works.
+hand to match an expectation. `scripts/regen_fixtures.py` is the single source of truth for
+which combinations exist — the full cross product of layout, git provider and package manager,
+plus the publish and license edges — and `tests/test_copier.bats` reads the same set back by
+iterating the directories, reconstructing each render's answers from its name. Neither the
+golden test nor the fixture list needs a per-fixture case, so they cannot drift apart.
+
+Run `make tests` before every commit, and `make tests-integration` whenever you touch
+`project/noxfile.py.jinja`, `project/pyproject.toml.jinja` or a pipeline template — that target
+generates real projects and runs their toolchains, which is the only way to know a change works.
 
 `make tests` also runs `scripts/check_pipelines.py`, which parses every generated YAML rather
 than reading it. Jinja whitespace control can move a key into the block scalar above it,
@@ -32,13 +37,15 @@ a few places, so shipped layouts are not disturbed:
    (`project/pyproject.toml.jinja`, `project/noxfile.py.jinja`), and conditional directory names
    for whole trees that only one layout wants, following
    `project/{% if project_layout == 'ml' %}notebooks{% endif %}/`.
-3. Add the layout to `FIXTURES` in `scripts/regen_fixtures.py` and a matching case in
-   `tests/test_copier.bats`. A layout without a fixture is an untested claim.
+3. Add the layout segment to `LAYOUTS` in `scripts/regen_fixtures.py`. The fixtures are the
+   cross product of the dimensions, so this creates one fixture per provider and package
+   manager automatically; the golden test picks them up without a per-fixture case.
 4. Add a case to `tests/test_integration.bats` that generates the layout and runs its `install`,
-   `checks` and `tests`.
+   `checks` and `tests`. The golden suite proves the layout renders; the integration suite proves
+   the generated project works.
 5. Run `make regen-fixtures`, then confirm `git diff --exit-code tests/expected/` shows changes
-   *only* under your new fixture. Any movement elsewhere means the new layout disturbed an
-   existing one, which is a defect rather than something to regenerate away.
+   *only* under the new layout's fixtures. Any movement elsewhere means the new layout disturbed
+   an existing one, which is a defect rather than something to regenerate away.
 
 Two rules constrain what a layout may carry. It must not add a dependency unless one of the
 generated project's own tasks exercises it, and any framework it does add must run locally with

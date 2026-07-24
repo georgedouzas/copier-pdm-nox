@@ -1,0 +1,95 @@
+image: python:3.11
+
+pipelines:
+  default:
+    - step:
+        name: Test
+        caches:
+          - pip
+        script:
+          - pip install uv
+          - uv sync
+          - uv run nox -s tests
+        artifacts:
+          - coverage.xml
+          - htmlcov/**
+
+    - step:
+        name: Quality Checks
+        caches:
+          - pip
+        script:
+          - pip install uv
+          - uv sync
+          - uv run nox -s checks
+
+  branches:
+    main:
+      - step:
+          name: Test
+          caches:
+            - pip
+          script:
+            - pip install uv
+            - uv sync
+            - uv run nox -s tests
+          artifacts:
+            - coverage.xml
+            - htmlcov/**
+
+      - step:
+          name: Quality Checks
+          caches:
+            - pip
+          script:
+            - pip install uv
+            - uv sync
+            - uv run nox -s checks
+
+      - step:
+          name: Build Documentation
+          caches:
+            - pip
+          script:
+            - pip install uv
+            - uv sync
+            - uv run nox -s docs -- build
+          artifacts:
+            - site/**
+
+  tags:
+    '*':
+      - step:
+          name: Test
+          caches:
+            - pip
+          script:
+            - pip install uv
+            - uv sync
+            - uv run nox -s tests
+
+      - step:
+          name: Quality Checks
+          caches:
+            - pip
+          script:
+            - pip install uv
+            - uv sync
+            - uv run nox -s checks
+
+      # The `release` nox session is the local kickoff that tags the commit. The
+      # pipeline is the only publisher, so it just builds and uploads the tag,
+      # and the steps above have to pass before this one runs.
+      - step:
+          name: Release to PyPI
+          caches:
+            - pip
+          script:
+            - pip install uv twine
+            - uv build
+            - twine upload --skip-existing dist/*
+          trigger: manual
+
+definitions:
+  caches:
+    pip: ~/.cache/pip

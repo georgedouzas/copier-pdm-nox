@@ -1,0 +1,16 @@
+# Kedro's data catalog: where each dataset lives and how it is read.
+#
+# Entries default to in-memory so the pipeline runs with nothing provisioned. Replace them
+# with real datasets as they arrive, for instance:
+#
+# clean_rows:
+#   type: pandas.ParquetDataset
+#   filepath: data/clean_rows.parquet
+raw_rows:
+  type: MemoryDataset
+
+clean_rows:
+  type: MemoryDataset
+
+total:
+  type: MemoryDataset

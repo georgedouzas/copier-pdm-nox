@@ -1,0 +1,76 @@
+stages:
+  - test
+  - quality
+  - docs
+  - release
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  paths:
+    - .cache/pip
+    - .nox
+
+.python_template: &python_template
+  image: python:3.11
+  before_script:
+    - pip install pdm
+
+test:
+  <<: *python_template
+  stage: test
+  script:
+    - pdm install
+    - pdm tests
+  coverage: '/TOTAL.*\s+(\d+%)$/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+
+quality:
+  <<: *python_template
+  stage: quality
+  script:
+    - pdm install
+    - pdm checks
+
+docs:
+  <<: *python_template
+  stage: docs
+  script:
+    - pdm install
+    - pdm docs build
+  artifacts:
+    paths:
+      - site/
+  only:
+    - main
+
+pages:
+  stage: docs
+  dependencies:
+    - docs
+  script:
+    - mv site public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
+
+# The `release` nox session is the local kickoff that tags the commit. The
+# pipeline is the only publisher, so it just builds and uploads the tag, and it
+# only reaches this stage once the test and quality stages are green.
+release:
+  <<: *python_template
+  stage: release
+  script:
+    - pip install twine
+    - pdm build
+    - twine upload --skip-existing dist/*
+  only:
+    - tags
+  when: manual

@@ -1,0 +1,82 @@
+image: python:3.11
+
+pipelines:
+  default:
+    - step:
+        name: Test
+        caches:
+          - pip
+        script:
+          - pip install uv
+          - uv sync
+          - uv run nox -s tests
+        artifacts:
+          - coverage.xml
+          - htmlcov/**
+
+    - step:
+        name: Quality Checks
+        caches:
+          - pip
+        script:
+          - pip install uv
+          - uv sync
+          - uv run nox -s checks
+
+  branches:
+    main:
+      - step:
+          name: Test
+          caches:
+            - pip
+          script:
+            - pip install uv
+            - uv sync
+            - uv run nox -s tests
+          artifacts:
+            - coverage.xml
+            - htmlcov/**
+
+      - step:
+          name: Quality Checks
+          caches:
+            - pip
+          script:
+            - pip install uv
+            - uv sync
+            - uv run nox -s checks
+
+      - step:
+          name: Build Documentation
+          caches:
+            - pip
+          script:
+            - pip install uv
+            - uv sync
+            - uv run nox -s docs -- build
+          artifacts:
+            - site/**
+
+  tags:
+    '*':
+      - step:
+          name: Test
+          caches:
+            - pip
+          script:
+            - pip install uv
+            - uv sync
+            - uv run nox -s tests
+
+      - step:
+          name: Quality Checks
+          caches:
+            - pip
+          script:
+            - pip install uv
+            - uv sync
+            - uv run nox -s checks
+
+definitions:
+  caches:
+    pip: ~/.cache/pip

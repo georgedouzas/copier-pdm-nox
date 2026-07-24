@@ -1,12 +1,22 @@
 """Regenerate the golden fixtures under `tests/expected` by rendering the template.
 
 Fixtures are the specification: they are always produced by rendering, never edited by hand
-to match an expectation. This script is the only supported way to update them.
+to match an expectation. This script is the only supported way to update them, and it is the
+single source of truth for which combinations exist -- `tests/test_copier.bats` reads the same
+set back by iterating the directories this writes.
 
-The answers file of each fixture is preserved, because `tests/test_copier.bats` excludes it
-from comparison and rewriting it on every run would churn the diff for no reason.
+Coverage is the full cross product of the three structural dimensions -- project layout, git
+provider and package manager -- because the pipeline and packaging templates branch on all
+three and their interactions are where rendering bugs hide (a package manager renders different
+CI commands for each provider, and each layout declares different dependency groups). Two extra
+fixtures cover the orthogonal publish and license paths.
+
+The rendered `.copier-answers.yml` is not kept: it records a `_commit` that changes on every
+tag, so storing it would churn the fixtures for no reason. The answers each fixture was built
+from are recoverable from its directory name, which is what the bats suite does.
 """
 
+import itertools
 import shutil
 import subprocess
 import sys
@@ -25,25 +35,55 @@ COMMON = {
     'repository_name': 'test-repo',
 }
 
-# Fixture name -> the answers that differ from the defaults. Keep in step with the cases in
-# `tests/test_copier.bats`; a fixture with no case, or a case with no fixture, is a gap.
-# Each fixture is named for the answers it pins, in a fixed category order
-# (layout, git-provider, then whatever else it varies), so the name states the full
-# combination it covers. The first is the all-defaults render.
-FIXTURES: dict[str, dict[str, str]] = {
-    'layout-library-git-provider-github': {},
-    'layout-script-git-provider-github': {'project_layout': 'script'},
-    'layout-ml-git-provider-github': {'project_layout': 'ml'},
-    'layout-dataeng-git-provider-github': {'project_layout': 'dataeng'},
-    'layout-service-git-provider-github': {'project_layout': 'service'},
-    'layout-library-git-provider-none': {'git_provider': 'None'},
-    'layout-library-git-provider-gitlab': {'git_provider': 'GitLab'},
-    'layout-library-git-provider-azure-devops': {'git_provider': 'Azure DevOps'},
-    'layout-library-git-provider-bitbucket': {'git_provider': 'Bitbucket'},
-    'layout-library-git-provider-github-package-manager-uv': {'package_manager': 'uv'},
-    'layout-library-git-provider-github-publish-pypi-disabled': {'publish_pypi': 'False'},
-    'layout-library-git-provider-github-license-none': {'copyright_license': 'None'},
+# Each dimension maps a name segment to the answer it stands for. The segment is what appears in
+# the fixture directory name; the value is what is passed to copier.
+LAYOUTS = {
+    'library': 'library',
+    'script': 'script',
+    'ml': 'ml',
+    'dataeng': 'dataeng',
+    'service': 'service',
 }
+GIT_PROVIDERS = {
+    'github': 'GitHub',
+    'gitlab': 'GitLab',
+    'azure-devops': 'Azure DevOps',
+    'bitbucket': 'Bitbucket',
+    'none': 'None',
+}
+PACKAGE_MANAGERS = {
+    'pdm': 'PDM',
+    'uv': 'uv',
+}
+
+
+def build_fixtures() -> dict[str, dict[str, str]]:
+    """Build the fixture name to answers mapping.
+
+    Returns:
+        The full cross product of the structural dimensions, plus the publish and license edges.
+    """
+    fixtures: dict[str, dict[str, str]] = {}
+    for (lseg, lval), (pseg, pval), (mseg, mval) in itertools.product(
+        LAYOUTS.items(),
+        GIT_PROVIDERS.items(),
+        PACKAGE_MANAGERS.items(),
+    ):
+        name = f'layout-{lseg}-git-provider-{pseg}-package-manager-{mseg}'
+        fixtures[name] = {
+            'project_layout': lval,
+            'git_provider': pval,
+            'package_manager': mval,
+        }
+
+    base = 'layout-library-git-provider-github-package-manager-pdm'
+    defaults = {'project_layout': 'library', 'git_provider': 'GitHub', 'package_manager': 'PDM'}
+    fixtures[f'{base}-publish-pypi-disabled'] = {**defaults, 'publish_pypi': 'False'}
+    fixtures[f'{base}-license-none'] = {**defaults, 'copyright_license': 'None'}
+    return fixtures
+
+
+FIXTURES = build_fixtures()
 
 
 def render(name: str, answers: dict[str, str], destination: Path) -> None:
@@ -51,7 +91,7 @@ def render(name: str, answers: dict[str, str], destination: Path) -> None:
 
     Arguments:
         name: The fixture name.
-        answers: Answers that differ from the defaults.
+        answers: The answers that define this fixture.
         destination: Directory to render into.
     """
     command = ['copier', 'copy', str(REPO), str(destination), '--defaults', '--vcs-ref=HEAD']
@@ -62,31 +102,31 @@ def render(name: str, answers: dict[str, str], destination: Path) -> None:
         sys.exit(f'Rendering fixture {name!r} failed:\n{result.stdout}\n{result.stderr}')
 
 
-def install(name: str, rendered: Path) -> None:
-    """Replace the fixture directory with freshly rendered output.
+def install(rendered: Path, target: Path) -> None:
+    """Replace the fixture directory with freshly rendered output, minus the answers file.
 
     Arguments:
-        name: The fixture name.
         rendered: The freshly rendered tree.
+        target: The fixture directory to replace.
     """
-    target = EXPECTED / name
-    previous_answers = target / ANSWERS
-    saved = previous_answers.read_bytes() if previous_answers.is_file() else None
     (rendered / ANSWERS).unlink(missing_ok=True)
     shutil.rmtree(target, ignore_errors=True)
     shutil.copytree(rendered, target)
-    if saved is not None:
-        (target / ANSWERS).write_bytes(saved)
 
 
 def main() -> None:
-    """Regenerate every fixture."""
+    """Regenerate every fixture, removing any that are no longer defined."""
+    EXPECTED.mkdir(parents=True, exist_ok=True)
+    stale = {p.name for p in EXPECTED.iterdir() if p.is_dir()} - set(FIXTURES)
+    for name in sorted(stale):
+        shutil.rmtree(EXPECTED / name)
+        print(f'removed stale {name}')
+
     for name, answers in FIXTURES.items():
         with tempfile.TemporaryDirectory() as tmp:
             rendered = Path(tmp) / name
             render(name, answers, rendered)
-            install(name, rendered)
-        print(f'regenerated {name}')
+            install(rendered, EXPECTED / name)
     print(f'{len(FIXTURES)} fixtures regenerated')
 
 

@@ -21,7 +21,7 @@ git diff --exit-code tests/expected/  # and regeneration produced no changes
 ```
 
 **Expected**: `make tests` reports 8/8 passing (rising as layout fixtures are added), and the
-`git diff` exits 0. Any change under `tests/expected/layout-library-git-provider-github/` is a C7 breach — investigate
+`git diff` exits 0. Any change under `tests/expected/layout-library-git-provider-github-package-manager-pdm/` is a C7 breach — investigate
 before continuing, do not regenerate the fixture to make it pass.
 
 ## S2: Each layout generates a working project (contract C1)
@@ -43,7 +43,7 @@ because the failure output is easier to read.
 ## S3: The task interface is identical (contract C2)
 
 ```bash
-for d in tests/expected/layout-library-git-provider-github tests/expected/layout-script-git-provider-github tests/expected/layout-ml-git-provider-github; do
+for d in tests/expected/layout-library-git-provider-github-package-manager-pdm tests/expected/layout-script-git-provider-github-package-manager-pdm tests/expected/layout-ml-git-provider-github; do
   echo "== $d"; sed -n '/\[tool.pdm.scripts\]/,/^\[/p' "$d/pyproject.toml"
 done
 ```
@@ -54,8 +54,8 @@ applicability matrix in [data-model.md](./data-model.md); an undocumented one is
 ## S4: Publishing is absent, not broken, for ML (contract C4, FR-009, FR-016)
 
 ```bash
-grep -rn "twine\|pypi-release\|Release to PyPI" tests/expected/layout-ml-git-provider-github/ || echo "none — correct"
-grep -rn "release" tests/expected/layout-ml-git-provider-github/pyproject.toml
+grep -rn "twine\|pypi-release\|Release to PyPI" tests/expected/layout-ml-git-provider-github-package-manager-pdm/ || echo "none — correct"
+grep -rn "release" tests/expected/layout-ml-git-provider-github-package-manager-pdm/pyproject.toml
 ```
 
 **Expected**: no publish step anywhere in the ML fixture, **and** the `release` task still

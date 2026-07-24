@@ -1,0 +1,4 @@
+# Kedro ships telemetry as a core dependency. This project is generated from a template, so
+# its owner never had the chance to opt in; consent is therefore withheld here rather than
+# assumed. Set this to true if you decide otherwise.
+consent: false

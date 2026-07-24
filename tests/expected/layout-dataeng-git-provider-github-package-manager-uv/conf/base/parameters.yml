@@ -1,0 +1,3 @@
+# Values the pipeline reads rather than hard-codes, so a run can be reconfigured without a
+# code change.
+minimum_value: 0
