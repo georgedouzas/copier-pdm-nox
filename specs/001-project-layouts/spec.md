@@ -8,6 +8,14 @@
 
 **Input**: User description: "Support multiple generated project layouts. Today copier-modern-python only generates a library layout: a src/ package with a distribution name, published to PyPI, documented with an API reference. Users starting a script or CLI tool, a machine learning project, or a data engineering pipeline have to delete and rewrite parts of what they get. Add a layout choice to copier.yml so the generated source tree, dependency set, documentation shape, and applicable nox sessions match the kind of project being started, while every layout keeps the same quality floor: the same checks, tests and release topology, across all four git providers and both package managers. Library layout must remain the default and must keep generating exactly what it generates today."
 
+## Clarifications
+
+### Session 2026-07-24
+
+- Q: How should the spec bound the cost a layout may add to the quality floor? → A: A relevance rule, not a time budget — a layout MUST NOT add a dependency unless a task exercises it.
+- Q: Should changing `project_layout` on an existing project via update be supported? → A: Out of scope, and documented as such — the answer may be changed, but the result is whatever the update merge produces.
+- Q: Should generated data or artifact directories be version-control ignored by default? → A: Yes — contents excluded by default, the directory itself still tracked so the structure survives a clone.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Choosing a layout at generation time (Priority: P1)
@@ -103,8 +111,13 @@ the previously shipped layouts produce identical output to before.
 - What happens to someone on an existing generated project when they update to a version that
   has layouts? Their project predates the choice; it must continue to update as a library
   project without being asked to re-answer and without silently changing kind.
+- What happens to someone who changes the kind of an existing project on update, for instance a
+  library that grows into a machine learning project? Out of scope per FR-018: not prevented,
+  not supported, and documented as such rather than left to be discovered.
 - How does the system handle a layout whose natural dependencies are heavy enough that the
-  quality floor becomes slow, and people start skipping it?
+  quality floor becomes slow, and people start skipping it? Addressed by FR-017: the constraint
+  is relevance rather than runtime. A layout carries only what a task exercises, so weight has
+  to be earned. Slowness that survives that rule is accepted.
 - What happens when a task has no meaning for a layout, such as an API documentation task for
   a project that exposes no importable package? It must be absent or adapted deliberately,
   never present-but-broken.
@@ -152,6 +165,18 @@ the previously shipped layouts produce identical output to before.
 - **FR-016**: The machine learning kind MUST be the case that proves FR-009: it produces no
   artifact published to a package index, so its generated project MUST omit publishing while
   still carrying the full quality floor of FR-006 and FR-007.
+- **FR-017**: A kind MUST NOT add a dependency to the generated project unless one of that
+  project's tasks exercises it. Illustrative or aspirational dependencies are forbidden: every
+  generated project pays for each one, including the projects that wanted a different choice.
+  Dependency weight is therefore bounded by relevance, not by a runtime budget.
+- **FR-018**: Changing the kind of an existing project on update is OUT OF SCOPE. It is not
+  prevented, but it is not supported or tested, and the outcome is whatever the update merge
+  produces. The documentation required by FR-014 MUST state this, so the limit is a published
+  boundary rather than a surprise.
+- **FR-019**: Where a kind generates a directory intended to hold data or model artifacts, that
+  directory's contents MUST be excluded from version control by default, while the directory
+  itself remains tracked so the structure survives a clone. The safe default matters because the
+  failure it prevents — data reaching a shared repository — cannot be undone by a later commit.
 
 ### Key Entities
 
@@ -182,6 +207,10 @@ the previously shipped layouts produce identical output to before.
   layouts without conflict attributable to the layout change, and without changing kind.
 - **SC-007**: A maintainer can add a further kind by following the documented procedure alone,
   leaving the output of existing kinds unchanged.
+- **SC-008**: Every dependency in a generated project can be traced to a task that exercises it;
+  zero dependencies exist for illustration alone.
+- **SC-009**: Adding a file to a generated data or artifact directory leaves the project's
+  version control status clean; the directory survives a clone with zero data files carried.
 
 ## Assumptions
 
@@ -197,7 +226,10 @@ the previously shipped layouts produce identical output to before.
 - Layouts differ in what they generate, never in whether the quality floor applies, per the
   constitution's matrix parity principle.
 - Some layouts will pull heavier dependencies than the library layout. Slower generated
-  toolchains are acceptable; a weaker quality floor is not.
+  toolchains are acceptable; a weaker quality floor is not. What is not acceptable is weight
+  that nothing uses, which FR-017 forbids. No runtime budget is imposed, because a threshold
+  meaningful across developer machines and CI runners would be either flaky or too loose to
+  ever fire.
 - This feature implies no change to the generator's own release process, test harness structure
   or supported provider set.
 - Three kinds ship first (library, script/CLI, machine learning) and data engineering is
