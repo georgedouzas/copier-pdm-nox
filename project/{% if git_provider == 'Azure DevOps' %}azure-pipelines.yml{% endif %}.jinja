@@ -24,21 +24,21 @@ stages:
 
     - script: |
         python -m pip install --upgrade pip
-        {% if package_manager == "PDM" -%}
+        {%- if package_manager == "PDM" %}
         pip install pdm
-        {% else -%}
+        {%- else %}
         pip install uv
-        {% endif -%}
+        {%- endif %}
       displayName: 'Install dependencies'
 
     - script: |
-        {% if package_manager == "PDM" -%}
+        {%- if package_manager == "PDM" %}
         pdm install
         pdm run tests
-        {% else -%}
+        {%- else %}
         uv sync
         uv run nox -s tests
-        {% endif -%}
+        {%- endif %}
       displayName: 'Run tests'
 
 - stage: Quality
@@ -53,21 +53,21 @@ stages:
 
     - script: |
         python -m pip install --upgrade pip
-        {% if package_manager == "PDM" -%}
+        {%- if package_manager == "PDM" %}
         pip install pdm
-        {% else -%}
+        {%- else %}
         pip install uv
-        {% endif -%}
+        {%- endif %}
       displayName: 'Install dependencies'
 
     - script: |
-        {% if package_manager == "PDM" -%}
+        {%- if package_manager == "PDM" %}
         pdm install
         pdm run checks
-        {% else -%}
+        {%- else %}
         uv sync
         uv run nox -s checks
-        {% endif -%}
+        {%- endif %}
       displayName: 'Run quality checks'
 
 - stage: Docs
@@ -83,21 +83,21 @@ stages:
 
     - script: |
         python -m pip install --upgrade pip
-        {% if package_manager == "PDM" -%}
+        {%- if package_manager == "PDM" %}
         pip install pdm
-        {% else -%}
+        {%- else %}
         pip install uv
-        {% endif -%}
+        {%- endif %}
       displayName: 'Install dependencies'
 
     - script: |
-        {% if package_manager == "PDM" -%}
+        {%- if package_manager == "PDM" %}
         pdm install
         pdm run docs build
-        {% else -%}
+        {%- else %}
         uv sync
         uv run nox -s docs -- build
-        {% endif -%}
+        {%- endif %}
       displayName: 'Build documentation'
 
     - task: PublishBuildArtifacts@1
@@ -105,7 +105,7 @@ stages:
         pathToPublish: 'site'
         artifactName: 'documentation'
 
-{% if publish_pypi -%}
+{%- if publish_pypi %}
 # The Docs stage is skipped on tag builds, so the release depends on the stages
 # that do run there. This is what gates publishing on a green test suite.
 - stage: Release
@@ -123,24 +123,24 @@ stages:
 
     - script: |
         python -m pip install --upgrade pip
-        {% if package_manager == "PDM" -%}
+        {%- if package_manager == "PDM" %}
         pip install pdm twine
-        {% else -%}
+        {%- else %}
         pip install uv twine
-        {% endif -%}
+        {%- endif %}
       displayName: 'Install dependencies'
 
     # The `release` nox session is the local kickoff that tags the commit. The
     # pipeline is the only publisher, so it just builds and uploads the tag.
     - script: |
-        {% if package_manager == "PDM" -%}
+        {%- if package_manager == "PDM" %}
         pdm build
-        {% else -%}
+        {%- else %}
         uv build
-        {% endif -%}
+        {%- endif %}
         twine upload --skip-existing dist/*
       displayName: 'Release to PyPI'
       env:
         TWINE_USERNAME: $(TWINE_USERNAME)
         TWINE_PASSWORD: $(TWINE_PASSWORD)
-{% endif -%}
+{%- endif %}

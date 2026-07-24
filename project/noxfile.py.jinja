@@ -298,7 +298,12 @@ def release(session: nox.Session) -> None:
         '--description', f'Release {version}',
         external=True,
     )
-    session.run('az', 'repos', 'pr', 'complete', '--merge-commit-message', f'Release {version}', '--delete-source-branch', external=True)
+    session.run(
+        'az', 'repos', 'pr', 'complete',
+        '--merge-commit-message', f'Release {version}',
+        '--delete-source-branch',
+        external=True,
+    )
 
     # Create and push the release tag, which is what the pipeline reacts to
     session.run('git', 'checkout', 'main', external=True)

@@ -25,12 +25,12 @@ stages:
     - script: |
         python -m pip install --upgrade pip
         pip install pdm
-        displayName: 'Install dependencies'
+      displayName: 'Install dependencies'
 
     - script: |
         pdm install
         pdm run tests
-        displayName: 'Run tests'
+      displayName: 'Run tests'
 
 - stage: Quality
   dependsOn: Test
@@ -45,12 +45,12 @@ stages:
     - script: |
         python -m pip install --upgrade pip
         pip install pdm
-        displayName: 'Install dependencies'
+      displayName: 'Install dependencies'
 
     - script: |
         pdm install
         pdm run checks
-        displayName: 'Run quality checks'
+      displayName: 'Run quality checks'
 
 - stage: Docs
   dependsOn: Quality
@@ -66,18 +66,17 @@ stages:
     - script: |
         python -m pip install --upgrade pip
         pip install pdm
-        displayName: 'Install dependencies'
+      displayName: 'Install dependencies'
 
     - script: |
         pdm install
         pdm run docs build
-        displayName: 'Build documentation'
+      displayName: 'Build documentation'
 
     - task: PublishBuildArtifacts@1
       inputs:
         pathToPublish: 'site'
         artifactName: 'documentation'
-
 # The Docs stage is skipped on tag builds, so the release depends on the stages
 # that do run there. This is what gates publishing on a green test suite.
 - stage: Release
@@ -96,7 +95,7 @@ stages:
     - script: |
         python -m pip install --upgrade pip
         pip install pdm twine
-        displayName: 'Install dependencies'
+      displayName: 'Install dependencies'
 
     # The `release` nox session is the local kickoff that tags the commit. The
     # pipeline is the only publisher, so it just builds and uploads the tag.
