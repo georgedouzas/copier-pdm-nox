@@ -147,3 +147,26 @@ teardown() {
     run pdm tests
     [ "$status" -eq 0 ]
 }
+
+@test "Generated data engineering layout installs, checks and tests, with telemetry declined" {
+    command -v pdm >/dev/null || skip "pdm not installed"
+    command -v uv >/dev/null || skip "uv not installed (needed for nox venvs)"
+
+    generate proj --data project_layout=dataeng
+    cd proj
+    init_git
+
+    run pdm install
+    [ "$status" -eq 0 ]
+
+    run pdm checks
+    [ "$status" -eq 0 ]
+
+    run pdm tests
+    [ "$status" -eq 0 ]
+
+    # Kedro ships telemetry as a core dependency; a generated project must decline it rather
+    # than inherit consent its owner never gave.
+    run grep -q "consent: false" .telemetry
+    [ "$status" -eq 0 ]
+}

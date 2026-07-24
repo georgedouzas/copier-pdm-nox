@@ -113,6 +113,18 @@ python -m {{ python_package_import_name }}.flow run
 
 Notebooks live in `notebooks/` and are executed by the test suite, so a notebook that stops
 working fails the build. Anything placed in `data/` stays out of version control.
+{% elif project_layout == "dataeng" %}
+## Usage
+
+Run the pipeline. It executes locally against the catalog in `conf/base/catalog.yml`, which
+starts in memory so nothing has to be provisioned first:
+
+```bash
+python -c "from kedro.io import DataCatalog; from kedro.runner import SequentialRunner; from {{ python_package_import_name }}.pipeline import create_pipeline; SequentialRunner().run(create_pipeline(), DataCatalog())"
+```
+
+Anything placed in `data/` stays out of version control. Kedro telemetry is declined in
+`.telemetry`; change it there if you want to send usage data.
 {% elif project_layout == "service" %}
 ## Usage
 

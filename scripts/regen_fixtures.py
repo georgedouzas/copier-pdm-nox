@@ -38,6 +38,7 @@ FIXTURES: dict[str, dict[str, str]] = {
     'bitbucket': {'git_provider': 'Bitbucket'},
     'script-layout': {'project_layout': 'script'},
     'ml-layout': {'project_layout': 'ml'},
+    'dataeng-layout': {'project_layout': 'dataeng'},
     'service-layout': {'project_layout': 'service'},
 }
 

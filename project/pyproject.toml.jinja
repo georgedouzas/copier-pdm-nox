@@ -118,6 +118,10 @@ dependencies = [
 dependencies = [
     "metaflow>=2.19",
 ]
+{% elif project_layout == "dataeng" -%}
+dependencies = [
+    "kedro>=1.5",
+]
 {% elif project_layout == "service" -%}
 dependencies = [
     "fastapi>=0.115",
