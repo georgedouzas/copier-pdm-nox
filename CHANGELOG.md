@@ -6,6 +6,33 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [1.9.0](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.9.0) - 2026-07-24
+
+<small>[Compare with 1.8.4](https://github.com/georgedouzas/copier-modern-python/compare/1.8.4...1.9.0)</small>
+
+### Features
+
+- Read pip-audit vulnerability ignores from pyproject ([f91ae9b](https://github.com/georgedouzas/copier-modern-python/commit/f91ae9b1bdad58dd7bed59e79b4840c040e5cd86) by georgedouzas).
+
+### Bug Fixes
+
+- Install the project in the uv docs session ([b971a2a](https://github.com/georgedouzas/copier-modern-python/commit/b971a2ab710f95991e3cba782a9b904d55a92024) by georgedouzas).
+- Render the Azure pipeline step names as YAML ([55b939f](https://github.com/georgedouzas/copier-modern-python/commit/55b939fc6779022123480329eb8fcb78d25633c9) by georgedouzas).
+- Gate releases on a green pipeline for every git provider ([dd0a136](https://github.com/georgedouzas/copier-modern-python/commit/dd0a136b6942257a7de74cc6b969e1f3a37db03d) by georgedouzas).
+- Exclude editable project from uv pip-audit export ([7452386](https://github.com/georgedouzas/copier-modern-python/commit/7452386966fa3889c88ce6960d2722660f51a9e4) by georgedouzas).
+
+### Tests
+
+- Add integration smoke test and governance files ([7d33134](https://github.com/georgedouzas/copier-modern-python/commit/7d33134af0bf88d108adca6ab2747c3a0556c7b5) by georgedouzas).
+
+### Chore
+
+- Build this template's own documentation with properdocs ([1bf3f13](https://github.com/georgedouzas/copier-modern-python/commit/1bf3f13b14057fcbd39dadd1e55142f71ac80142) by georgedouzas).
+- Build generated documentation with properdocs ([a75692c](https://github.com/georgedouzas/copier-modern-python/commit/a75692c17f9f0b13e789283dee19bde746130690) by georgedouzas).
+- Let bandit read its configuration from pyproject ([0881eef](https://github.com/georgedouzas/copier-modern-python/commit/0881eef6205a8d62754fc95e13a203507c4cf5fd) by georgedouzas).
+- Build PDM projects with pdm-backend ([abfa30e](https://github.com/georgedouzas/copier-modern-python/commit/abfa30e374f012e38574a07304191c63e329bcdc) by georgedouzas).
+- Add tests workflow for the template repo ([233cf7b](https://github.com/georgedouzas/copier-modern-python/commit/233cf7be245da5faa2da15018d1ca15c1951daf5) by georgedouzas).
+
 ## [1.8.4](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.8.4) - 2026-05-21
 
 <small>[Compare with 1.8.3](https://github.com/georgedouzas/copier-modern-python/compare/1.8.3...1.8.4)</small>
@@ -14,6 +41,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Repair non-GitHub CI, generate coverage.xml, modernize tooling ([a10c761](https://github.com/georgedouzas/copier-modern-python/commit/a10c7616426bf123a746b7547e4d6bf91c4f2f12) by georgedouzas).
 - Add black target-version and unbreak pyproject.toml whitespace ([1c1239d](https://github.com/georgedouzas/copier-modern-python/commit/1c1239d8e748f4912038d1b0b9a8881c129200f1) by georgedouzas).
+
+### Docs
+
+- Update changelog for version 1.8.4 ([ca60210](https://github.com/georgedouzas/copier-modern-python/commit/ca602101369a2fbe366e44bf00d87fe06f3a938c) by georgedouzas).
 
 ## [1.8.3](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.8.3) - 2026-05-19
 
