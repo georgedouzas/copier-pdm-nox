@@ -18,7 +18,7 @@ teardown() {
     rm -rf "$TEST_DIR"
 }
 
-@test "Test default choices" {
+@test "Test library layout and default choices" {
     run copier copy "$TEMPLATE_DIR" test-repo --defaults --vcs-ref=HEAD \
     --data project_description="A test project." \
     --data author_fullname="Georgios Douzas" \
@@ -27,7 +27,7 @@ teardown() {
     --data repository_name="test-repo"
 
     [ -d test-repo ]
-    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/default" "test-repo"
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/layout-library-git-provider-github" "test-repo"
 }
 
 @test "Test no git provider choice" {
@@ -40,7 +40,7 @@ teardown() {
     --data git_provider="None"
 
     [ -d test-repo ]
-    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/no-git-provider" "test-repo"
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/layout-library-git-provider-none" "test-repo"
 }
 
 @test "Test uv package manager choice" {
@@ -53,7 +53,7 @@ teardown() {
     --data package_manager="uv"
 
     [ -d test-repo ]
-    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/uv-package-manager" "test-repo"
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/layout-library-git-provider-github-package-manager-uv" "test-repo"
 }
 
 @test "Test no publish PyPI choice" {
@@ -66,7 +66,7 @@ teardown() {
     --data publish_pypi="False"
 
     [ -d test-repo ]
-    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/no-publish-pypi" "test-repo"
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/layout-library-git-provider-github-publish-pypi-disabled" "test-repo"
 }
 
 @test "Test no license choice" {
@@ -79,7 +79,7 @@ teardown() {
     --data copyright_license="None"
 
     [ -d test-repo ]
-    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/no-license" "test-repo"
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/layout-library-git-provider-github-license-none" "test-repo"
 }
 
 @test "Test Azure DevOps choice" {
@@ -92,7 +92,7 @@ teardown() {
     --data git_provider="Azure DevOps"
 
     [ -d test-repo ]
-    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/azure-devops" "test-repo"
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/layout-library-git-provider-azure-devops" "test-repo"
 }
 
 @test "Test GitLab choice" {
@@ -105,7 +105,7 @@ teardown() {
     --data git_provider="GitLab"
 
     [ -d test-repo ]
-    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/gitlab" "test-repo"
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/layout-library-git-provider-gitlab" "test-repo"
 }
 
 @test "Test Bitbucket choice" {
@@ -118,7 +118,7 @@ teardown() {
     --data git_provider="Bitbucket"
 
     [ -d test-repo ]
-    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/bitbucket" "test-repo"
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/layout-library-git-provider-bitbucket" "test-repo"
 }
 
 @test "Test script layout choice" {
@@ -131,7 +131,7 @@ teardown() {
     --data project_layout="script"
 
     [ -d test-repo ]
-    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/script-layout" "test-repo"
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/layout-script-git-provider-github" "test-repo"
 }
 
 @test "Test ML layout choice" {
@@ -144,7 +144,7 @@ teardown() {
     --data project_layout="ml"
 
     [ -d test-repo ]
-    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/ml-layout" "test-repo"
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/layout-ml-git-provider-github" "test-repo"
 }
 
 @test "Test data engineering layout choice" {
@@ -157,7 +157,7 @@ teardown() {
     --data project_layout="dataeng"
 
     [ -d test-repo ]
-    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/dataeng-layout" "test-repo"
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/layout-dataeng-git-provider-github" "test-repo"
 }
 
 @test "Test service layout choice" {
@@ -170,5 +170,5 @@ teardown() {
     --data project_layout="service"
 
     [ -d test-repo ]
-    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/service-layout" "test-repo"
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/layout-service-git-provider-github" "test-repo"
 }

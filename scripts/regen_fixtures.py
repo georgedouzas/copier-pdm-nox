@@ -27,19 +27,22 @@ COMMON = {
 
 # Fixture name -> the answers that differ from the defaults. Keep in step with the cases in
 # `tests/test_copier.bats`; a fixture with no case, or a case with no fixture, is a gap.
+# Each fixture is named for the answers it pins, in a fixed category order
+# (layout, git-provider, then whatever else it varies), so the name states the full
+# combination it covers. The first is the all-defaults render.
 FIXTURES: dict[str, dict[str, str]] = {
-    'default': {},
-    'no-git-provider': {'git_provider': 'None'},
-    'uv-package-manager': {'package_manager': 'uv'},
-    'no-publish-pypi': {'publish_pypi': 'False'},
-    'no-license': {'copyright_license': 'None'},
-    'azure-devops': {'git_provider': 'Azure DevOps'},
-    'gitlab': {'git_provider': 'GitLab'},
-    'bitbucket': {'git_provider': 'Bitbucket'},
-    'script-layout': {'project_layout': 'script'},
-    'ml-layout': {'project_layout': 'ml'},
-    'dataeng-layout': {'project_layout': 'dataeng'},
-    'service-layout': {'project_layout': 'service'},
+    'layout-library-git-provider-github': {},
+    'layout-script-git-provider-github': {'project_layout': 'script'},
+    'layout-ml-git-provider-github': {'project_layout': 'ml'},
+    'layout-dataeng-git-provider-github': {'project_layout': 'dataeng'},
+    'layout-service-git-provider-github': {'project_layout': 'service'},
+    'layout-library-git-provider-none': {'git_provider': 'None'},
+    'layout-library-git-provider-gitlab': {'git_provider': 'GitLab'},
+    'layout-library-git-provider-azure-devops': {'git_provider': 'Azure DevOps'},
+    'layout-library-git-provider-bitbucket': {'git_provider': 'Bitbucket'},
+    'layout-library-git-provider-github-package-manager-uv': {'package_manager': 'uv'},
+    'layout-library-git-provider-github-publish-pypi-disabled': {'publish_pypi': 'False'},
+    'layout-library-git-provider-github-license-none': {'copyright_license': 'None'},
 }
 
 

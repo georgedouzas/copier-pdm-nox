@@ -99,7 +99,12 @@ def check_release_topology(fixture: Path) -> list[str]:
     publishes = 'pypi-release' in jobs
     # A fixture is publishable unless its answers turned publishing off. Layouts that deploy
     # rather than distribute publish nothing to an index, as does the no-publish-pypi fixture.
-    unpublishable = {'ml-layout', 'dataeng-layout', 'service-layout', 'no-publish-pypi'}
+    unpublishable = {
+        'layout-ml-git-provider-github',
+        'layout-dataeng-git-provider-github',
+        'layout-service-git-provider-github',
+        'layout-library-git-provider-github-publish-pypi-disabled',
+    }
     expected = fixture.name not in unpublishable
 
     failures = []
