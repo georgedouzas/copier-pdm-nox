@@ -81,6 +81,11 @@ feedback during development.
 broken code from entering the repository. [git-changelog](https://github.com/pawamoy/git-changelog) generates beautiful changelogs
 from conventional commit messages, automating release documentation.
 
+Releasing has one shape on every provider. The `release` task is the local half: it writes the changelog, opens and merges the
+release pull request, and pushes the tag. The pipeline is the only publisher, and it will not publish a tag whose tests and
+quality checks have not passed. Exactly one publisher exists for a given version, so a local release cannot race the pipeline for
+it.
+
 ### Platform Support
 
 Supports all major Git providers with pre-configured CI/CD workflows. Choose from GitHub Actions, GitLab CI, Azure Pipelines, or
@@ -128,10 +133,11 @@ The template will prompt you for various configuration options including:
 - Project name and description
 - Author information
 - Package manager preference (PDM or uv)
+- Project layout (library, command line tool, or machine learning)
 - Git provider (GitHub, GitLab, Azure DevOps, Bitbucket, or None)
 - License selection
 - Python version requirements
-- Publishing preferences
+- Publishing preferences, unless the layout publishes nothing
 
 ### Updating an Existing Project
 
