@@ -24,7 +24,7 @@ A kind of project the generator can produce. Represented by the `project_layout`
 | ----- | ---------------- | ----------- | ------------ |
 | `library` | Importable package distributed to others | Yes | `src/<pkg>/` |
 | `script` | Command line tool with an entry point | Yes | `src/<pkg>/` + `cli.py` |
-| `ml` | Experiments and models, notebooks alongside code | No | `src/<pkg>/`, `notebooks/`, `data/` |
+| `ml` | Experiments and models, notebooks alongside code | No | `src/<pkg>/` + `flow.py`, `notebooks/`, `data/` |
 
 ### Validation rules
 
@@ -45,7 +45,8 @@ keeping them named and in one place is what stops the conditionals sprawling.
 | `is_publishable` | `project_layout != 'ml'` | Whether `publish_pypi` is asked at all |
 | `has_api_docs` | `project_layout in ['library', 'script']` | Whether `docs/generate_api.py` renders and the API nav entry exists |
 | `has_cli` | `project_layout == 'script'` | Whether `cli.py` and `[project.scripts]` render |
-| `has_notebooks` | `project_layout == 'ml'` | Whether `notebooks/` and `data/` render, and whether lint/coverage carry notebook rules |
+| `has_notebooks` | `project_layout == 'ml'` | Whether `notebooks/` and `data/` render, whether notebook tooling is declared (FR-020), and whether lint/coverage carry notebook rules |
+| `has_flow` | `project_layout == 'ml'` | Whether `flow.py` and the workflow dependency render (research R4a). Kept separate from `has_notebooks` so a future layout can take one without the other |
 
 ## Relationships to existing answers
 

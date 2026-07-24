@@ -35,7 +35,10 @@
 
 ### Outstanding
 
-None. All checklist items pass.
+None. All 16 items pass, re-validated after the clarification session of 2026-07-24 (16/16 →
+16/16, no state changes). The four clarifications added FR-017 through FR-021 and SC-008
+through SC-010; each is testable, and the spec remains free of framework names — the Metaflow
+decision lives in `research.md` R4a, not here.
 
 **Resolved**: FR-015 carried the sole `[NEEDS CLARIFICATION]`, on which layouts ship first.
 Answered by the user: library, script/CLI and machine learning, with data engineering

@@ -90,8 +90,32 @@ copier update --defaults
 **Expected**: no prompt for `project_layout`, no conflict attributable to layout, and the
 project's kind unchanged. `.copier-answers.yml` gains `project_layout: library`.
 
+## S7: Generated data stays out of version control (contract C5, FR-019)
+
+```bash
+cd /tmp/probe                      # an ML-layout project from S2
+echo "secret,data" > data/probe.csv
+git status --porcelain             # must be empty
+git ls-files data/                 # must list the ignore file, proving the dir is tracked
+```
+
+**Expected**: `git status --porcelain` prints nothing, and `git ls-files data/` is non-empty.
+Both halves matter: contents ignored, directory tracked, so the structure survives a clone
+without carrying data.
+
+## S8: The ML layout runs with no infrastructure (FR-021)
+
+```bash
+cd /tmp/probe
+env -u AWS_ACCESS_KEY_ID -u AWS_SECRET_ACCESS_KEY -u AWS_PROFILE \
+  <pm> run pytest -k flow
+```
+
+**Expected**: passes. Metaflow's local mode requires no account and no server; if this needs
+credentials, FR-021 is breached and the dependency does not belong as a default.
+
 ## Definition of done
 
-All six scenarios pass, plus `make tests` and `make tests-integration` green. S1 and S5 are
+All eight scenarios pass, plus `make tests` and `make tests-integration` green. S1 and S5 are
 the ones to automate first — they are cheap, and they cover the two failure modes this
-repository has actually shipped.
+repository has actually shipped. S7 and S8 guard requirements added during clarification.

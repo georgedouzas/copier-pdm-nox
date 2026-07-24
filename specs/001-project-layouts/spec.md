@@ -15,6 +15,7 @@
 - Q: How should the spec bound the cost a layout may add to the quality floor? → A: A relevance rule, not a time budget — a layout MUST NOT add a dependency unless a task exercises it.
 - Q: Should changing `project_layout` on an existing project via update be supported? → A: Out of scope, and documented as such — the answer may be changed, but the result is whatever the update merge produces.
 - Q: Should generated data or artifact directories be version-control ignored by default? → A: Yes — contents excluded by default, the directory itself still tracked so the structure survives a clone.
+- Q: Should the machine learning kind ship a workflow framework, or only shape and configuration? → A: A workflow framework, provided it runs locally with no infrastructure and a task exercises it; plus the means to run any notebooks it generates. Modelling libraries and tracker servers remain excluded. The specific choice is recorded in the design, not here.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -177,6 +178,14 @@ the previously shipped layouts produce identical output to before.
   directory's contents MUST be excluded from version control by default, while the directory
   itself remains tracked so the structure survives a clone. The safe default matters because the
   failure it prevents — data reaching a shared repository — cannot be undone by a later commit.
+- **FR-020**: Where a kind generates an artifact of a particular format, the project MUST also
+  carry the means to run or open that artifact. A directory of notebooks with nothing able to
+  execute a notebook is the vestigial output FR-004 and the third acceptance scenario of User
+  Story 1 forbid. This bounds FR-017 from the other side: relevance excludes what nothing uses,
+  and this requires what the generated output needs.
+- **FR-021**: Any framework a kind adds MUST be runnable locally, with no account, server or
+  other infrastructure the user must provision. A framework whose value requires infrastructure
+  the generator cannot supply MUST NOT be a default.
 
 ### Key Entities
 
@@ -211,6 +220,8 @@ the previously shipped layouts produce identical output to before.
   zero dependencies exist for illustration alone.
 - **SC-009**: Adding a file to a generated data or artifact directory leaves the project's
   version control status clean; the directory survives a clone with zero data files carried.
+- **SC-010**: Every artifact format a kind generates can be run or opened using only what the
+  generated project already installs, with no account or server to provision first.
 
 ## Assumptions
 
@@ -236,3 +247,8 @@ the previously shipped layouts produce identical output to before.
   deferred. Machine learning is included ahead of it deliberately: it is the case least like
   the library layout, so it stresses the abstraction before further kinds are built on it.
   Data engineering is expected to reuse whatever that stress reveals.
+- A distinction is drawn between two categories of framework, and only one is acceptable as a
+  default. A *modelling* library encodes a choice the practitioner owns and that no task the
+  generator ships could exercise. A *workflow* library is scaffolding, which is what a kind
+  exists to provide. FR-017 and FR-021 are what separate them in practice: exercised by a task,
+  and runnable without infrastructure.

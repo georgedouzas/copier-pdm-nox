@@ -73,34 +73,99 @@ generation. It is integrated, not merely installed.
 
 ## R4: What the ML layout contains, and what it must not
 
-**Decision**: A `notebooks/` directory, a `data/` directory ignored by version control, a
-`src/` package for importable code, and **no** ML framework dependency. The layout ships
-the *shape*, not a stack: no pinned framework, no experiment tracker, no pipeline runner.
+**Superseded.** The original decision was to ship no framework at all. It was wrong in one
+respect and over-corrected in another; see R4a below for the decision now in force. The
+reasoning is kept because the constraint it derived — a framework must be locally runnable
+and actually exercised — is what the replacement is measured against.
 
-**Rationale**: This is the Principle VI gate. An ML layout is the natural place to bundle a
-fashionable stack, and every dependency added is paid for by every ML project the template
-ever generates — including the ones that wanted a different framework and must now remove
-this one. The layout's value is the scaffolding that is tedious to assemble (directory
-conventions, notebook handling in linting and coverage, data ignored, docs shaped for
-narrative rather than API reference). The framework choice is the user's, and it is the one
-decision an ML practitioner is certain to have an opinion about.
+**Original decision**: A `notebooks/` directory, a version-control-ignored `data/` directory,
+a `src/` package, and no ML framework dependency. The layout ships shape, not a stack.
 
-Concretely, adding a framework would violate the principle's third condition: it cannot be
-"exercised by CI" in any meaningful way, because the template has no model to train.
+**Original rationale**: An ML layout is the natural place to bundle a fashionable stack, and
+every dependency is paid for by every ML project the template ever generates — including the
+ones that wanted a different framework and must now remove this one. A modelling library also
+cannot satisfy Principle VI's "exercised by CI" condition, because the template has no model
+to train.
 
-**Principle VI check**: **passes by adding nothing.** The layout's only new machinery is
-configuration — notebook-aware lint and coverage settings — which is exercised by the
-generated project's own `checks` session.
+**Where it was wrong**: it shipped a `notebooks/` directory with nothing capable of opening a
+notebook. That is precisely the vestigial artifact contract C5 forbids, arrived at by applying
+the anti-stack rule to tooling the layout genuinely needs.
 
-**Alternatives considered**:
+**Where it over-corrected**: it treated all frameworks as one category. A *modelling* library
+(scikit-learn, torch) is a choice the practitioner owns and the template cannot exercise. A
+*workflow* library is scaffolding — the very thing the layout's value was defined as — and can
+be exercised locally with no infrastructure.
 
-- *Ship scikit-learn, pandas and numpy as defaults*. Rejected per the above. Note the docs
-  dependency group already carries `pandas` for the gallery, so the marginal convenience is
-  smaller than it appears.
-- *Ship an experiment tracker (MLflow or similar)*. Rejected: it implies infrastructure the
-  template cannot provision, and an unconfigured tracker is worse than none.
-- *Offer a nested "ML framework" question*. Rejected for the first release: it multiplies
-  the matrix again for a choice the user can make in one line of `pyproject.toml`.
+**Still rejected, and why**:
+
+- *scikit-learn, pandas, numpy as defaults*. The practitioner owns this choice, and no task
+  the template ships would exercise them. Fails FR-017.
+- *MLflow or a similar tracker*. Implies a server the template cannot provision; an
+  unconfigured tracker is worse than none.
+- *A nested "ML framework" question*. Multiplies the matrix for a choice the user can make in
+  one line of `pyproject.toml`.
+
+## R4a: The ML layout ships Metaflow and notebook tooling
+
+**Decision**: The ML layout ships **Metaflow**, a runnable flow module exercised by the
+generated test suite, and notebook tooling (`jupyter`/`ipykernel`) so `notebooks/` is usable.
+No modelling library, no tracker server.
+
+**Rationale**: Metaflow is scaffolding rather than a modelling opinion, and it clears every bar
+the alternatives failed:
+
+| Criterion | kedro 1.5.0 | metaflow 2.19.35 |
+| --------- | ----------- | ---------------- |
+| Core dependencies | 17 | 2 (`requests`, `boto3`) |
+| Telemetry in core deps | `kedro-telemetry` | none |
+| Competing project scaffolder | `cookiecutter` | none |
+| Structural imposition | `conf/base`, `catalog.yml`, `pipelines/`, `nodes` | a `FlowSpec` class in a module |
+| Runs locally with no infrastructure | yes | yes, and it is the default |
+
+The decisive point is User Story 1's "nothing has to be deleted before work starts". Metaflow
+is a library, so a user who does not want it deletes one module. Kedro is a tree, so the same
+user deletes a directory taxonomy — which inverts the story the feature exists to serve.
+
+**FR-017 check (the relevance rule)**: passes. `python flow.py run` executes locally with no
+config files and no cloud account, so the generated test suite exercises the dependency rather
+than merely declaring it. This is the bar scikit-learn cannot clear.
+
+**Principle VI check**: passes on all three conditions. It earns its place against a
+hand-rolled directory convention by giving the layout something that runs; it is integrated
+(declared in `pyproject.toml`, invoked by a task, exercised by the test suite); and it is
+verified by execution on a generated project.
+
+**Costs accepted, recorded rather than glossed**:
+
+- `boto3` is an unconditional dependency. A purely local user installs the AWS SDK and never
+  touches it, and botocore is not small. This is the one axis on which shipping nothing was
+  better, and it is accepted because the alternative leaves the layout with nothing runnable.
+- Metaflow declares no `requires-python`. Low risk against the template's `>=3.11, <3.14`
+  range, but it is undeclared rather than guaranteed, so the integration suite is what
+  establishes compatibility.
+- The flow abstraction is still an opinion. It is a far smaller one than a directory taxonomy,
+  and it is confined to a single module.
+
+**Alternatives considered**: kedro, per the table above — rejected primarily for telemetry
+arriving by a default the generated project's owner never chose, and for structural
+imposition. See R8 for where kedro is better placed.
+
+## R8: Kedro belongs to the deferred data-engineering layout
+
+**Decision**: Record kedro as the leading candidate for the data-engineering layout when it
+lands, not as a rejected option.
+
+**Rationale**: Kedro describes itself as building "production-ready data and analytics
+pipelines". Catalogs, environment-scoped configuration and DAGs are the vocabulary of data
+engineering, not of ML experimentation. The objections in R4a are objections to kedro *as the
+ML layout* — structural imposition is a cost when the user wants notebooks, and a feature when
+the user wants a pipeline project with a defined shape.
+
+The telemetry dependency remains a genuine concern for any layout, and MUST be decided
+explicitly rather than inherited silently when data engineering is specified.
+
+**Deferred, not decided**: this is a note for the future layout's own research phase, recorded
+here so the analysis is not repeated from scratch.
 
 ## R5: Publishing for a layout that publishes nothing
 
@@ -164,5 +229,6 @@ version of this, which is a layout breaking the shared nox spine.
 
 ## Open questions carried into implementation
 
-None blocking. Two decisions are cheap to revisit and flagged in place: the CLI framework
-choice (R3) and whether ML needs a per-package-manager fixture (R7).
+None blocking. Three decisions are cheap to revisit and flagged in place: the CLI framework
+choice (R3), whether ML needs a per-package-manager fixture (R7), and whether `boto3` arriving
+transitively with Metaflow proves annoying enough in practice to reconsider R4a.

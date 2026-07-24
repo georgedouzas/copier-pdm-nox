@@ -78,9 +78,13 @@ Paths containing `{% ... %}` are literal directory names on disk, not placeholde
 
 ### ML layout
 
-- [ ] T013 [P] [US1] Add `project/{% if project_layout == 'ml' %}notebooks{% endif %}/` with a placeholder notebook or README so the directory renders
-- [ ] T014 [P] [US1] Add `project/{% if project_layout == 'ml' %}data{% endif %}/` with a `.gitignore` that ignores its own contents
-- [ ] T015 [US1] Add notebook-aware `ruff` and `coverage` configuration to `project/pyproject.toml.jinja`, gated on `has_notebooks` — configuration only, **no ML framework dependency**, per research R4
+- [ ] T013 [P] [US1] Add `project/{% if project_layout == 'ml' %}notebooks{% endif %}/` with a placeholder notebook so the directory renders and has something to open
+- [ ] T014 [P] [US1] Add `project/{% if project_layout == 'ml' %}data{% endif %}/` with a `.gitignore` that ignores its own contents while keeping the directory tracked, per FR-019
+- [ ] T015 [US1] Add notebook-aware `ruff` and `coverage` configuration to `project/pyproject.toml.jinja`, gated on `has_notebooks`
+- [ ] T015a [US1] Add notebook tooling (`jupyter`/`ipykernel`) to the ML dependency set in `project/pyproject.toml.jinja`, gated on `has_notebooks`, so `notebooks/` is not vestigial per FR-020
+- [ ] T015b [P] [US1] Add `project/src/{{python_package_import_name}}/{% if project_layout == 'ml' %}flow.py{% endif %}.jinja` containing a minimal Metaflow `FlowSpec` that runs locally with no cloud account, per research R4a
+- [ ] T015c [US1] Add the `metaflow` dependency to `project/pyproject.toml.jinja`, gated on `has_flow`
+- [ ] T015d [US1] Add a test to `project/tests/test_{{python_package_import_name}}.py.jinja`, gated on `has_flow`, that executes the generated flow locally — this is what makes the dependency satisfy FR-017 rather than merely be declared
 - [ ] T016 [US1] Confirm no publish step renders for `ml` in any of the four pipeline templates under `project/`, and that the `release` nox session still renders (quickstart S4)
 
 ### Fixtures
@@ -129,10 +133,13 @@ Paths containing `{% ... %}` are literal directory names on disk, not placeholde
 ## Phase 6: Polish & Cross-Cutting
 
 - [ ] T031 [P] Update `README.md` to describe the three layouts and what each produces (FR-014, and the ⚠ item in the constitution's Sync Impact Report)
+- [ ] T031a [P] State in `README.md` that changing a project's layout on update is out of scope, per FR-018 — a published boundary rather than a surprise
 - [ ] T032 [P] Update `project/README.md.jinja` so a generated project's README reflects its own layout
 - [ ] T033 Verify `copier update` on a pre-feature project does not prompt for `project_layout` and does not change its kind (FR-011, quickstart S6)
-- [ ] T034 Run every quickstart scenario S1-S6 end to end
-- [ ] T035 Confirm the constitution's Principle VI holds for the shipped result: every added dependency is configured, invoked by a session, and exercised by CI
+- [ ] T033a Verify FR-019 by adding a file under the ML fixture's `data/` and confirming version control status stays clean while the directory itself remains tracked (quickstart S7)
+- [ ] T034 Run every quickstart scenario S1-S8 end to end
+- [ ] T035 Confirm the constitution's Principle VI holds for the shipped result: every added dependency is configured, invoked by a session, and exercised by CI — specifically that `click` and `metaflow` each trace to a task that runs them (SC-008)
+- [ ] T036 Confirm FR-021 by generating an ML project on a machine with no cloud credentials and running its flow test — no account, server or provisioning may be required
 
 ---
 
@@ -151,8 +158,10 @@ Paths containing `{% ... %}` are literal directory names on disk, not placeholde
 
 - T009 before T016 — publishing must be gated before its absence can be verified
 - T011 depends on T008 — the derived values must exist before they can gate anything
+- T015b before T015c before T015d — the flow module exists, then the dependency that runs it, then the test that proves FR-017
 - T019 after T010-T016 — fixtures are rendered from finished templates, never ahead of them
 - T024 before T025 — shape the docs session before removing the API generator from it
+- T036 after T015d — the local-only guarantee is verified against the same test the flow ships with
 
 ### Parallel opportunities
 
@@ -192,7 +201,11 @@ the first becomes far harder to attribute, because two things changed at once.
 
 ## Notes on task count
 
-35 tasks: 3 setup, 4 foundational, 13 for US1, 7 for US2, 3 for US3, 5 polish. Every task
-names a real path in this repository. Tasks that are verifications rather than edits (T006,
-T007, T020, T021, T022, T027, T030, T033, T034, T035) are listed as tasks deliberately —
-under Principle IV, verification is work, not a formality appended to someone else's work.
+42 tasks: 3 setup, 4 foundational, 17 for US1, 7 for US2, 3 for US3, 8 polish. Every task names
+a real path in this repository. Twelve are verifications rather than edits (T006, T007, T020,
+T021, T022, T027, T030, T033, T033a, T034, T035, T036), listed as tasks deliberately — under
+Principle IV, verification is work, not a formality appended to someone else's work.
+
+The count grew from 35 after the clarification pass reopened the ML dependency decision. The
+added tasks are the flow module and its test (T015b-T015d), notebook tooling (T015a), and the
+verifications for the requirements the pass introduced (T031a, T033a, T036).

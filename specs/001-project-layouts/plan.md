@@ -26,7 +26,9 @@ construction instead of by vigilance.
 Python `>=3.11, <3.14`
 
 **Primary Dependencies**: Copier (rendering), nox (generated task interface), bats (fixture
-and integration harness), PDM and uv (generated package managers)
+and integration harness), PDM and uv (generated package managers). Added to generated
+projects by layout: `click` for script/CLI, `metaflow` plus notebook tooling for ML — each
+exercised by a task, per FR-017.
 
 **Storage**: N/A — the artifact is a rendered file tree
 
@@ -80,10 +82,15 @@ stack. Phase 0 constrains the dependency set to what a session actually runs.
 | III | R7 fixes coverage at two new fixtures with the residual risk named and accepted, rather than left implicit |
 | IV | Contract C6 and quickstart S5 require pipelines to be *parsed*; S1 makes the freeze a `git diff --exit-code`, not a review |
 | V | Process gate, carried into implementation |
-| VI | **Closed.** R4 resolves the ML layout by adding no framework dependency at all. The layout ships shape and configuration, both exercised by the generated project's own `checks`. R3 adds exactly one CLI dependency, with entry point, tests and runnable command. |
+| VI | **Closed.** R4a gives the ML layout Metaflow plus notebook tooling: scaffolding that runs locally, exercised by the generated test suite rather than merely declared. R3 adds exactly one CLI dependency, with entry point, tests and runnable command. Modelling libraries and tracker servers remain rejected. |
 
-Principle VI moved from GATE ACTIVE to closed: the design's answer is that the ML layout's
-value is scaffolding, not a stack, so the principle is satisfied by subtraction.
+Principle VI moved from GATE ACTIVE to closed, though not the way the first draft expected.
+That draft satisfied the principle by subtraction — no ML dependency at all — and in doing so
+shipped a `notebooks/` directory with nothing able to open a notebook, which contract C5
+forbids. R4a distinguishes a *modelling* library, which the practitioner owns and no template
+task can exercise, from a *workflow* library, which is the scaffolding the layout was defined
+to provide and which runs locally with no infrastructure. Metaflow clears FR-017 because
+`python flow.py run` is executable by the generated tests; scikit-learn never could.
 
 ## Project Structure
 
@@ -121,8 +128,8 @@ project/                            # the single shared spine, branching on answ
 │   ├── __init__.py.jinja
 │   ├── py.typed
 │   └── {% if project_layout == 'script' %}cli.py{% endif %}.jinja
-├── {% if project_layout == 'ml' %}notebooks{% endif %}/
-├── {% if project_layout == 'ml' %}data{% endif %}/
+├── {% if project_layout == 'ml' %}notebooks{% endif %}/   # ml only, with notebook tooling
+├── {% if project_layout == 'ml' %}data{% endif %}/        # ml only, contents ignored (FR-019)
 ├── tests/
 └── {% if git_provider == ... %}      # unchanged provider-conditional paths
 
