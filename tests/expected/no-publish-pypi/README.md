@@ -8,8 +8,8 @@
 [mypy]: <http://mypy-lang.org>
 [mkdocs badge]: <https://img.shields.io/badge/docs-mkdocs%20material-blue.svg?style=flat>
 [mkdocs]: <https://squidfunk.github.io/mkdocs-material>
-[safety badge]: <https://img.shields.io/badge/safety-checked-green>
-[safety]: <https://github.com/pyupio/safety>
+[pip-audit badge]: <https://img.shields.io/badge/security-pip--audit-green>
+[pip-audit]: <https://github.com/pypa/pip-audit>
 [bandit badge]: <https://img.shields.io/badge/security-bandit-yellow>
 [bandit]: <https://github.com/PyCQA/bandit>
 [pytest badge]: <https://img.shields.io/badge/tests-pytest-blue>
@@ -38,7 +38,7 @@
 | ------------------| -------- |
 | **Development**   | [![black][black badge]][black] [![ruff][ruff badge]][ruff] [![mypy][mypy badge]][mypy] [![docformatter][docformatter badge]][docformatter] |
 | **Testing**       | [![pytest][pytest badge]][pytest] [![coverage][coverage badge]][coverage] [![interrogate][interrogate badge]][interrogate] |
-| **Security**      | [![safety][safety badge]][safety] [![bandit][bandit badge]][bandit] |
+| **Security**      | [![pip-audit][pip-audit badge]][pip-audit] [![bandit][bandit badge]][bandit] |
 | **Automation**    | [![nox][nox badge]][nox] [![pre-commit][pre-commit badge]][pre-commit] |
 | **Package**       |  ![pythonversion][pythonversion badge] |
 | **Documentation** | [![mkdocs][mkdocs badge]][mkdocs]|

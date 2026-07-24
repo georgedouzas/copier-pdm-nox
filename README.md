@@ -60,9 +60,10 @@ coverage.
 
 ### Security & Safety
 
-Proactive security scanning with [safety](https://github.com/pyupio/safety) to detect known vulnerabilities in dependencies and
-[bandit](https://github.com/PyCQA/bandit) to identify common security issues in your code. These tools integrate into CI/CD
-pipelines to catch security problems before deployment.
+Proactive security scanning with [pip-audit](https://github.com/pypa/pip-audit) to detect known vulnerabilities in dependencies
+and [bandit](https://github.com/PyCQA/bandit) to identify common security issues in your code. Both run as part of the `checks`
+task and in CI, and both read their configuration from `pyproject.toml`, so a project records its own suppressions where the rest
+of its tooling lives.
 
 ### Type Checking
 
