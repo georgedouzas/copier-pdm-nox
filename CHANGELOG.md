@@ -6,6 +6,29 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [1.11.0](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.11.0) - 2026-07-25
+
+<small>[Compare with 1.10.0](https://github.com/georgedouzas/copier-modern-python/compare/1.10.0...1.11.0)</small>
+
+### Features
+
+- Offer an optional Dockerfile, and document the layouts ([f3da70a](https://github.com/georgedouzas/copier-modern-python/commit/f3da70a3b05ccbc723ee2ad7ebd707c5b0f5a860) by georgedouzas).
+- Add a data engineering layout built on Kedro ([3eaf1e0](https://github.com/georgedouzas/copier-modern-python/commit/3eaf1e06bc1cef3bc7d0e006c438a1a1a35550e2) by georgedouzas).
+- Add a service layout built on FastAPI ([c1be612](https://github.com/georgedouzas/copier-modern-python/commit/c1be612a16dab99bc32d636529b74432e65bb33a) by georgedouzas).
+- Add deptry, pydoclint, typos and Renovate to generated projects ([42663e2](https://github.com/georgedouzas/copier-modern-python/commit/42663e2b78d83c39ed0d2126aff38a5a2ab2cef5) by georgedouzas).
+
+### Bug Fixes
+
+- Badge the security tool the project actually runs ([c6e89a0](https://github.com/georgedouzas/copier-modern-python/commit/c6e89a09f0495cf4f3d3e95d9261e1dfcf59604a) by georgedouzas).
+
+### Code Refactoring
+
+- Name fixtures by the full answer combination they pin ([5577aec](https://github.com/georgedouzas/copier-modern-python/commit/5577aecf7043848d714f4440cf71fa0b9d91adbd) by georgedouzas).
+
+### Tests
+
+- Cover the full layout x provider x package-manager cross product ([7e2cae9](https://github.com/georgedouzas/copier-modern-python/commit/7e2cae971c8cc733e0da9173d068fe2a3f6b104e) by georgedouzas).
+
 ## [1.10.0](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.10.0) - 2026-07-24
 
 <small>[Compare with 1.9.0](https://github.com/georgedouzas/copier-modern-python/compare/1.9.0...1.10.0)</small>
@@ -17,6 +40,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Docs
 
+- Update changelog for version 1.10.0 ([13e5976](https://github.com/georgedouzas/copier-modern-python/commit/13e5976224bbc97a410a89f1176bc70ae7cbe88d) by georgedouzas).
 - Fill two gaps in the README ([e7ac84c](https://github.com/georgedouzas/copier-modern-python/commit/e7ac84c5c24dfe8c8c3170baf8bcdf7950c9a9aa) by georgedouzas).
 - Mark the project layouts tasks complete ([5b676de](https://github.com/georgedouzas/copier-modern-python/commit/5b676ded3d9e50e1bb0364d9a1a4cc19ee98a6cc) by georgedouzas).
 - Document layouts and how to add one ([47dd972](https://github.com/georgedouzas/copier-modern-python/commit/47dd9729a68949c1f5e45075647349a5570f5f16) by georgedouzas).
