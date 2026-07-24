@@ -22,6 +22,14 @@ repos:
     hooks:
     -   id: mypy
         exclude: ^(docs/examples/|docs/generated/|tests/fixtures)
+-   repo: https://github.com/crate-ci/typos
+    rev: v1.48.0
+    hooks:
+    -   id: typos
+-   repo: https://github.com/kynan/nbstripout
+    rev: 0.9.1
+    hooks:
+    -   id: nbstripout
 -   repo: https://github.com/compilerla/conventional-pre-commit
     rev: v4.0.0
     hooks:

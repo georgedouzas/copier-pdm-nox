@@ -165,6 +165,7 @@ def checks(session: nox.Session, file: str) -> None:
         session.run('bandit', '-c', 'pyproject.toml', '-r', file)
     if arg in ['docs', 'all'] and file == 'src':
         session.run('interrogate', file)
+        session.run('pydoclint', file)
     if arg in ['dependencies', 'all']:
         requirements_path = (Path(session.create_tmp()) / 'requirements.txt').as_posix()
         {% if package_manager == "PDM" -%}
@@ -200,6 +201,7 @@ def checks(session: nox.Session, file: str) -> None:
         ignored = config.get('tool', {}).get('pip-audit', {}).get('ignore-vulns', [])
         ignore_args = [flag for vuln in ignored for flag in ('--ignore-vuln', vuln)]
         session.run('pip-audit', '-r', requirements_path, *ignore_args)
+        session.run('deptry', 'src', 'tests')
 
 
 @nox.session(python=PYTHON_VERSIONS)

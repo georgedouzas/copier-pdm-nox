@@ -47,6 +47,9 @@ nav:
     {%- endif %}
   - API: api/
   - Examples: generated/gallery
+  {%- if project_layout == "ml" %}
+  - Notebooks: notebooks/example.ipynb
+  {%- endif %}
   - Development:
     - development/index.md
     - Contributing: development/contributing.md
@@ -82,6 +85,16 @@ plugins:
   - gen-files:
       scripts:
       - docs/generate_api.py
+      {%- if project_layout == "ml" %}
+      - docs/generate_notebooks.py
+      {%- endif %}
+  {%- if project_layout == "ml" %}
+  # After gen-files, so it sees the notebooks copied into the documentation tree. Renders
+  # them as pages, making the work in them readable without cloning the repository.
+  - mkdocs-jupyter:
+      execute: false
+      include_source: true
+  {%- endif %}
   - literate-nav:
       nav_file: SUMMARY.md
   - section-index

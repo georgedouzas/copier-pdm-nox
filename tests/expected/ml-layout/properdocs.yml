@@ -24,6 +24,7 @@ nav:
     - License: overview/license.md
   - API: api/
   - Examples: generated/gallery
+  - Notebooks: notebooks/example.ipynb
   - Development:
     - development/index.md
     - Contributing: development/contributing.md
@@ -59,6 +60,12 @@ plugins:
   - gen-files:
       scripts:
       - docs/generate_api.py
+      - docs/generate_notebooks.py
+  # After gen-files, so it sees the notebooks copied into the documentation tree. Renders
+  # them as pages, making the work in them readable without cloning the repository.
+  - mkdocs-jupyter:
+      execute: false
+      include_source: true
   - literate-nav:
       nav_file: SUMMARY.md
   - section-index
