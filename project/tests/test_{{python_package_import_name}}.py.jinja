@@ -1,5 +1,36 @@
 """Test the `{{python_package_import_name}}` module."""
+{%- if project_layout == "script" %}
+
+from click.testing import CliRunner
+
+from {{python_package_import_name}}.cli import main
+
+
+def test_main():
+    """The command runs and greets."""
+    result = CliRunner().invoke(main, ['--name', 'test'])
+    assert result.exit_code == 0
+    assert 'Hello, test!' in result.output
+{%- elif project_layout == "ml" %}
+
+from pathlib import Path
+
+from metaflow import Runner
+
+import {{python_package_import_name}}.flow
+
+FLOW_FILE = str(Path({{python_package_import_name}}.flow.__file__))
+EXPECTED_TOTAL = 6
+
+
+def test_flow_runs_locally():
+    """The flow runs end to end with no account, server or other infrastructure."""
+    with Runner(FLOW_FILE, show_output=False).run() as running:
+        assert running.status == 'successful'
+        assert running.run.data.total == EXPECTED_TOTAL
+{%- else %}
 
 
 def test_function():
     """Test a function."""
+{%- endif %}

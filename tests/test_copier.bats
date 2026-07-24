@@ -120,3 +120,29 @@ teardown() {
     [ -d test-repo ]
     compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/bitbucket" "test-repo"
 }
+
+@test "Test script layout choice" {
+    run copier copy "$TEMPLATE_DIR" test-repo --defaults --vcs-ref=HEAD \
+    --data project_description="A test project." \
+    --data author_fullname="Georgios Douzas" \
+    --data author_email="gdouzas@icloud.com" \
+    --data author_username="gdouzas" \
+    --data repository_name="test-repo" \
+    --data project_layout="script"
+
+    [ -d test-repo ]
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/script-layout" "test-repo"
+}
+
+@test "Test ML layout choice" {
+    run copier copy "$TEMPLATE_DIR" test-repo --defaults --vcs-ref=HEAD \
+    --data project_description="A test project." \
+    --data author_fullname="Georgios Douzas" \
+    --data author_email="gdouzas@icloud.com" \
+    --data author_username="gdouzas" \
+    --data repository_name="test-repo" \
+    --data project_layout="ml"
+
+    [ -d test-repo ]
+    compare_repos "$(dirname "$BATS_TEST_FILENAME")/expected/ml-layout" "test-repo"
+}

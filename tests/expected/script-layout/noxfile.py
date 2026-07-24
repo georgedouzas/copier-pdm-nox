@@ -1,37 +1,17 @@
 """Development tasks."""
 
-{% set minor_versions = [] -%}
-{% for version in python_versions.rsplit(',') -%}
-{% set offset = (-1 if loop.index == 1 else 1) if '=' in version else 0 -%}
-{% set version = version|replace('>', '')|replace('<', '')|replace('=', '') -%}
-{{ minor_versions.append(version.rsplit('.')[1]|int + offset) or '' -}}
-{% endfor -%}
-{% set versions = [] -%}
-{% for minor_version in range(minor_versions[0] + 1, minor_versions[1]) -%}
-{{ versions.append('3.' + minor_version|string) or '' -}}
-{% endfor -%}
-
-{%- if package_manager == "PDM" -%}
 import os
-{% endif -%}
 import shutil
 import tomllib
 from pathlib import Path
 from typing import Any
 
 import nox
-{% if package_manager == "uv" -%}
-from git_changelog.cli import build_and_render
-{% endif -%}
-{% if package_manager == "PDM" %}
+
 os.environ.update({'PDM_IGNORE_SAVED_PYTHON': '1'})
-{% endif %}
-{% if package_manager == "uv" -%}
-nox.options.default_venv_backend = 'uv'
-nox.options.error_on_external_run = True
-nox.options.reuse_existing_virtualenvs = True
-{% endif %}
-PYTHON_VERSIONS: list[str] = {{ versions }}
+
+
+PYTHON_VERSIONS: list[str] = ['3.11', '3.12', '3.13']
 FILES: list[str] = ['src', 'tests', 'docs', 'noxfile.py']
 CHANGELOG_ARGS: dict[str, Any] = {
     'repository': '.',
@@ -83,14 +63,7 @@ def clean(session: nox.Session) -> None:
         '.nox',
         '.ruff_cache',
         'coverage.xml',
-        {%- if project_layout == "ml" %}
-        '.metaflow',
-        {%- endif %}
-        {%- if package_manager == "PDM" %}
         'pdm.lock',
-        {%- elif package_manager == "uv" %}
-        'uv.lock',
-        {%- endif %}
     ]
     for path in paths:
         shutil.rmtree(path, ignore_errors=True)
@@ -112,12 +85,7 @@ def docs(session: nox.Session) -> None:
         session: The nox session.
     """
     arg = check_cli(session, ['serve', 'build'])
-    {% if package_manager == "PDM" -%}
     session.run('pdm', 'install', '-dG', 'docs', external=True)
-    {% else -%}
-    # Not `--only-dev`: mkdocstrings imports the package to document it.
-    session.run('uv', 'sync', '--active', external=True)
-    {% endif -%}
     session.run('properdocs', arg)
 
 
@@ -131,11 +99,7 @@ def formatting(session: nox.Session, file: str) -> None:
         file: The file to be formatted.
     """
     arg = check_cli(session, ['all', 'code', 'docstrings'])
-    {% if package_manager == "PDM" -%}
     session.run('pdm', 'install', '-dG', 'formatting', '--no-default', external=True)
-    {% else -%}
-    session.run('uv', 'sync', '--only-dev', '--active', external=True)
-    {% endif -%}
     if arg in ['code', 'all']:
         session.run('black', file)
     if arg in ['docstrings', 'all']:
@@ -152,11 +116,7 @@ def checks(session: nox.Session, file: str) -> None:
         file: The file to be checked.
     """
     arg = check_cli(session, ['all', 'quality', 'dependencies', 'types', 'security', 'docs'])
-    {% if package_manager == "PDM" -%}
     session.run('pdm', 'install', '-dG', 'checks', '--no-default', external=True)
-    {% else -%}
-    session.run('uv', 'sync', '--only-dev', '--active', external=True)
-    {% endif -%}
     if arg in ['quality', 'all']:
         session.run('ruff', 'check', file)
     if arg in ['types', 'all']:
@@ -167,7 +127,6 @@ def checks(session: nox.Session, file: str) -> None:
         session.run('interrogate', file)
     if arg in ['dependencies', 'all']:
         requirements_path = (Path(session.create_tmp()) / 'requirements.txt').as_posix()
-        {% if package_manager == "PDM" -%}
         args_groups = [['--prod']] + [['-dG', group] for group in ['tests', 'docs', 'maintenance']]
         requirements_types = zip(FILES, args_groups, strict=True)
         args = [
@@ -182,20 +141,6 @@ def checks(session: nox.Session, file: str) -> None:
             requirements_path,
         ]
         session.run(*(args + dict(requirements_types)[file]), external=True)
-        {% else -%}
-        session.run(
-            'uv',
-            'export',
-            '--format',
-            'requirements-txt',
-            '--group',
-            'dev',
-            '--no-emit-project',
-            '--output-file',
-            requirements_path,
-            external=True,
-        )
-        {% endif -%}
         config = tomllib.loads(Path('pyproject.toml').read_text())
         ignored = config.get('tool', {}).get('pip-audit', {}).get('ignore-vulns', [])
         ignore_args = [flag for vuln in ignored for flag in ('--ignore-vuln', vuln)]
@@ -209,11 +154,7 @@ def tests(session: nox.Session) -> None:
     Arguments:
         session: The nox session.
     """
-    {% if package_manager == "PDM" -%}
     session.run('pdm', 'install', '-dG', 'tests', external=True)
-    {% else -%}
-    session.run('uv', 'sync', '--active', external=True)
-    {% endif -%}
     env = {'COVERAGE_FILE': f'.coverage.{session.python}'}
     if session.posargs:
         session.run('pytest', '-n', 'auto', '-k', *session.posargs, 'tests', env=env)
@@ -232,13 +173,8 @@ def changelog(session: nox.Session) -> None:
     Arguments:
         session: The nox session.
     """
-    {% if package_manager == "PDM" -%}
     session.run('pdm', 'install', '-dG', 'changelog', '--no-default', external=True)
     from git_changelog.cli import build_and_render  # noqa: PLC0415
-
-    {% else -%}
-    session.run('uv', 'sync', '--only-dev', '--active', external=True)
-    {% endif -%}
 
     build_and_render(**CHANGELOG_ARGS)
 
@@ -250,29 +186,22 @@ def release(session: nox.Session) -> None:
     Arguments:
         session: The nox session.
     """
-{%- if package_manager == "PDM" %}
-{%- if publish_pypi and git_provider == "None" %}
-    session.run('pdm', 'install', '-dG', 'changelog', '-dG', 'release', '--no-default', external=True)
-{%- else %}
     session.run('pdm', 'install', '-dG', 'changelog', '--no-default', external=True)
-{%- endif %}
     from git_changelog.cli import build_and_render  # noqa: PLC0415
-{% else %}
-    session.run('uv', 'sync', '--only-dev', '--active', external=True)
-{% endif %}
+
     changelog, _ = build_and_render(**CHANGELOG_ARGS)
     if changelog.versions_list[0].tag:
         session.skip('Commit has already a tag. Release is aborted.')
     version = changelog.versions_list[0].planned_tag
     if version is None:
         session.skip('Next version was not possible to be specified. Release is aborted.')
-{% if git_provider != "None" %}
+
     # Create release branch and commit changelog
     session.run('git', 'checkout', '-b', f'release_{version}', external=True)
     session.run('git', 'add', 'CHANGELOG.md', external=True)
     session.run('git', 'commit', '-m', f'chore: Release {version}', '--allow-empty', external=True)
     session.run('git', 'push', '-u', 'origin', f'release_{version}', external=True)
-{% if git_provider == "GitHub" %}
+
     # Create and merge PR from release branch to main
     session.run('gh', 'pr', 'create', '--base', 'main', '--fill', external=True)
     session.run('gh', 'pr', 'merge', '--rebase', '--delete-branch', external=True)
@@ -282,69 +211,3 @@ def release(session: nox.Session) -> None:
     session.run('git', 'pull', '--rebase', external=True)
     session.run('git', 'tag', version, external=True)
     session.run('git', 'push', 'origin', version, external=True)
-{% elif git_provider == "GitLab" %}
-    # Create and merge PR from release branch to main
-    session.run('glab', 'mr', 'create', '--target-branch', 'main', '--fill', '--yes', external=True)
-    session.run('glab', 'mr', 'merge', '--rebase', '--remove-source-branch', '--yes', external=True)
-
-    # Create and push the release tag, which is what the pipeline reacts to
-    session.run('git', 'checkout', 'main', external=True)
-    session.run('git', 'pull', '--rebase', external=True)
-    session.run('git', 'tag', version, external=True)
-    session.run('git', 'push', 'origin', version, external=True)
-{% elif git_provider == "Azure DevOps" %}
-    # Create and merge PR from release branch to main
-    session.run(
-        'az', 'repos', 'pr', 'create',
-        '--source-branch', f'release_{version}',
-        '--target-branch', 'main',
-        '--title', f'Release {version}',
-        '--description', f'Release {version}',
-        external=True,
-    )
-    session.run(
-        'az', 'repos', 'pr', 'complete',
-        '--merge-commit-message', f'Release {version}',
-        '--delete-source-branch',
-        external=True,
-    )
-
-    # Create and push the release tag, which is what the pipeline reacts to
-    session.run('git', 'checkout', 'main', external=True)
-    session.run('git', 'pull', '--rebase', external=True)
-    session.run('git', 'tag', version, external=True)
-    session.run('git', 'push', 'origin', version, external=True)
-{% elif git_provider == "Bitbucket" %}
-    # Create and merge PR from release branch to main
-    session.run(
-        'atlassian', 'bitbucket', 'pr', 'create',
-        '--source', f'release_{version}',
-        '--destination', 'main',
-        '--title', f'Release {version}',
-        external=True,
-    )
-    session.run('atlassian', 'bitbucket', 'pr', 'merge', '--delete-source-branch', external=True)
-
-    # Create and push the release tag, which is what the pipeline reacts to
-    session.run('git', 'checkout', 'main', external=True)
-    session.run('git', 'pull', '--rebase', external=True)
-    session.run('git', 'tag', version, external=True)
-    session.run('git', 'push', 'origin', version, external=True)
-{% endif %}
-{%- else %}
-    # Commit changelog and create tag
-    session.run('git', 'add', 'CHANGELOG.md', external=True)
-    session.run('git', 'commit', '-m', f'chore: Release {version}', '--allow-empty', external=True)
-    session.run('git', 'tag', version, external=True)
-{% endif %}
-{%- if publish_pypi and git_provider == "None" %}
-    # There is no pipeline to react to the tag, so build and upload from here.
-    # With a git provider configured the pipeline is the only publisher, which
-    # keeps a local release from racing it for the same version.
-    {%- if package_manager == "PDM" %}
-    session.run('pdm', 'build', external=True)
-    {%- else %}
-    session.run('uv', 'build', external=True)
-    {%- endif %}
-    session.run('twine', 'upload', '--skip-existing', 'dist/*')
-{% endif -%}

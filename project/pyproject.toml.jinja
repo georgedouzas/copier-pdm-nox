@@ -110,7 +110,17 @@ classifiers = [
 ]
 {% set namespace_path = repository_namespace | urlencode if repository_namespace is defined else "" -%}
 {% set repo_path = repository_name | urlencode -%}
+{% if project_layout == "script" -%}
+dependencies = [
+    "click>=8.1.3",
+]
+{% elif project_layout == "ml" -%}
+dependencies = [
+    "metaflow>=2.19",
+]
+{% else -%}
 dependencies = []
+{% endif -%}
 {% if git_provider != "None" %}
 [project.urls]
 {% if git_provider == "GitHub" -%}
@@ -133,6 +143,10 @@ Repository = "https://dev.azure.com/{{ namespace_path }}/{{ azure_devops_project
 Repository = "https://bitbucket.org/{{ namespace_path }}/{{ repo_path }}"
 Issues = "https://bitbucket.org/{{ namespace_path }}/{{ repo_path }}/issues"
 {% endif -%}
+{% endif -%}
+{% if project_layout == "script" %}
+[project.scripts]
+{{ repository_name }} = "{{ python_package_import_name }}.cli:main"
 {% endif -%}
 {% if package_manager == "PDM" %}
 [tool.pdm.version]
@@ -186,6 +200,10 @@ tests = [
     "pytest-cov>=5.0.0",
     "pytest-randomly>=3.15.0",
     "pytest-xdist>=3.6.1",
+    {%- if project_layout == "ml" %}
+    "ipykernel>=6.29.0",
+    "nbmake>=1.5.0",
+    {%- endif %}
 ]
 changelog = [
     "git-changelog>=2.5.2",
@@ -220,6 +238,10 @@ dev = [
     "pytest-cov>=5.0.0",
     "pytest-randomly>=3.15.0",
     "pytest-xdist>=3.6.1",
+    {%- if project_layout == "ml" %}
+    "ipykernel>=6.29.0",
+    "nbmake>=1.5.0",
+    {%- endif %}
     "git-changelog>=2.5.2",
     "twine>=5.1.1",
     "nox[uv]>=2024.4.15",
@@ -265,6 +287,11 @@ select = ["C", "E", "F", "W", "B", "I", "D", "N", "UP", "YTT", "ANN", "S",
 "docs/examples/*" = ["ANN", "D", "B018"]
 "docs/generated/*" = ["ANN", "D"]
 "test_*" = ["ANN"]
+{%- if project_layout == "ml" %}
+# Notebooks are worked in, not written like library code: printing is the point, annotations
+# and module docstrings are noise, and a bare expression is how you look at a value.
+"notebooks/*" = ["ANN", "D", "T20", "B018", "INP001"]
+{%- endif %}
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
@@ -287,9 +314,16 @@ ignore-vulns = ["PYSEC-2022-42969"]
 
 [tool.pytest.ini_options]
 python_files = ["test_*.py"]
+{% if project_layout == "ml" -%}
+# `--nbmake` executes the notebooks as tests. That is what keeps the notebook tooling honest:
+# the dependency is exercised rather than merely declared, and a notebook that stops running
+# fails the suite instead of rotting quietly.
+addopts = "--cov --nbmake"
+testpaths = ["tests", "notebooks"]
+{% else -%}
 addopts = "--cov"
 testpaths = ["tests"]
-
+{% endif %}
 [tool.coverage.run]
 branch = true
 parallel = true

@@ -36,6 +36,8 @@ FIXTURES: dict[str, dict[str, str]] = {
     'azure-devops': {'git_provider': 'Azure DevOps'},
     'gitlab': {'git_provider': 'GitLab'},
     'bitbucket': {'git_provider': 'Bitbucket'},
+    'script-layout': {'project_layout': 'script'},
+    'ml-layout': {'project_layout': 'ml'},
 }
 
 

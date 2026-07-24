@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+__pypackages__/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+
+# Testing and coverage
+.pytest_cache/
+.coverage*
+coverage.xml
+htmlcov/
+
+# Type checking and linting
+.mypy_cache/
+.ruff_cache/
+
+# Task runner
+.nox/
+
+# Package managers
+pdm.lock
+uv.lock
+.pdm-python
+.pdm.toml
+
+# Documentation
+site/
+docs/generated/
+
+# IDE and editors
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+{% if project_layout == "ml" %}
+# Metaflow local run metadata, written when a flow runs
+.metaflow/
+{% endif -%}

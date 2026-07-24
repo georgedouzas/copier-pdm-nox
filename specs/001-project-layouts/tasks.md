@@ -67,32 +67,32 @@ Paths containing `{% ... %}` are literal directory names on disk, not placeholde
 
 ### Derived values and gating
 
-- [ ] T008 [US1] Add the derived-value conditionals (`is_publishable`, `has_api_docs`, `has_cli`, `has_notebooks`) to `project/pyproject.toml.jinja` as documented in [data-model.md](./data-model.md), rendering identically to today on the `library` branch
-- [ ] T009 [US1] Make `publish_pypi` conditional in `copier.yml` with `when: "{{ project_layout != 'ml' }}"` and a default of `false` when unasked, per research R5
+- [X] T008 [US1] Add the derived-value conditionals (`is_publishable`, `has_api_docs`, `has_cli`, `has_notebooks`) to `project/pyproject.toml.jinja` as documented in [data-model.md](./data-model.md), rendering identically to today on the `library` branch
+- [X] T009 [US1] Make `publish_pypi` conditional in `copier.yml` with `when: "{{ project_layout != 'ml' }}"` and a default of `false` when unasked, per research R5
 
 ### Script/CLI layout
 
-- [ ] T010 [P] [US1] Add `project/src/{{python_package_import_name}}/{% if project_layout == 'script' %}cli.py{% endif %}.jinja` with a minimal working command
-- [ ] T011 [US1] Add a conditional `[project.scripts]` entry point and the `click` dependency to `project/pyproject.toml.jinja`, gated on `has_cli`, per research R3
-- [ ] T012 [P] [US1] Add a test for the generated CLI to `project/tests/test_{{python_package_import_name}}.py.jinja`, gated on `has_cli`, so the entry point is exercised rather than merely declared
+- [X] T010 [P] [US1] Add `project/src/{{python_package_import_name}}/{% if project_layout == 'script' %}cli.py{% endif %}.jinja` with a minimal working command
+- [X] T011 [US1] Add a conditional `[project.scripts]` entry point and the `click` dependency to `project/pyproject.toml.jinja`, gated on `has_cli`, per research R3
+- [X] T012 [P] [US1] Add a test for the generated CLI to `project/tests/test_{{python_package_import_name}}.py.jinja`, gated on `has_cli`, so the entry point is exercised rather than merely declared
 
 ### ML layout
 
-- [ ] T013 [P] [US1] Add `project/{% if project_layout == 'ml' %}notebooks{% endif %}/` with a placeholder notebook so the directory renders and has something to open
-- [ ] T014 [P] [US1] Add `project/{% if project_layout == 'ml' %}data{% endif %}/` with a `.gitignore` that ignores its own contents while keeping the directory tracked, per FR-019
-- [ ] T015 [US1] Add notebook-aware `ruff` and `coverage` configuration to `project/pyproject.toml.jinja`, gated on `has_notebooks`
-- [ ] T015a [US1] Add notebook tooling (`jupyter`/`ipykernel`) to the ML dependency set in `project/pyproject.toml.jinja`, gated on `has_notebooks`, so `notebooks/` is not vestigial per FR-020
-- [ ] T015b [P] [US1] Add `project/src/{{python_package_import_name}}/{% if project_layout == 'ml' %}flow.py{% endif %}.jinja` containing a minimal Metaflow `FlowSpec` that runs locally with no cloud account, per research R4a
-- [ ] T015c [US1] Add the `metaflow` dependency to `project/pyproject.toml.jinja`, gated on `has_flow`
-- [ ] T015d [US1] Add a test to `project/tests/test_{{python_package_import_name}}.py.jinja`, gated on `has_flow`, that executes the generated flow locally — this is what makes the dependency satisfy FR-017 rather than merely be declared
-- [ ] T016 [US1] Confirm no publish step renders for `ml` in any of the four pipeline templates under `project/`, and that the `release` nox session still renders (quickstart S4)
+- [X] T013 [P] [US1] Add `project/{% if project_layout == 'ml' %}notebooks{% endif %}/` with a placeholder notebook so the directory renders and has something to open
+- [X] T014 [P] [US1] Add `project/{% if project_layout == 'ml' %}data{% endif %}/` with a `.gitignore` that ignores its own contents while keeping the directory tracked, per FR-019
+- [X] T015 [US1] Add notebook-aware `ruff` and `coverage` configuration to `project/pyproject.toml.jinja`, gated on `has_notebooks`
+- [X] T015a [US1] Add notebook tooling (`jupyter`/`ipykernel`) to the ML dependency set in `project/pyproject.toml.jinja`, gated on `has_notebooks`, so `notebooks/` is not vestigial per FR-020
+- [X] T015b [P] [US1] Add `project/src/{{python_package_import_name}}/{% if project_layout == 'ml' %}flow.py{% endif %}.jinja` containing a minimal Metaflow `FlowSpec` that runs locally with no cloud account, per research R4a
+- [X] T015c [US1] Add the `metaflow` dependency to `project/pyproject.toml.jinja`, gated on `has_flow`
+- [X] T015d [US1] Add a test to `project/tests/test_{{python_package_import_name}}.py.jinja`, gated on `has_flow`, that executes the generated flow locally — this is what makes the dependency satisfy FR-017 rather than merely be declared
+- [X] T016 [US1] Confirm no publish step renders for `ml` in any of the four pipeline templates under `project/`, and that the `release` nox session still renders (quickstart S4)
 
 ### Fixtures
 
-- [ ] T017 [P] [US1] Add a `Test script layout choice` case to `tests/test_copier.bats` comparing against `tests/expected/script-layout`
-- [ ] T018 [P] [US1] Add a `Test ML layout choice` case to `tests/test_copier.bats` comparing against `tests/expected/ml-layout`
-- [ ] T019 [US1] Run `make regen-fixtures` to create `tests/expected/script-layout/` and `tests/expected/ml-layout/` by rendering, then `make tests`
-- [ ] T020 [US1] Re-run `git diff --exit-code tests/expected/default/` to confirm the new layouts did not disturb the frozen library output
+- [X] T017 [P] [US1] Add a `Test script layout choice` case to `tests/test_copier.bats` comparing against `tests/expected/script-layout`
+- [X] T018 [P] [US1] Add a `Test ML layout choice` case to `tests/test_copier.bats` comparing against `tests/expected/ml-layout`
+- [X] T019 [US1] Run `make regen-fixtures` to create `tests/expected/script-layout/` and `tests/expected/ml-layout/` by rendering, then `make tests`
+- [X] T020 [US1] Re-run `git diff --exit-code tests/expected/default/` to confirm the new layouts did not disturb the frozen library output
 
 **Checkpoint**: three layouts render and are covered by fixtures. This is the MVP — shippable on its own.
 

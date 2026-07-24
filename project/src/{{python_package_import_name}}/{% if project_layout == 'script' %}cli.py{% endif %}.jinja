@@ -1,0 +1,18 @@
+"""Command line interface for `{{ python_package_import_name }}`."""
+
+import click
+
+
+@click.command()
+@click.option('--name', default='world', help='Who to greet.')
+def main(name: str) -> None:
+    """Greet someone.
+
+    Arguments:
+        name: Who to greet.
+    """
+    click.echo(f'Hello, {name}!')
+
+
+if __name__ == '__main__':
+    main()
