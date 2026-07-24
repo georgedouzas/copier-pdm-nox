@@ -61,12 +61,16 @@ pages:
   only:
     - main
 
+# The `release` nox session is the local kickoff that tags the commit. The
+# pipeline is the only publisher, so it just builds and uploads the tag, and it
+# only reaches this stage once the test and quality stages are green.
 release:
   <<: *python_template
   stage: release
   script:
-    - pdm install
-    - pdm release
+    - pip install twine
+    - pdm build
+    - twine upload --skip-existing dist/*
   only:
     - tags
   when: manual

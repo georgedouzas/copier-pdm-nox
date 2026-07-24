@@ -247,7 +247,11 @@ def release(session: nox.Session) -> None:
         session: The nox session.
     """
 {%- if package_manager == "PDM" %}
+{%- if publish_pypi and git_provider == "None" %}
     session.run('pdm', 'install', '-dG', 'changelog', '-dG', 'release', '--no-default', external=True)
+{%- else %}
+    session.run('pdm', 'install', '-dG', 'changelog', '--no-default', external=True)
+{%- endif %}
     from git_changelog.cli import build_and_render  # noqa: PLC0415
 {% else %}
     session.run('uv', 'sync', '--only-dev', '--active', external=True)
@@ -266,44 +270,57 @@ def release(session: nox.Session) -> None:
     session.run('git', 'push', '-u', 'origin', f'release_{version}', external=True)
 {% if git_provider == "GitHub" %}
     # Create and merge PR from release branch to main
-    session.run('gh', 'pr', 'create', '--base', 'main', external=True)
+    session.run('gh', 'pr', 'create', '--base', 'main', '--fill', external=True)
     session.run('gh', 'pr', 'merge', '--rebase', '--delete-branch', external=True)
 
-    # Create tag
+    # Create and push the release tag, which is what the pipeline reacts to
     session.run('git', 'checkout', 'main', external=True)
     session.run('git', 'pull', '--rebase', external=True)
     session.run('git', 'tag', version, external=True)
-    session.run('git', 'push', '--tags', external=True)
+    session.run('git', 'push', 'origin', version, external=True)
 {% elif git_provider == "GitLab" %}
     # Create and merge PR from release branch to main
-    session.run('glab', 'mr', 'create', '--target-branch', 'main', external=True)
-    session.run('glab', 'mr', 'merge', '--rebase', '--remove-source-branch', external=True)
+    session.run('glab', 'mr', 'create', '--target-branch', 'main', '--fill', '--yes', external=True)
+    session.run('glab', 'mr', 'merge', '--rebase', '--remove-source-branch', '--yes', external=True)
 
-    # Create tag
+    # Create and push the release tag, which is what the pipeline reacts to
     session.run('git', 'checkout', 'main', external=True)
     session.run('git', 'pull', '--rebase', external=True)
     session.run('git', 'tag', version, external=True)
-    session.run('git', 'push', '--tags', external=True)
+    session.run('git', 'push', 'origin', version, external=True)
 {% elif git_provider == "Azure DevOps" %}
     # Create and merge PR from release branch to main
-    session.run('az', 'repos', 'pr', 'create', '--target-branch', 'main', external=True)
+    session.run(
+        'az', 'repos', 'pr', 'create',
+        '--source-branch', f'release_{version}',
+        '--target-branch', 'main',
+        '--title', f'Release {version}',
+        '--description', f'Release {version}',
+        external=True,
+    )
     session.run('az', 'repos', 'pr', 'complete', '--merge-commit-message', f'Release {version}', '--delete-source-branch', external=True)
 
-    # Create tag
+    # Create and push the release tag, which is what the pipeline reacts to
     session.run('git', 'checkout', 'main', external=True)
     session.run('git', 'pull', '--rebase', external=True)
     session.run('git', 'tag', version, external=True)
-    session.run('git', 'push', '--tags', external=True)
+    session.run('git', 'push', 'origin', version, external=True)
 {% elif git_provider == "Bitbucket" %}
     # Create and merge PR from release branch to main
-    session.run('atlassian', 'bitbucket', 'pr', 'create', '--destination', 'main', external=True)
+    session.run(
+        'atlassian', 'bitbucket', 'pr', 'create',
+        '--source', f'release_{version}',
+        '--destination', 'main',
+        '--title', f'Release {version}',
+        external=True,
+    )
     session.run('atlassian', 'bitbucket', 'pr', 'merge', '--delete-source-branch', external=True)
 
-    # Create tag
+    # Create and push the release tag, which is what the pipeline reacts to
     session.run('git', 'checkout', 'main', external=True)
     session.run('git', 'pull', '--rebase', external=True)
     session.run('git', 'tag', version, external=True)
-    session.run('git', 'push', '--tags', external=True)
+    session.run('git', 'push', 'origin', version, external=True)
 {% endif %}
 {%- else %}
     # Commit changelog and create tag
@@ -311,12 +328,14 @@ def release(session: nox.Session) -> None:
     session.run('git', 'commit', '-m', f'chore: Release {version}', '--allow-empty', external=True)
     session.run('git', 'tag', version, external=True)
 {% endif %}
-{%- if publish_pypi and package_manager == "PDM"%}
-    # Build and upload artifacts
+{%- if publish_pypi and git_provider == "None" %}
+    # There is no pipeline to react to the tag, so build and upload from here.
+    # With a git provider configured the pipeline is the only publisher, which
+    # keeps a local release from racing it for the same version.
+    {%- if package_manager == "PDM" %}
     session.run('pdm', 'build', external=True)
-    session.run('twine', 'upload', '--skip-existing', 'dist/*')
-{% elif publish_pypi and package_manager == "uv"%}
-    # Build and upload artifacts
+    {%- else %}
     session.run('uv', 'build', external=True)
+    {%- endif %}
     session.run('twine', 'upload', '--skip-existing', 'dist/*')
 {% endif -%}

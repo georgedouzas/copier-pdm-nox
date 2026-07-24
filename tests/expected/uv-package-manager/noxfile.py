@@ -199,15 +199,11 @@ def release(session: nox.Session) -> None:
     session.run('git', 'push', '-u', 'origin', f'release_{version}', external=True)
 
     # Create and merge PR from release branch to main
-    session.run('gh', 'pr', 'create', '--base', 'main', external=True)
+    session.run('gh', 'pr', 'create', '--base', 'main', '--fill', external=True)
     session.run('gh', 'pr', 'merge', '--rebase', '--delete-branch', external=True)
 
-    # Create tag
+    # Create and push the release tag, which is what the pipeline reacts to
     session.run('git', 'checkout', 'main', external=True)
     session.run('git', 'pull', '--rebase', external=True)
     session.run('git', 'tag', version, external=True)
-    session.run('git', 'push', '--tags', external=True)
-
-    # Build and upload artifacts
-    session.run('uv', 'build', external=True)
-    session.run('twine', 'upload', '--skip-existing', 'dist/*')
+    session.run('git', 'push', 'origin', version, external=True)

@@ -201,6 +201,8 @@ def release(session: nox.Session) -> None:
     session.run('git', 'commit', '-m', f'chore: Release {version}', '--allow-empty', external=True)
     session.run('git', 'tag', version, external=True)
 
-    # Build and upload artifacts
+    # There is no pipeline to react to the tag, so build and upload from here.
+    # With a git provider configured the pipeline is the only publisher, which
+    # keeps a local release from racing it for the same version.
     session.run('pdm', 'build', external=True)
     session.run('twine', 'upload', '--skip-existing', 'dist/*')

@@ -1,5 +1,10 @@
 trigger:
-  - main
+  branches:
+    include:
+      - '*'
+  tags:
+    include:
+      - '*'
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -101,8 +106,12 @@ stages:
         artifactName: 'documentation'
 
 {% if publish_pypi -%}
+# The Docs stage is skipped on tag builds, so the release depends on the stages
+# that do run there. This is what gates publishing on a green test suite.
 - stage: Release
-  dependsOn: Docs
+  dependsOn:
+    - Test
+    - Quality
   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
   jobs:
   - job: ReleaseJob
@@ -115,20 +124,21 @@ stages:
     - script: |
         python -m pip install --upgrade pip
         {% if package_manager == "PDM" -%}
-        pip install pdm
+        pip install pdm twine
         {% else -%}
-        pip install uv
+        pip install uv twine
         {% endif -%}
       displayName: 'Install dependencies'
 
+    # The `release` nox session is the local kickoff that tags the commit. The
+    # pipeline is the only publisher, so it just builds and uploads the tag.
     - script: |
         {% if package_manager == "PDM" -%}
-        pdm install
-        pdm run release
+        pdm build
         {% else -%}
-        uv sync
-        uv run nox -s release
+        uv build
         {% endif -%}
+        twine upload --skip-existing dist/*
       displayName: 'Release to PyPI'
       env:
         TWINE_USERNAME: $(TWINE_USERNAME)

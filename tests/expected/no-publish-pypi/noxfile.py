@@ -186,7 +186,7 @@ def release(session: nox.Session) -> None:
     Arguments:
         session: The nox session.
     """
-    session.run('pdm', 'install', '-dG', 'changelog', '-dG', 'release', '--no-default', external=True)
+    session.run('pdm', 'install', '-dG', 'changelog', '--no-default', external=True)
     from git_changelog.cli import build_and_render  # noqa: PLC0415
 
     changelog, _ = build_and_render(**CHANGELOG_ARGS)
@@ -203,11 +203,11 @@ def release(session: nox.Session) -> None:
     session.run('git', 'push', '-u', 'origin', f'release_{version}', external=True)
 
     # Create and merge PR from release branch to main
-    session.run('gh', 'pr', 'create', '--base', 'main', external=True)
+    session.run('gh', 'pr', 'create', '--base', 'main', '--fill', external=True)
     session.run('gh', 'pr', 'merge', '--rebase', '--delete-branch', external=True)
 
-    # Create tag
+    # Create and push the release tag, which is what the pipeline reacts to
     session.run('git', 'checkout', 'main', external=True)
     session.run('git', 'pull', '--rebase', external=True)
     session.run('git', 'tag', version, external=True)
-    session.run('git', 'push', '--tags', external=True)
+    session.run('git', 'push', 'origin', version, external=True)
