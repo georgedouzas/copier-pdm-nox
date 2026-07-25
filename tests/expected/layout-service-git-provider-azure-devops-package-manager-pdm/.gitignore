@@ -25,9 +25,10 @@ htmlcov/
 # Task runner
 .nox/
 
-# Package managers
-pdm.lock
-uv.lock
+# Package manager
+#
+# The lock file is committed, so it is deliberately not ignored, giving reproducible installs
+# in development and CI.
 .pdm-python
 .pdm.toml
 

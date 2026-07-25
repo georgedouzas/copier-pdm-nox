@@ -65,7 +65,6 @@ def clean(session: nox.Session) -> None:
         '.ruff_cache',
         'coverage.xml',
         '.metaflow',
-        'uv.lock',
     ]
     for path in paths:
         shutil.rmtree(path, ignore_errors=True)

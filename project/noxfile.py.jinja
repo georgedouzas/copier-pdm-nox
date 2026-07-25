@@ -86,11 +86,6 @@ def clean(session: nox.Session) -> None:
         {%- if project_layout == "ml" %}
         '.metaflow',
         {%- endif %}
-        {%- if package_manager == "PDM" %}
-        'pdm.lock',
-        {%- elif package_manager == "uv" %}
-        'uv.lock',
-        {%- endif %}
     ]
     for path in paths:
         shutil.rmtree(path, ignore_errors=True)
