@@ -1,20 +1,4 @@
-"""Regenerate the golden fixtures under `tests/expected` by rendering the template.
-
-Fixtures are the specification: they are always produced by rendering, never edited by hand
-to match an expectation. This script is the only supported way to update them, and it is the
-single source of truth for which combinations exist -- `tests/test_copier.bats` reads the same
-set back by iterating the directories this writes.
-
-Coverage is the full cross product of the three structural dimensions -- project layout, git
-provider and package manager -- because the pipeline and packaging templates branch on all
-three and their interactions are where rendering bugs hide (a package manager renders different
-CI commands for each provider, and each layout declares different dependency groups). Two extra
-fixtures cover the orthogonal publish and license paths.
-
-The rendered `.copier-answers.yml` is not kept: it records a `_commit` that changes on every
-tag, so storing it would churn the fixtures for no reason. The answers each fixture was built
-from are recoverable from its directory name, which is what the bats suite does.
-"""
+"""Regenerate the golden fixtures under `tests/expected` by rendering the template."""
 
 import itertools
 import shutil
@@ -26,7 +10,6 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 EXPECTED = REPO / 'tests' / 'expected'
 ANSWERS = '.copier-answers.yml'
-
 COMMON = {
     'project_description': 'A test project.',
     'author_fullname': 'Georgios Douzas',
@@ -34,9 +17,6 @@ COMMON = {
     'author_username': 'gdouzas',
     'repository_name': 'test-repo',
 }
-
-# Each dimension maps a name segment to the answer it stands for. The segment is what appears in
-# the fixture directory name; the value is what is passed to copier.
 LAYOUTS = {
     'library': 'library',
     'script': 'script',
@@ -58,10 +38,10 @@ PACKAGE_MANAGERS = {
 
 
 def build_fixtures() -> dict[str, dict[str, str]]:
-    """Build the fixture name to answers mapping.
+    """Build the mapping of fixture name to the answers that define it.
 
     Returns:
-        The full cross product of the structural dimensions, plus the publish and license edges.
+        The full cross product of the structural dimensions, plus the orthogonal edge fixtures.
     """
     fixtures: dict[str, dict[str, str]] = {}
     for (lseg, lval), (pseg, pval), (mseg, mval) in itertools.product(
@@ -80,20 +60,15 @@ def build_fixtures() -> dict[str, dict[str, str]]:
     defaults = {'project_layout': 'library', 'git_provider': 'GitHub', 'package_manager': 'PDM'}
     fixtures[f'{base}-publish-pypi-disabled'] = {**defaults, 'publish_pypi': 'False'}
     fixtures[f'{base}-license-none'] = {**defaults, 'copyright_license': 'None'}
-    # AGENTS.md is on by default, so its layout- and package-manager-aware content is covered by
-    # the cross product above; these two edges cover turning it off and turning Spec Kit on.
     fixtures[f'{base}-agents-md-disabled'] = {**defaults, 'include_agents_md': 'False'}
     fixtures[f'{base}-speckit-enabled'] = {**defaults, 'include_speckit': 'True'}
     return fixtures
 
 
-FIXTURES = build_fixtures()
-
-
 def render(name: str, answers: dict[str, str], destination: Path) -> None:
     """Render one fixture into `destination`.
 
-    Arguments:
+    Args:
         name: The fixture name.
         answers: The answers that define this fixture.
         destination: Directory to render into.
@@ -101,7 +76,7 @@ def render(name: str, answers: dict[str, str], destination: Path) -> None:
     command = ['copier', 'copy', str(REPO), str(destination), '--defaults', '--vcs-ref=HEAD']
     for key, value in {**COMMON, **answers}.items():
         command += ['--data', f'{key}={value}']
-    result = subprocess.run(command, capture_output=True, text=True, check=False)  # noqa: S603
+    result = subprocess.run(command, capture_output=True, text=True, check=False)
     if result.returncode != 0 or not destination.is_dir():
         sys.exit(f'Rendering fixture {name!r} failed:\n{result.stdout}\n{result.stderr}')
 
@@ -109,7 +84,7 @@ def render(name: str, answers: dict[str, str], destination: Path) -> None:
 def install(rendered: Path, target: Path) -> None:
     """Replace the fixture directory with freshly rendered output, minus the answers file.
 
-    Arguments:
+    Args:
         rendered: The freshly rendered tree.
         target: The fixture directory to replace.
     """
@@ -120,18 +95,19 @@ def install(rendered: Path, target: Path) -> None:
 
 def main() -> None:
     """Regenerate every fixture, removing any that are no longer defined."""
+    fixtures = build_fixtures()
     EXPECTED.mkdir(parents=True, exist_ok=True)
-    stale = {p.name for p in EXPECTED.iterdir() if p.is_dir()} - set(FIXTURES)
+    stale = {p.name for p in EXPECTED.iterdir() if p.is_dir()} - set(fixtures)
     for name in sorted(stale):
         shutil.rmtree(EXPECTED / name)
         print(f'removed stale {name}')
 
-    for name, answers in FIXTURES.items():
+    for name, answers in fixtures.items():
         with tempfile.TemporaryDirectory() as tmp:
             rendered = Path(tmp) / name
             render(name, answers, rendered)
             install(rendered, EXPECTED / name)
-    print(f'{len(FIXTURES)} fixtures regenerated')
+    print(f'{len(fixtures)} fixtures regenerated')
 
 
 if __name__ == '__main__':

@@ -1,12 +1,16 @@
 <!--
 Sync Impact Report
 ==================
-Version change: 1.2.0 → 2.0.0
-Bump rationale: MAJOR, a structural rewrite. The shared engineering body seeded into generated
-projects is adopted here too: Purpose & Scope, Writing Style, the full Code Conventions the
-repository defines and propagates, a Development Workflow, and a Project Profile. The six
-template principles are unchanged in meaning; their prose was rewritten to follow the new
-Writing Style, which forbids the em-dash and semicolon as sentence punctuation.
+Version change: 1.2.0 → 2.0.0 → 2.0.1
+Bump rationale for 2.0.0: MAJOR, a structural rewrite. The shared engineering body seeded into
+generated projects is adopted here too: Purpose & Scope, Writing Style, the full Code Conventions
+the repository defines and propagates, a Development Workflow, and a Project Profile. The six
+template principles are unchanged in meaning; their prose was rewritten to follow the new Writing
+Style, which forbids the em-dash and semicolon as sentence punctuation.
+Bump rationale for 2.0.1: PATCH. The 2.0.0 adoption had quietly softened two Code Conventions
+against the source it claimed to adopt. The strict wording is restored: constants form one block
+with no blank line between them, and there are no explanatory comments in source, only a `# noqa`
+or `# type: ignore` suppression, with genuinely important caveats written into the documentation.
 
 Modified principles: none in substance. Principles I-VI keep their meaning, reworded for style.
 
@@ -205,9 +209,11 @@ and type aliases. Then functions in dependency order, so a name is defined befor
 helpers first and the function the module exists for last.
 
 A module constant is `UPPER_CASE`, and it lives in the constants block near the top of the module, never
-mid-file among the functions. One module is one concern. When a file grows two, split it. Small general
-helpers may share a `_utils` module, and a helper earns its own module only when it takes on a distinct
-role worth a name.
+mid-file among the functions. Consecutive constants form one block with no blank line between them. A
+blank line separates the constants block from the imports above and the code below, never one constant
+from the next. One module is one concern. When a file grows two, split it. Small general helpers may
+share a `_utils` module, and a helper earns its own module only when it takes on a distinct role worth a
+name.
 
 ### Package Layering
 
@@ -249,16 +255,20 @@ does not do. Never restate a self-evident name. Each point is its own sentence.
 
 ### Comments & Suppressions
 
-An explanatory comment that narrates a line, states the rationale for an implementation choice, or points
-out a caveat usually means the line or its names are unclear, so fix those instead. A comment that earns
-its place explains something the names genuinely cannot, such as why a regex matches what it does or why
-a step is ordered as it is. A comment never narrates the development process, describes what a thing used
-to be or will become, or decorates the file with a banner. Delete such comments when found.
+No explanatory comments. The names say what, the docstring says why the thing exists. An inline comment
+that explains a line, states the rationale for an implementation choice, or points out a caveat means the
+line or its names are unclear, so fix those instead. A caveat or rationale that genuinely matters, a
+correctness invariant, or a safety constraint, is written into the project documentation, not the source.
+Lesser notes live in the commit message or an issue. The only comments in source are a `# noqa` or a
+`# type: ignore` suppression. Delete every other comment when found, and never add one.
 
-A lint or type suppression, a `# noqa` or a `# type: ignore`, is a last resort for a genuine one-off, and
-it carries the rule code and the reason. When the same suppression recurs across the repository, it is
-not repeated inline. The rule is configured once in the project configuration, as a scoped ignore, so the
-decision lives in one place rather than scattered through the source.
+A comment never narrates the development process. It does not describe a migration, a transitional or
+temporary state, what a thing used to be, or what will change later. A comment is also never a decorative
+separator or a section banner. Delete such comments when found.
+
+A lint or type suppression carries the rule code and the reason. When the same suppression recurs across
+the repository, it is not repeated inline. The rule is configured once in `pyproject.toml`, as a scoped
+ignore, so the decision lives in one place rather than scattered through the source.
 
 ### Errors
 
@@ -377,4 +387,4 @@ This section instantiates the body above for this repository.
   offers an AGENTS.md and a Spec Kit constitution for AI coding agents, and seeds the latter from this
   same engineering body.
 
-**Version**: 2.0.0 | **Ratified**: 2026-07-24 | **Last Amended**: 2026-08-02
+**Version**: 2.0.1 | **Ratified**: 2026-07-24 | **Last Amended**: 2026-08-02

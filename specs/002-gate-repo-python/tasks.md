@@ -23,7 +23,7 @@ pytest suite for two scripts; the checks are the gate blocking a planted violati
 
 **Purpose**: bring the gate's configuration into the repository before pointing anything at it.
 
-- [ ] T001 Create a root `pyproject.toml` holding `[tool.black]`, `[tool.ruff]`, `[tool.ruff.lint]`, and
+- [X] T001 Create a root `pyproject.toml` holding `[tool.black]`, `[tool.ruff]`, `[tool.ruff.lint]`, and
   `[tool.mypy]`, copied from `project/pyproject.toml.jinja` with `target-version` resolved to `py311` and
   the template's path excludes dropped, and no `[project]` table.
 
@@ -41,31 +41,31 @@ then remove them and confirm both pass (quickstart S1 to S4).
 
 ### Make the scripts pass the gate
 
-- [ ] T002 [US1] Fix the black finding by letting black reformat `scripts/check_pipelines.py`, joining the
+- [X] T002 [US1] Fix the black finding by letting black reformat `scripts/check_pipelines.py`, joining the
   split f-string it flags.
-- [ ] T003 [US1] Refactor `main` in `scripts/check_pipelines.py` to clear `C901`, extracting the per-file
+- [X] T003 [US1] Refactor `main` in `scripts/check_pipelines.py` to clear `C901`, extracting the per-file
   scan into a helper so complexity falls below the threshold by structure, not suppression.
-- [ ] T004 [US1] Add the scoped, reasoned ruff ignores to `pyproject.toml`: a `per-file-ignores` entry for
+- [X] T004 [US1] Add the scoped, reasoned ruff ignores to `pyproject.toml`: a `per-file-ignores` entry for
   `scripts/*` covering `T20` (the scripts print as their interface) and `ANN401` (a parsed YAML node is
   genuinely `Any`), each with its reason in a comment.
-- [ ] T005 [US1] Run `uvx black --check scripts/`, `uvx ruff check scripts/`, and
+- [X] T005 [US1] Run `uvx black --check scripts/`, `uvx ruff check scripts/`, and
   `uvx --with types-PyYAML mypy scripts/` and confirm all three report no findings.
 
 ### Wire the gate in
 
-- [ ] T006 [P] [US1] Add black, ruff, and mypy hooks to `.pre-commit-config.yaml`, each scoped with
+- [X] T006 [P] [US1] Add black, ruff, and mypy hooks to `.pre-commit-config.yaml`, each scoped with
   `files: ^scripts/` so the gate never touches `project/` or `tests/expected/`. Add `types-PyYAML` to the
   mypy hook's `additional_dependencies`.
-- [ ] T007 [US1] Add a black, ruff, and mypy run over `scripts/` to the `tests` target in `Makefile`, so
+- [X] T007 [US1] Add a black, ruff, and mypy run over `scripts/` to the `tests` target in `Makefile`, so
   `make tests` runs the gate alongside the bats suites.
-- [ ] T008 [US1] Update `.github/workflows/tests.yml` so the CI job that runs `make tests` has the gate
+- [X] T008 [US1] Update `.github/workflows/tests.yml` so the CI job that runs `make tests` has the gate
   tools available, matching however the workflow installs its other tooling.
 
 ### Prove it
 
-- [ ] T009 [US1] Plant an unused import in a script and confirm both `pre-commit run --files <script>` and
+- [X] T009 [US1] Plant an unused import in a script and confirm both `pre-commit run --files <script>` and
   `make tests` fail on the ruff finding; revert and confirm both pass (quickstart S2).
-- [ ] T010 [US1] Plant a type error in a script and confirm `make tests` fails on mypy; revert and confirm
+- [X] T010 [US1] Plant a type error in a script and confirm `make tests` fails on mypy; revert and confirm
   it passes (quickstart S3). Plant a formatting drift and confirm black blocks it (quickstart S4).
 
 **Checkpoint**: the gate is green on the scripts as they ship, and blocks a planted violation on commit and
@@ -78,19 +78,19 @@ in the suite. This is the MVP.
 **Independent test**: read the config and the scripts and confirm no rule is disabled wholesale, and every
 suppression names its rule and reason (quickstart S6).
 
-- [ ] T011 [US2] Confirm `pyproject.toml` contains no blanket rule disablement, that the only suppressions
+- [X] T011 [US2] Confirm `pyproject.toml` contains no blanket rule disablement, that the only suppressions
   are the `scripts/*` `T20` and `ANN401` per-file ignores from T004, and that each carries its reason.
-- [ ] T012 [US2] Confirm the `C901` finding was resolved by the T003 refactor and carries no suppression.
+- [X] T012 [US2] Confirm the `C901` finding was resolved by the T003 refactor and carries no suppression.
 
 **Checkpoint**: the gate enforces something, because it was not made green by silencing it.
 
 ## Phase 5: Polish & Cross-Cutting
 
-- [ ] T013 Confirm the gate targets `scripts/` only: `project/` and `tests/expected/` are unreported
+- [X] T013 Confirm the gate targets `scripts/` only: `project/` and `tests/expected/` are unreported
   (quickstart S5, FR-006).
-- [ ] T014 Update `CONTRIBUTING.md` so the "Working on the template" section states that the repository's
+- [X] T014 Update `CONTRIBUTING.md` so the "Working on the template" section states that the repository's
   own Python is gated by black, ruff, and mypy, run on commit and in `make tests`.
-- [ ] T015 Run every quickstart scenario S1 through S6, then `make tests` and `make tests-integration`, and
+- [X] T015 Run every quickstart scenario S1 through S6, then `make tests` and `make tests-integration`, and
   confirm both are green.
 
 ## Dependencies & Execution Order

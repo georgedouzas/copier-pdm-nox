@@ -1,4 +1,4 @@
-.PHONY: install docs tests tests-integration regen-fixtures changelog release
+.PHONY: install docs checks tests tests-integration regen-fixtures changelog release
 
 # Override to use a specific interpreter, e.g. `make tests PYTHON=.venv/bin/python`.
 PYTHON ?= python3
@@ -9,7 +9,12 @@ install:
 docs:
 	@properdocs serve
 
-tests:
+checks:
+	@uvx black --check scripts/
+	@uvx ruff check scripts/
+	@uvx --with types-PyYAML mypy scripts/
+
+tests: checks
 	@bats tests/test_copier.bats
 	@$(PYTHON) scripts/check_pipelines.py
 

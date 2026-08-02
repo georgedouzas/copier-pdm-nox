@@ -1,13 +1,4 @@
-"""Structurally validate the generated fixtures under `tests/expected`.
-
-Reading a rendered file is not verification. Jinja whitespace control can silently relocate a
-YAML key into the block scalar above it, producing a file that still parses but means
-something entirely different -- the pipeline runs `displayName: 'Install dependencies'` as a
-shell command. A textual diff against a fixture cannot see this, because the fixture records
-the broken output just as faithfully as it would record correct output.
-
-So this parses instead, and asserts structure.
-"""
+"""Structurally validate the generated fixtures under `tests/expected` by parsing them."""
 
 import re
 import sys
@@ -21,22 +12,15 @@ except ModuleNotFoundError:
 
 REPO = Path(__file__).resolve().parent.parent
 EXPECTED = REPO / 'tests' / 'expected'
-
-# A key that ended up inside a script body rather than beside it. Anchored to the start of a
-# line so a shell command that merely mentions one of these words is not flagged.
 SWALLOWED_KEY = re.compile(r'^\s*(name|displayName|uses|with|env|run|script|steps|jobs):', re.MULTILINE)
-
-# Any construct that should have been consumed at render time. `${{ ... }}` is excluded: that
-# is GitHub Actions expression syntax, which the templates emit deliberately via `{% raw %}`.
 UNRENDERED = re.compile(r'(?<!\$)\{\{|\{%|\{#')
-
 SKIP_SUFFIXES = {'.png', '.jpg', '.gif', '.ico', '.pyc'}
 
 
-def failures_in_scripts(path: Path, node: Any, trail: str = '') -> list[str]:
+def find_swallowed_keys(path: Path, node: Any, trail: str = '') -> list[str]:
     """Walk a parsed document looking for keys swallowed into string values.
 
-    Arguments:
+    Args:
         path: The file being checked, for reporting.
         node: The current node of the parsed document.
         trail: Human readable path to the current node.
@@ -47,10 +31,10 @@ def failures_in_scripts(path: Path, node: Any, trail: str = '') -> list[str]:
     failures = []
     if isinstance(node, dict):
         for key, value in node.items():
-            failures += failures_in_scripts(path, value, f'{trail}.{key}')
+            failures += find_swallowed_keys(path, value, f'{trail}.{key}')
     elif isinstance(node, list):
         for index, value in enumerate(node):
-            failures += failures_in_scripts(path, value, f'{trail}[{index}]')
+            failures += find_swallowed_keys(path, value, f'{trail}[{index}]')
     elif isinstance(node, str) and (found := SWALLOWED_KEY.search(node)):
         failures.append(
             f'{path.relative_to(REPO)}: at {trail or "<root>"} the value contains a line '
@@ -63,7 +47,7 @@ def failures_in_scripts(path: Path, node: Any, trail: str = '') -> list[str]:
 def check_azure_steps(path: Path, document: Any) -> list[str]:
     """Assert every Azure script step carries its own `displayName` key.
 
-    Arguments:
+    Args:
         path: The file being checked, for reporting.
         document: The parsed pipeline.
 
@@ -85,7 +69,7 @@ def check_azure_steps(path: Path, document: Any) -> list[str]:
 def check_release_topology(fixture: Path) -> list[str]:
     """Assert a fixture publishes if and only if its layout is publishable, and only when green.
 
-    Arguments:
+    Args:
         fixture: The fixture directory.
 
     Returns:
@@ -97,9 +81,6 @@ def check_release_topology(fixture: Path) -> list[str]:
     document = yaml.safe_load(release.read_text(encoding='utf-8')) or {}
     jobs = document.get('jobs', {})
     publishes = 'pypi-release' in jobs
-    # A fixture is publishable unless its answers turned publishing off. Read that from the
-    # name: the layouts that deploy rather than distribute publish nothing to an index, as does
-    # the publish-pypi-disabled fixture.
     deployed = any(f'layout-{kind}-' in f'{fixture.name}-' for kind in ('ml', 'dataeng', 'service'))
     expected = not deployed and 'publish-pypi-disabled' not in fixture.name
 
@@ -118,6 +99,42 @@ def check_release_topology(fixture: Path) -> list[str]:
     return failures
 
 
+def scan_file(path: Path) -> tuple[list[str], int] | None:
+    """Scan one fixture file for unrendered constructs and structural problems.
+
+    Args:
+        path: The file to scan.
+
+    Returns:
+        The failures found and 1 if the file parsed as a YAML document, or None if the file could not be
+        read as text and was skipped.
+    """
+    try:
+        text = path.read_text(encoding='utf-8')
+    except UnicodeDecodeError:
+        return None
+
+    failures = []
+    if found := UNRENDERED.search(text):
+        failures.append(f'{path.relative_to(REPO)}: contains an unrendered template construct {found.group(0)!r}')
+
+    if path.suffix not in {'.yml', '.yaml'}:
+        return failures, 0
+    try:
+        document = yaml.safe_load(text)
+    except yaml.YAMLError as error:
+        failures.append(f'{path.relative_to(REPO)}: does not parse as YAML: {error}')
+        return failures, 0
+    if document is None:
+        failures.append(f'{path.relative_to(REPO)}: parses as an empty document')
+        return failures, 1
+
+    failures += find_swallowed_keys(path, document)
+    if path.name == 'azure-pipelines.yml':
+        failures += check_azure_steps(path, document)
+    return failures, 1
+
+
 def main() -> None:
     """Validate every generated fixture."""
     if not EXPECTED.is_dir():
@@ -133,32 +150,13 @@ def main() -> None:
     for path in sorted(EXPECTED.rglob('*')):
         if not path.is_file() or path.suffix in SKIP_SUFFIXES:
             continue
-        try:
-            text = path.read_text(encoding='utf-8')
-        except UnicodeDecodeError:
+        result = scan_file(path)
+        if result is None:
             continue
+        file_failures, was_parsed = result
+        failures += file_failures
         scanned += 1
-
-        if found := UNRENDERED.search(text):
-            failures.append(
-                f'{path.relative_to(REPO)}: contains an unrendered template construct '
-                f'{found.group(0)!r}',
-            )
-
-        if path.suffix not in {'.yml', '.yaml'}:
-            continue
-        try:
-            document = yaml.safe_load(text)
-        except yaml.YAMLError as error:
-            failures.append(f'{path.relative_to(REPO)}: does not parse as YAML: {error}')
-            continue
-        parsed += 1
-        if document is None:
-            failures.append(f'{path.relative_to(REPO)}: parses as an empty document')
-            continue
-        failures += failures_in_scripts(path, document)
-        if path.name == 'azure-pipelines.yml':
-            failures += check_azure_steps(path, document)
+        parsed += was_parsed
 
     if failures:
         print(f'{len(failures)} structural problem(s) in the generated fixtures:\n')

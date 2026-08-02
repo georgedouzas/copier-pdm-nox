@@ -1,0 +1,34 @@
+# Configuration for the gate on the repository's own Python, the scripts under scripts/. There is no
+# [project] table because this repository is a Copier template, not a distributed package. The black,
+# ruff, and mypy settings are copied from the template's own project/pyproject.toml.jinja, so the
+# repository is checked by the same configuration it ships to a generated project.
+
+[tool.black]
+line-length = 120
+skip-string-normalization = true
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+ignore = ["D202", "N806", "N803", "S101", "INP001", "Q000", "TRY002", "PLR0913", "EXE001", "EXE002", "E741"]
+select = ["C", "E", "F", "W", "B", "I", "D", "N", "UP", "YTT", "ANN", "S",
+"BLE", "A", "COM", "C4", "DTZ", "T10", "EM", "EXE", "ISC", "ICN", "G",
+"INP", "PIE", "T20", "PT", "Q", "RET501", "RET502", "RET503", "SIM",
+"PTH", "PD", "PGH", "PL", "TRY", "RUF", "PLE", "PLR", "PLW"]
+
+[tool.ruff.lint.per-file-ignores]
+# The scripts are command-line tools, so their stdout is the interface (T20), a parsed YAML node is
+# genuinely of arbitrary shape (ANN401), and their subprocess calls run copier with arguments built
+# from this file's own constants, never external input (S603).
+"scripts/*" = ["T20", "ANN401", "S603"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.mypy]
+ignore_missing_imports = true
+warn_unused_ignores = true
+show_error_codes = true

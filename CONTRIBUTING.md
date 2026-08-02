@@ -21,10 +21,19 @@ Run `make tests` before every commit, and `make tests-integration` whenever you 
 `project/noxfile.py.jinja`, `project/pyproject.toml.jinja` or a pipeline template — that target
 generates real projects and runs their toolchains, which is the only way to know a change works.
 
+The repository holds its own Python to the same bar it ships. `make checks`, which `make tests`
+runs first, gates the scripts under `scripts/` with black, ruff, and mypy, using the same
+configuration in `pyproject.toml` that the template puts in a generated project. The same three
+run on commit through pre-commit, scoped to `scripts/` so they never touch the `.jinja` templates
+or the rendered fixtures.
+
 `make tests` also runs `scripts/check_pipelines.py`, which parses every generated YAML rather
 than reading it. Jinja whitespace control can move a key into the block scalar above it,
 producing a file that still parses and means something else entirely; a textual diff cannot see
-that, so the fixture would record the broken output just as faithfully as correct output.
+that, so the fixture would record the broken output just as faithfully as correct output. That
+checker deliberately excludes GitHub Actions `${{ ... }}` expression syntax from its
+unrendered-construct scan, because the templates emit it on purpose; the negative lookbehind in
+the pattern is what keeps a real expression from being flagged as leftover Jinja.
 
 ## Adding a project layout
 
