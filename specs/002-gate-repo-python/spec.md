@@ -70,8 +70,8 @@ blanket rule disablement, and that any remaining suppression names its rule and 
 
 ### Functional Requirements
 
-- **FR-001**: Linting and type checking MUST run on the repository's own Python, the scripts under
-  `scripts/`.
+- **FR-001**: Formatting, linting, and type checking MUST run on the repository's own Python, the scripts
+  under `scripts/`.
 - **FR-002**: The gate MUST run locally on commit, so a violation blocks the commit.
 - **FR-003**: The gate MUST run in the repository's test suite, so a violation blocks the suite and CI.
 - **FR-004**: The repository's scripts MUST pass the gate with no findings at the point this feature is
@@ -84,7 +84,8 @@ blanket rule disablement, and that any remaining suppression names its rule and 
   is generated output.
 - **FR-007**: The gate's configuration MUST live in one place, so its rules are recorded rather than
   scattered.
-- **FR-008**: The scope of the gate is linting and type checking. The dependency and security tools of the
+- **FR-008**: The scope of the gate is formatting, linting, and type checking, and its tools use the same
+  configuration the template ships for a generated project. The dependency and security tools of the
   generated-project floor are out of scope, because the repository declares no runtime dependencies to
   audit and its Python is two standalone scripts rather than a distributed package.
 
@@ -110,9 +111,10 @@ blanket rule disablement, and that any remaining suppression names its rule and 
 
 ## Assumptions
 
-- The gate is linting and type checking, resolved with the maintainer as the sensible floor for two
-  standalone scripts. The full generated-project floor of seven tools is deliberately out of scope for the
-  reasons in FR-008.
+- The gate is formatting, linting, and type checking, resolved with the maintainer as the sensible floor
+  for two standalone scripts, with the tools configured exactly as the template configures them for a
+  generated project. The dependency and security tools of the full seven-tool floor are deliberately out
+  of scope for the reasons in FR-008.
 - Where the gate's configuration lives, in a new project file or a standalone configuration file, is an
   implementation choice for the plan, not a requirement of this specification.
 - The scripts already carry type annotations and docstrings, so the change is expected to add the gate and
