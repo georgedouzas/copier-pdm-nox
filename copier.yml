@@ -95,6 +95,18 @@ include_dockerfile:
   # ones distributed as packages, where a container is something to delete rather than use.
   default: "{{ project_layout in ['dataeng', 'service'] }}"
 
+# AI assistants
+
+include_agents_md:
+  type: bool
+  help: Include an AGENTS.md describing the project's conventions for AI coding agents
+  default: true
+
+include_speckit:
+  type: bool
+  help: Include a Spec Kit constitution seeding the project's principles (run `specify init` to complete the setup)
+  default: false
+
 # Distribution
 
 publish_pypi:

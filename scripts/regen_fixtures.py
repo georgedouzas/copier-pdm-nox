@@ -80,6 +80,10 @@ def build_fixtures() -> dict[str, dict[str, str]]:
     defaults = {'project_layout': 'library', 'git_provider': 'GitHub', 'package_manager': 'PDM'}
     fixtures[f'{base}-publish-pypi-disabled'] = {**defaults, 'publish_pypi': 'False'}
     fixtures[f'{base}-license-none'] = {**defaults, 'copyright_license': 'None'}
+    # AGENTS.md is on by default, so its layout- and package-manager-aware content is covered by
+    # the cross product above; these two edges cover turning it off and turning Spec Kit on.
+    fixtures[f'{base}-agents-md-disabled'] = {**defaults, 'include_agents_md': 'False'}
+    fixtures[f'{base}-speckit-enabled'] = {**defaults, 'include_speckit': 'True'}
     return fixtures
 
 

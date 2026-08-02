@@ -49,6 +49,16 @@ Layouts add only what a task actually exercises, and any framework they add runs
 provision. Changing a project's layout after generation is out of scope: the answer can be changed, but the result is whatever
 the update merge produces, and it is neither supported nor tested.
 
+### AI assistants
+
+Generated projects can carry conventions for AI coding agents, asked as two independent options. An **`AGENTS.md`** (the
+agent-agnostic standard that Claude Code, Cursor and others read directly) is seeded from what the project enforces: the
+task interface with the correct commands for the chosen package manager, the quality floor and the rule not to weaken
+it, the commit convention, the release topology, and notes for the chosen layout. Separately, an opt-in **Spec Kit
+constitution** seeds the project's principles in [Spec Kit's](https://github.com/github/spec-kit) format; run
+`specify init` alongside it to add the rest of the workflow. The two are distinct — Spec Kit does not read `AGENTS.md` —
+so you can take either, both, or neither.
+
 ### Documentation
 
 Automatic documentation generation using [properdocs](https://github.com/properdocs/properdocs) with the beautiful
@@ -140,7 +150,8 @@ The template will prompt you for various configuration options including:
 - Project name and description
 - Author information
 - Package manager preference (PDM or uv)
-- Project layout (library, command line tool, or machine learning)
+- Project layout (library, command line tool, machine learning, data engineering, or service)
+- Whether to include a Dockerfile, and conventions for AI coding agents (AGENTS.md, Spec Kit)
 - Git provider (GitHub, GitLab, Azure DevOps, Bitbucket, or None)
 - License selection
 - Python version requirements

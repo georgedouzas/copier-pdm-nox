@@ -15,6 +15,7 @@ pip-wheel-metadata/
 # Testing and coverage
 .pytest_cache/
 .coverage*
+coverage.xml
 htmlcov/
 
 # Type checking and linting
@@ -24,14 +25,16 @@ htmlcov/
 # Task runner
 .nox/
 
-# Package managers
-pdm.lock
-uv.lock
+# Package manager
+#
+# The lock file is committed, so it is deliberately not ignored, giving reproducible installs
+# in development and CI.
 .pdm-python
 .pdm.toml
 
 # Documentation
 site/
+docs/generated/
 
 # IDE and editors
 .idea/
@@ -39,6 +42,3 @@ site/
 
 # OS
 .DS_Store
-
-# Local backups
-*.bak
