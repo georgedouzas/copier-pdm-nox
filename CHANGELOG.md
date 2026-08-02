@@ -6,6 +6,30 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [1.12.0](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.12.0) - 2026-08-02
+
+<small>[Compare with 1.11.1](https://github.com/georgedouzas/copier-modern-python/compare/1.11.1...1.12.0)</small>
+
+### Features
+
+- Gate the repository's own Python with black, ruff, and mypy ([e157bf5](https://github.com/georgedouzas/copier-modern-python/commit/e157bf55bcaa6c116741219fbbed448b667168f4) by georgedouzas).
+- Offer AI assistant conventions for generated projects ([98c4a2a](https://github.com/georgedouzas/copier-modern-python/commit/98c4a2a89dca1193da480a0199fde0975b509aeb) by georgedouzas).
+
+### Docs
+
+- Break the repo-gate work into tasks ([ac32077](https://github.com/georgedouzas/copier-modern-python/commit/ac320771a9c1ab5ca00bc902a06877f66f046513) by georgedouzas).
+- Plan gating the repository's own Python ([1b00e8f](https://github.com/georgedouzas/copier-modern-python/commit/1b00e8fff45125cf697c5b6cd74551598e16a518) by georgedouzas).
+- Specify gating the repository's own Python ([cc52521](https://github.com/georgedouzas/copier-modern-python/commit/cc52521853f12ba987713a2546bc592e14622580) by georgedouzas).
+- Adopt the shared engineering body in this constitution ([000225e](https://github.com/georgedouzas/copier-modern-python/commit/000225ef22e3b08d890a8eb04cbd5e866b1971e5) by georgedouzas).
+
+### Code Refactoring
+
+- Move the repository's dependencies into pyproject.toml ([b858749](https://github.com/georgedouzas/copier-modern-python/commit/b858749cd8c0ff0c59a776111c57c2d2c0451aab) by georgedouzas).
+
+### Tests
+
+- Commit the lock before the ML cleanliness check ([4183468](https://github.com/georgedouzas/copier-modern-python/commit/4183468f95de9431de9833dce541a3269f5bab54) by georgedouzas).
+
 ## [1.11.1](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.11.1) - 2026-07-25
 
 <small>[Compare with 1.11.0](https://github.com/georgedouzas/copier-modern-python/compare/1.11.0...1.11.1)</small>
@@ -14,6 +38,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Commit the lock file for reproducible installs ([aa19070](https://github.com/georgedouzas/copier-modern-python/commit/aa19070c678f7977dd6663c533392da544b79ed1) by georgedouzas).
 - Make the development docs describe the chosen package manager ([2486622](https://github.com/georgedouzas/copier-modern-python/commit/2486622eb67be4447482bd9c797922a59cdc81e5) by georgedouzas).
+
+### Docs
+
+- Update changelog for version 1.11.1 ([21b8d67](https://github.com/georgedouzas/copier-modern-python/commit/21b8d67d20c1b42a6ed3dfa2a30c4be719beb6ad) by georgedouzas).
 
 ## [1.11.0](https://github.com/georgedouzas/copier-modern-python/releases/tag/1.11.0) - 2026-07-25
 
