@@ -32,3 +32,17 @@ convention = "google"
 ignore_missing_imports = true
 warn_unused_ignores = true
 show_error_codes = true
+
+# The repository's own tooling dependencies, what `make install` installs. There is no [project]
+# table, so these live in a PEP 735 dependency group rather than under [project.dependencies].
+[dependency-groups]
+dev = [
+    "copier>=9",
+    "PyYAML>=6",
+    "properdocs>=1.6.7",
+    "mkdocs-material>=9.1.2",
+    "markdown-exec>=1.3.0",
+    "mkdocs-section-index>=0.3.5",
+    "git-changelog>=1.0.0",
+    "mdx-truly-sane-lists>=1.3",
+]

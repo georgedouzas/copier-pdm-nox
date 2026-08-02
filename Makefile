@@ -4,7 +4,7 @@
 PYTHON ?= python3
 
 install:
-	@pip install -r requirements.txt
+	@pip install --group dev
 
 docs:
 	@properdocs serve
