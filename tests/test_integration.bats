@@ -104,6 +104,12 @@ teardown() {
     run pdm install
     [ "$status" -eq 0 ]
 
+    # pdm install writes the lock, which is committed. Capture it here, as a user would after a
+    # first install, so the cleanliness check below tests only what running the flow leaves
+    # behind -- .metaflow and notebook outputs -- rather than the lock created at install.
+    git add -A
+    git -c user.email=test@test.com -c user.name=test commit -qm "lock"
+
     run pdm checks
     [ "$status" -eq 0 ]
 
